@@ -40,35 +40,43 @@ function array_foreach(_array, _f) {
 /// @param {script} generator The function which will generate values for the iterator.
 function Iterator(_generator) constructor {
 	generator = _generator;
+	has_peeked = false;
 	peeked = undefined;
 	next = function() {
-		var item = peeked;
-		if (item == undefined)
-		then item = generator();
-		else peeked = undefined;
+		var item;
+		if (has_peeked) {
+			has_peeked = false;
+			item = peeked;
+		} else {
+			item = generator();
+		}
 		return item;
 	};
 	peek = function() {
-		if (peeked == undefined)
-		then peeked = generator();
+		if not (has_peeked) {
+			peeked = generator();
+			has_peeked = true;
+		}
 		return peeked;
 	}
 }
 
+/// @desc An exception which tells the iterator to stop running.
+function StopIteration() constructor { }
+
 /// @desc Converts an iterator into an array.
 /// @param {Iterator} iter The iterator to generate values from.
 function iterate(_iter) {
-	var queue = ds_queue_create();
-	var n = 0;
-	while (_iter.peek() != undefined) {
-		ds_queue_enqueue(queue, _iter.next());
-		n += 1;
+	var arr = [];
+	try {
+		for (var i = 0; true; i += 1) {
+			var next = _iter.next();
+			arr[@ i] = next;
+		}
+	} catch (_exception) {
+		if (instanceof(_exception) != "StopIteration")
+		then throw _exception;
 	}
-	var arr = array_create(n);
-	for (var i = 0; i < n; i += 1) {
-		arr[@ i] = ds_queue_dequeue(queue);
-	}
-	ds_queue_destroy(queue);
 	return arr;
 }
 

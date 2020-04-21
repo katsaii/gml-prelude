@@ -13,7 +13,7 @@ var iter = new Iterator(function () {
 	static count = 0;
 	count += 1;
 	if (count > 100)
-	then return undefined;
+	then throw new StopIteration();
 	else return count;
 });
 

@@ -31,6 +31,28 @@ var arr_wrapper = {
 
 var arr_iter = new Iterator(arr_wrapper.next);
 
+function add(_a) {
+	var closure = {
+		a : _a,
+		f : function(_b) {
+			return a + _b;
+		}
+	};
+	return closure.f;
+}
+
+/* Doesn't work
+function false_add(_a) {
+	return function(_b) {
+		return _a + _b;
+	}
+}
+*/
+
+var result = add(1)(2);
+// var false_result = false_add(1)(2);
+show_debug_message("closure test: " + string(result));
+
 array_foreach(iterate(arr_iter), function(_x) {
 	show_debug_message("value: " + string(_x));
 })

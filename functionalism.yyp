@@ -1,7 +1,8 @@
 {
   "resources": [
     {"id":{"name":"scr_functionalism","path":"scripts/scr_functionalism/scr_functionalism.yy",},"order":0,},
-    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":0,},
+    {"id":{"name":"obj_test","path":"objects/obj_test/obj_test.yy",},"order":1,},
+    {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},"order":0,},
   ],
   "Options": [
     {"name":"Linux","path":"options/linux/options_linux.yy",},
@@ -17,10 +18,10 @@
     "children": [],
   },
   "RoomOrder": [
-    {"name":"Room1","path":"rooms/Room1/Room1.yy",},
+    {"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},
   ],
   "Folders": [
-    {"folderPath":"folders/Rooms.yy","order":10,"resourceVersion":"1.0","name":"Rooms","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Tests.yy","order":10,"resourceVersion":"1.0","name":"Tests","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Functionalism.yy","order":11,"resourceVersion":"1.0","name":"Functionalism","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [

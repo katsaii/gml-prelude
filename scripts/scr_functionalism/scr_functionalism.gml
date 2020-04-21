@@ -2,11 +2,13 @@
  * `https://github.com/NuxiiGit/functionalism`
  */
 
+#region array
+
 /// @desc Applies a function to all elements of an array and returns a new array.
 /// @param {array} variable The array to apply the function to.
 /// @param {script} f The function to apply to all elements in the array.
 /// @param {int} [n] The size of the output array.
-/// @param {int} [i] The index of the array to start at.
+/// @param {int} [i=0] The index of the array to start at.
 function array_mapf(_array, _f) {
 	var n = argument_count > 2 ? argument[2] : array_length(_array);
 	var i = argument_count > 3 ? argument[3] : 0;
@@ -21,7 +23,7 @@ function array_mapf(_array, _f) {
 /// @param {array} variable The array to apply the function to.
 /// @param {script} f The function to apply to all elements in the array.
 /// @param {int} [n] The number of elements to loop through.
-/// @param {int} [i] The index of the array to start at.
+/// @param {int} [i=0] The index of the array to start at.
 function array_foreach(_array, _f) {
 	var n = argument_count > 2 ? argument[2] : array_length(_array);
 	var i = argument_count > 3 ? argument[3] : 0;
@@ -30,4 +32,37 @@ function array_foreach(_array, _f) {
 	}
 }
 
+#endregion
 
+#region iterator
+
+/// @desc Creates a new iterator instance with this function.
+/// @param {script} generator The function which will generate values for the iterator.
+function Iterator(_generator) constructor {
+	generator = _generator;
+	peeked = undefined;
+	next = function() {
+		var item = peeked;
+		if (item == undefined)
+		then item = generator();
+		else peeked = undefined;
+		return item;
+	};
+	peek = function() {
+		if (peeked == undefined)
+		then peeked = generator();
+		return peeked;
+	}
+}
+
+/// @desc Converts an iterator into an array.
+/// @param {Iterator} iter The iterator to generate values from.
+function iterate(_iter) {
+	var arr = [];
+	for (var i = 0; _iter.peek() != undefined; i += 1) {
+		arr[@ i] = _iter.next();
+	}
+	return arr;
+}
+
+#endregion

@@ -58,10 +58,17 @@ function Iterator(_generator) constructor {
 /// @desc Converts an iterator into an array.
 /// @param {Iterator} iter The iterator to generate values from.
 function iterate(_iter) {
-	var arr = [];
-	for (var i = 0; _iter.peek() != undefined; i += 1) {
-		arr[@ i] = _iter.next();
+	var queue = ds_queue_create();
+	var n = 0;
+	while (_iter.peek() != undefined) {
+		ds_queue_enqueue(queue, _iter.next());
+		n += 1;
 	}
+	var arr = array_create(n);
+	for (var i = 0; i < n; i += 1) {
+		arr[@ i] = ds_queue_dequeue(queue);
+	}
+	ds_queue_destroy(queue);
 	return arr;
 }
 

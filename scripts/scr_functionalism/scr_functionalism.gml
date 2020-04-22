@@ -10,23 +10,29 @@ function Iterator(_generator) constructor {
 	generator = _generator;
 	has_peeked = false;
 	peeked = undefined;
-	next = function() {
-		var item;
-		if (has_peeked) {
-			has_peeked = false;
-			item = peeked;
-		} else {
-			item = generator();
-		}
-		return item;
-	};
-	peek = function() {
-		if not (has_peeked) {
-			peeked = generator();
-			has_peeked = true;
-		}
-		return peeked;
+}
+
+/// @desc Advance the iterator and return its next value.
+/// @param {Iterator} iter The iterator to advance.
+function next(_iter) {
+	var item;
+	if (_iter.has_peeked) {
+		_iter.has_peeked = false;
+		item = _iter.peeked;
+	} else {
+		item = _iter.generator();
 	}
+	return item;
+}
+
+/// @desc Peek at the next iterator value.
+/// @param {Iterator} iter The iterator to peek at the next value of.
+function peek(_iter) {
+	if not (_iter.has_peeked) {
+		_iter.peeked = _iter.generator();
+		_iter.has_peeked = true;
+	}
+	return _iter.peeked;
 }
 
 /// @desc An exception which tells the iterator to stop running.
@@ -38,8 +44,7 @@ function iterate(_iter) {
 	var arr = [];
 	try {
 		for (var i = 0; true; i += 1) {
-			var next = _iter.next();
-			arr[@ i] = next;
+			arr[@ i] = next(_iter);
 		}
 	} catch (_exception) {
 		if (instanceof(_exception) != "StopIteration")

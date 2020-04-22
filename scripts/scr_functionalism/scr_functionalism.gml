@@ -20,7 +20,7 @@ function next(_iter) {
 		_iter.has_peeked = false;
 		item = _iter.peeked;
 	} else {
-		item = _iter.generator();
+		item = _iter.generator.next();
 	}
 	return item;
 }
@@ -29,7 +29,7 @@ function next(_iter) {
 /// @param {Iterator} iter The iterator to peek at the next value of.
 function peek(_iter) {
 	if not (_iter.has_peeked) {
-		_iter.peeked = _iter.generator();
+		_iter.peeked = _iter.generator.next();
 		_iter.has_peeked = true;
 	}
 	return _iter.peeked;
@@ -87,19 +87,20 @@ function array_foreach(_arr, _f) {
 
 /// @desc Converts an array into an iterator.
 function array_into_iterator(_arr) {
-	return new Iterator(method({
+	return new Iterator({
 		arr : _arr,
 		pos : 0,
-		len : array_length(_arr)
-	}, function() {
-		if (pos < len) {
-			var val = arr[pos];
-			pos += 1;
-			return val;
-		} else {
-			throw new StopIteration();
+		len : array_length(_arr),
+		next : function() {
+			if (pos < len) {
+				var val = arr[pos];
+				pos += 1;
+				return val;
+			} else {
+				throw new StopIteration();
+			}
 		}
-	}));
+	});
 }
 
 #endregion

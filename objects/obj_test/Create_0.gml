@@ -9,22 +9,15 @@ var a = array_mapf([1,2,3,4], function(_x) {
 });
 show_debug_message(a);
 
-var num_iter = new Iterator(function() {
+var num_iter = new Iterator({ next : function() {
 	static count = 0;
 	count += 1;
 	if (count > 100)
 	then throw new StopIteration();
 	else return count;
-});
+}});
 
-var arr_iter = new Iterator(method({ arr : [1, 2, 3] }, function() {
-	static i = 0;
-	var pos = i;
-	i += 1;
-	if (pos < array_length(arr))
-	then return arr[pos];
-	else throw new StopIteration();
-}));
+var arr_iter = array_into_iterator([1, 2, 3]);
 
 array_foreach(iterate(arr_iter), function(_x) {
 	show_debug_message("value: " + string(_x));

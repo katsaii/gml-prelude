@@ -134,7 +134,7 @@ function curry_trip(_f) {
 		}, function(_b) {
 			return method({
 				f : self.f,
-				a : _a,
+				a : self.a,
 				b : _b
 			}, function(_c) {
 				return f(a, b, _c);
@@ -155,13 +155,13 @@ function curry_quad(_f) {
 		}, function(_b) {
 			return method({
 				f : self.f,
-				a : _a,
+				a : self.a,
 				b : _b
 			}, function(_c) {
 				return method({
 					f : self.f,
-					a : _a,
-					b : _b,
+					a : self.a,
+					b : self.b,
 					c : _c
 				}, function(_d) {
 					return f(a, b, c, _d);

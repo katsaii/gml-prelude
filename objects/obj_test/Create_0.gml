@@ -40,9 +40,16 @@ var dot = function(_a, _b, _c, _d) {
 
 var dot_curried = curry_quad(dot);
 
+var dot_curried_2 = dot_curried(2)(3);
+
 show_debug_message("uncurried:");
 show_debug_message(dot(2, 3, 8, 12));
 show_debug_message("curried:");
-show_debug_message(dot_curried(2)(3)(8)(12));
+show_debug_message(dot_curried_2(8)(12));
+
+show_debug_message("uncurried:");
+show_debug_message(dot(2, 3, 7, 12));
+show_debug_message("curried:");
+show_debug_message(dot_curried_2(7)(12));
 
 show_debug_message("\n-------#  tests end  #-------");

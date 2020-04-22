@@ -21,12 +21,12 @@ function struct_clone(_struct) {
 
 /// @desc Clones an array.
 /// @param {array} variable The array to clone.
-function array_clone(_arr) {
-	if (array_length(_arr) < 1) {
+function array_clone(_array) {
+	if (array_length(_array) < 1) {
 		return [];
 	} else {
-		_arr[0] = _arr[0];
-		return _arr;
+		_array[0] = _array[0];
+		return _array;
 	}
 }
 
@@ -71,16 +71,16 @@ function StopIteration() constructor { }
 /// @desc Converts an iterator into an array.
 /// @param {Iterator} iter The iterator to generate values from.
 function iterate(_iter) {
-	var arr = [];
+	var array = [];
 	try {
 		for (var i = 0; true; i += 1) {
-			arr[@ i] = next(_iter);
+			array[@ i] = next(_iter);
 		}
 	} catch (_exception) {
 		if (instanceof(_exception) != "StopIteration")
 		then throw _exception;
 	}
-	return arr;
+	return array;
 }
 
 #endregion
@@ -92,12 +92,12 @@ function iterate(_iter) {
 /// @param {script} f The function to apply to all elements in the array.
 /// @param {int} [n] The size of the output array.
 /// @param {int} [i=0] The index of the array to start at.
-function array_mapf(_arr, _f) {
-	var n = argument_count > 2 ? argument[2] : array_length(_arr);
+function array_mapf(_array, _f) {
+	var n = argument_count > 2 ? argument[2] : array_length(_array);
 	var i = argument_count > 3 ? argument[3] : 0;
 	var clone = array_create(n);
 	for (var j = 0; j < n; j += 1) {
-		clone[@ j] = _f(_arr[j + i]);
+		clone[@ j] = _f(_array[j + i]);
 	}
 	return clone;
 }
@@ -107,23 +107,23 @@ function array_mapf(_arr, _f) {
 /// @param {script} f The function to apply to all elements in the array.
 /// @param {int} [n] The number of elements to loop through.
 /// @param {int} [i=0] The index of the array to start at.
-function array_foreach(_arr, _f) {
-	var n = argument_count > 2 ? argument[2] : array_length(_arr);
+function array_foreach(_array, _f) {
+	var n = argument_count > 2 ? argument[2] : array_length(_array);
 	var i = argument_count > 3 ? argument[3] : 0;
 	for (; i < n; i += 1) {
-		_f(_arr[i]);
+		_f(_array[i]);
 	}
 }
 
 /// @desc Converts an array into an iterator.
-function array_into_iterator(_arr) {
+function array_into_iterator(_array) {
 	return new Iterator({
-		arr : _arr,
+		array : _array,
 		pos : 0,
-		len : array_length(_arr),
+		len : array_length(_array),
 		next : function() {
 			if (pos < len) {
-				var val = arr[pos];
+				var val = array[pos];
 				pos += 1;
 				return val;
 			} else {

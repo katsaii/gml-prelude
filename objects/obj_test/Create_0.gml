@@ -17,41 +17,14 @@ var num_iter = new Iterator(function() {
 	else return count;
 });
 
-var arr_wrapper = {
-	arr : [1, 2, 3],
-	next : function() {
-		static i = 0;
-		var pos = i;
-		i += 1;
-		if (pos < array_length(arr))
-		then return arr[pos];
-		else throw new StopIteration();
-	}
-};
-
-var arr_iter = new Iterator(arr_wrapper.next);
-
-function add(_a) {
-	var closure = {
-		a : _a,
-		f : function(_b) {
-			return a + _b;
-		}
-	};
-	return closure.f;
-}
-
-/* Doesn't work
-function false_add(_a) {
-	return function(_b) {
-		return _a + _b;
-	}
-}
-*/
-
-var result = add(1)(2);
-// var false_result = false_add(1)(2);
-show_debug_message("closure test: " + string(result));
+var arr_iter = new Iterator(method({ arr : [1, 2, 3] }, function() {
+	static i = 0;
+	var pos = i;
+	i += 1;
+	if (pos < array_length(arr))
+	then return arr[pos];
+	else throw new StopIteration();
+}));
 
 array_foreach(iterate(arr_iter), function(_x) {
 	show_debug_message("value: " + string(_x));

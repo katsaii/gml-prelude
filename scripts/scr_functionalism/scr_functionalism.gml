@@ -96,7 +96,7 @@ function array_foreach(_array, _f) {
 	}
 }
 
-/// @desc Converts an array into an iterator.
+/// @desc Returns an iterator over all elements of an array.
 /// @param {array} variable The array to convert into an iterator.
 function array_into_iterator(_array) {
 	return new Iterator({
@@ -119,8 +119,8 @@ function array_into_iterator(_array) {
 
 #region struct
 
-/// @desc Clones a structure.
-/// @param {struct} struct The structure to clone.
+/// @desc Clones a struct.
+/// @param {struct} struct The struct to clone.
 function struct_clone(_struct) {
 	var clone = { };
 	var n = variable_struct_names_count(_struct);
@@ -138,8 +138,15 @@ function struct_clone(_struct) {
 /// @param {struct} struct The struct to apply the function to.
 /// @param {script} f The function to apply to all member of the struct.
 function struct_foreach(_struct, _f) {
-	array_foreach(variable_struct_get_names(_struct), _f);
+	var n = variable_struct_names_count(_struct);
+	var names = variable_struct_get_names(_struct);
+	for (var i = n - 1; i >= 0; i -= 1) {
+		var variable = names[i];
+		_f(variable_struct_get(_struct, variable));
+	}
 }
+
+
 
 #endregion
 

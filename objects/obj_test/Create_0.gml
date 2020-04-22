@@ -55,10 +55,8 @@ show_debug_message(dot_curried_2(7)(12));
 var struct = { a : 3, b : "hello" };
 var struct2 = struct_clone(struct);
 
-show_message(struct == struct);
-show_message(struct == struct2);
-show_message(struct2 == struct2);
-show_message(struct);
-show_message(struct2);
+struct_foreach(struct, function(_data) {
+	show_debug_message("data:" + string(_data));
+});
 
 show_debug_message("\n-------#  tests end  #-------");

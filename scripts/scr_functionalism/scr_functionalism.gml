@@ -146,7 +146,29 @@ function struct_foreach(_struct, _f) {
 	}
 }
 
-
+/// @desc Returns an iterator over all members of the struct.
+/// @param {array} variable The array to convert into an iterator.
+function struct_into_iterator(_struct) {
+	return new Iterator({
+		struct : _struct,
+		names : variable_struct_get_names(_struct),
+		pos : 0,
+		len : variable_struct_names_count(_struct),
+		next : function() {
+			if (pos < len) {
+				var variable = names[pos];
+				var data = {
+					name : variable,
+					value : variable_struct_get(struct, variable)
+				};
+				pos += 1;
+				return data;
+			} else {
+				throw new StopIteration();
+			}
+		}
+	});
+}
 
 #endregion
 

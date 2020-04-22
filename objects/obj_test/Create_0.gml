@@ -55,7 +55,8 @@ show_debug_message(dot_curried_2(7)(12));
 var struct = { a : 3, b : "hello" };
 var struct2 = struct_clone(struct);
 
-struct_foreach(struct, function(_data) {
+var struct_iter = struct_into_iterator(struct);
+array_foreach(iterate(struct_iter), function(_data) {
 	show_debug_message("data:" + string(_data));
 });
 

@@ -57,12 +57,12 @@ function iterate(_iter) {
 /// @param {script} f The function to apply to all elements in the array.
 /// @param {int} [n] The size of the output array.
 /// @param {int} [i=0] The index of the array to start at.
-function array_mapf(_array, _f) {
-	var n = argument_count > 2 ? argument[2] : array_length(_array);
+function array_mapf(_arr, _f) {
+	var n = argument_count > 2 ? argument[2] : array_length(_arr);
 	var i = argument_count > 3 ? argument[3] : 0;
 	var clone = array_create(n);
 	for (var j = 0; j < n; j += 1) {
-		clone[@ j] = _f(_array[j + i]);
+		clone[@ j] = _f(_arr[j + i]);
 	}
 	return clone;
 }
@@ -72,20 +72,20 @@ function array_mapf(_array, _f) {
 /// @param {script} f The function to apply to all elements in the array.
 /// @param {int} [n] The number of elements to loop through.
 /// @param {int} [i=0] The index of the array to start at.
-function array_foreach(_array, _f) {
-	var n = argument_count > 2 ? argument[2] : array_length(_array);
+function array_foreach(_arr, _f) {
+	var n = argument_count > 2 ? argument[2] : array_length(_arr);
 	var i = argument_count > 3 ? argument[3] : 0;
 	for (; i < n; i += 1) {
-		_f(_array[i]);
+		_f(_arr[i]);
 	}
 }
 
 /// @desc Converts an array into an iterator.
-function array_into_iterator(_array) {
+function array_into_iterator(_arr) {
 	return new Iterator(method({
-		arr : _array,
+		arr : _arr,
 		pos : 0,
-		len : array_length(_array)
+		len : array_length(_arr)
 	}, function() {
 		if (pos < len) {
 			var val = arr[pos];

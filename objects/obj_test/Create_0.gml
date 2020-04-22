@@ -34,4 +34,15 @@ show_debug_message(mult(2, 3));
 show_debug_message("curried:");
 show_debug_message(mult_curried(2)(3));
 
+var dot = function(_a, _b, _c, _d) {
+	return dot_product(_a, _b, _c, _d);
+}
+
+var dot_curried = curry_quad(dot);
+
+show_debug_message("uncurried:");
+show_debug_message(dot(2, 3, 8, 12));
+show_debug_message("curried:");
+show_debug_message(dot_curried(2)(3)(8)(12));
+
 show_debug_message("\n-------#  tests end  #-------");

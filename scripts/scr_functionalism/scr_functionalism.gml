@@ -119,7 +119,7 @@ function curry_pair(_f) {
 	});
 }
 
-function curry_triple(_f) {
+function curry_trip(_f) {
 	return method({
 		func : _f,
 		a : undefined,
@@ -130,6 +130,26 @@ function curry_triple(_f) {
 			b = _b;
 			return method(self, function(_c) {
 				return func(a, b, _c);
+			});
+		});
+	});
+}
+
+function curry_quad(_f) {
+	return method({
+		func : _f,
+		a : undefined,
+		b : undefined,
+		c : undefined
+	}, function(_a) {
+		a = _a;
+		return method(self, function(_b) {
+			b = _b;
+			return method(self, function(_c) {
+				c = _c;
+				return method(self, function(_d) {
+					return func(a, b, c, _d);
+				});
 			});
 		});
 	});

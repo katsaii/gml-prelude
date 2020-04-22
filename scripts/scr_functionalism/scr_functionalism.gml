@@ -107,6 +107,8 @@ function array_into_iterator(_arr) {
 
 #region currying
 
+/// @desc Curries a function which takes two arguments.
+/// @param {script} ind The id of the script to apply currying to.
 function curry_pair(_f) {
 	return method({
 		func : _f,
@@ -119,6 +121,8 @@ function curry_pair(_f) {
 	});
 }
 
+/// @desc Curries a function which takes three arguments.
+/// @param {script} ind The id of the script to apply currying to.
 function curry_trip(_f) {
 	return method({
 		func : _f,
@@ -135,6 +139,8 @@ function curry_trip(_f) {
 	});
 }
 
+/// @desc Curries a function which takes four arguments.
+/// @param {script} ind The id of the script to apply currying to.
 function curry_quad(_f) {
 	return method({
 		func : _f,

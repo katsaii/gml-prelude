@@ -97,6 +97,7 @@ function array_foreach(_array, _f) {
 }
 
 /// @desc Converts an array into an iterator.
+/// @param {array} variable The array to convert into an iterator.
 function array_into_iterator(_array) {
 	return new Iterator({
 		array : _array,

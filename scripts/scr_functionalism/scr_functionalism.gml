@@ -119,4 +119,20 @@ function curry_pair(_f) {
 	});
 }
 
+function curry_triple(_f) {
+	return method({
+		func : _f,
+		a : undefined,
+		b : undefined
+	}, function(_a) {
+		a = _a;
+		return method(self, function(_b) {
+			b = _b;
+			return method(self, function(_c) {
+				return func(a, b, _c);
+			});
+		});
+	});
+}
+
 #endregion

@@ -133,6 +133,13 @@ function struct_clone(_struct) {
 	return clone;
 }
 
+/// @desc Calls some procedure for each member of a struct.
+/// @param {struct} struct The struct to apply the function to.
+/// @param {script} f The function to apply to all member of the struct.
+function struct_foreach(_struct, _f) {
+	array_foreach(variable_struct_get_names(_struct), _f);
+}
+
 #endregion
 
 #region currying

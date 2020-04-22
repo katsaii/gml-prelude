@@ -52,4 +52,13 @@ show_debug_message(dot(2, 3, 7, 12));
 show_debug_message("curried:");
 show_debug_message(dot_curried_2(7)(12));
 
+var struct = { a : 3, b : "hello" };
+var struct2 = struct_clone(struct);
+
+show_message(struct == struct);
+show_message(struct == struct2);
+show_message(struct2 == struct2);
+show_message(struct);
+show_message(struct2);
+
 show_debug_message("\n-------#  tests end  #-------");

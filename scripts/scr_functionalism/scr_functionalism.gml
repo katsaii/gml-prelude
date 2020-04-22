@@ -1,6 +1,36 @@
 /* Functional Programming Library by Kat @Katsaii
  * `https://github.com/NuxiiGit/functionalism`
  */
+ 
+#region clone
+
+/// @desc Clones a structure.
+/// @param {struct} struct The structure to clone.
+function struct_clone(_struct) {
+	var clone = { };
+	var n = variable_struct_names_count(_struct);
+	var names = variable_struct_get_names(_struct);
+	for (var i = n - 1; i >= 0; i -= 1) {
+		var variable = names[i];
+		variable_struct_set(
+				clone, variable,
+				variable_struct_get(_struct, variable));
+	}
+	return clone;
+}
+
+/// @desc Clones an array.
+/// @param {array} variable The array to clone.
+function array_clone(_arr) {
+	if (array_length(_arr) < 1) {
+		return [];
+	} else {
+		_arr[0] = _arr[0];
+		return _arr;
+	}
+}
+
+#endregion
 
 #region iterator
 

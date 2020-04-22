@@ -111,12 +111,13 @@ function array_into_iterator(_arr) {
 /// @param {script} ind The id of the script to apply currying to.
 function curry_pair(_f) {
 	return method({
-		func : _f,
-		a : undefined
+		f : _f
 	}, function(_a) {
-		a = _a;
-		return method(self, function(_b) {
-			return func(a, _b);
+		return method({
+			f : self.f,
+			a : _a
+		}, function(_b) {
+			return f(a, _b);
 		});
 	});
 }
@@ -125,15 +126,18 @@ function curry_pair(_f) {
 /// @param {script} ind The id of the script to apply currying to.
 function curry_trip(_f) {
 	return method({
-		func : _f,
-		a : undefined,
-		b : undefined
+		f : _f
 	}, function(_a) {
-		a = _a;
-		return method(self, function(_b) {
-			b = _b;
-			return method(self, function(_c) {
-				return func(a, b, _c);
+		return method({
+			f : self.f,
+			a : _a
+		}, function(_b) {
+			return method({
+				f : self.f,
+				a : _a,
+				b : _b
+			}, function(_c) {
+				return f(a, b, _c);
 			});
 		});
 	});
@@ -143,18 +147,24 @@ function curry_trip(_f) {
 /// @param {script} ind The id of the script to apply currying to.
 function curry_quad(_f) {
 	return method({
-		func : _f,
-		a : undefined,
-		b : undefined,
-		c : undefined
+		f : _f
 	}, function(_a) {
-		a = _a;
-		return method(self, function(_b) {
-			b = _b;
-			return method(self, function(_c) {
-				c = _c;
-				return method(self, function(_d) {
-					return func(a, b, c, _d);
+		return method({
+			f : self.f,
+			a : _a
+		}, function(_b) {
+			return method({
+				f : self.f,
+				a : _a,
+				b : _b
+			}, function(_c) {
+				return method({
+					f : self.f,
+					a : _a,
+					b : _b,
+					c : _c
+				}, function(_d) {
+					return f(a, b, c, _d);
 				});
 			});
 		});

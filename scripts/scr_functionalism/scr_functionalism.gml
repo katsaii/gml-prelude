@@ -104,3 +104,20 @@ function array_into_iterator(_arr) {
 }
 
 #endregion
+
+#region currying
+
+function curry_pair(_f) {
+	return method({
+		func : _f
+	}, function(_a) {
+		return method({
+			func : self.func,
+			a : _a
+		}, function(_b) {
+			return func(a, _b);
+		});
+	});
+}
+
+#endregion

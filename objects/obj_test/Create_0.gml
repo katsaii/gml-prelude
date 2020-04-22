@@ -23,4 +23,15 @@ array_foreach(iterate(arr_iter), function(_x) {
 	show_debug_message("value: " + string(_x));
 })
 
+var mult = function(_a, _b) {
+	return _a * _b;
+}
+
+var mult_curried = curry_pair(mult);
+
+show_debug_message("uncurried:");
+show_debug_message(mult(2, 3));
+show_debug_message("curried:");
+show_debug_message(mult_curried(2)(3));
+
 show_debug_message("\n-------#  tests end  #-------");

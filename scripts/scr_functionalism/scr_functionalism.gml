@@ -47,7 +47,7 @@ function iterate(_iter) {
 			array[@ i] = next(_iter);
 		}
 	} catch (_exception) {
-		if (instanceof(_exception) != "StopIteration")
+		if (instanceof(_exception) != script_get_name(StopIteration))
 		then throw _exception;
 	}
 	return array;

@@ -175,68 +175,6 @@ function struct_into_iterator(_struct) {
 
 #region currying
 
-/// @desc Curries a function which takes two arguments.
-/// @param {script} ind The id of the script to apply currying to.
-function curry_pair(_f) {
-	return method({
-		f : _f
-	}, function(_a) {
-		return method({
-			f : self.f,
-			a : _a
-		}, function(_b) {
-			return f(a, _b);
-		});
-	});
-}
 
-/// @desc Curries a function which takes three arguments.
-/// @param {script} ind The id of the script to apply currying to.
-function curry_trip(_f) {
-	return method({
-		f : _f
-	}, function(_a) {
-		return method({
-			f : self.f,
-			a : _a
-		}, function(_b) {
-			return method({
-				f : self.f,
-				a : self.a,
-				b : _b
-			}, function(_c) {
-				return f(a, b, _c);
-			});
-		});
-	});
-}
-
-/// @desc Curries a function which takes four arguments.
-/// @param {script} ind The id of the script to apply currying to.
-function curry_quad(_f) {
-	return method({
-		f : _f
-	}, function(_a) {
-		return method({
-			f : self.f,
-			a : _a
-		}, function(_b) {
-			return method({
-				f : self.f,
-				a : self.a,
-				b : _b
-			}, function(_c) {
-				return method({
-					f : self.f,
-					a : self.a,
-					b : self.b,
-					c : _c
-				}, function(_d) {
-					return f(a, b, c, _d);
-				});
-			});
-		});
-	});
-}
 
 #endregion

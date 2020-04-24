@@ -16,7 +16,10 @@ function identity(_a) {
 
 /// @desc Ignores all input. Returns nothing.
 function noop() {
-	var _ = argument_count; // required to stop compiler errors when passing arguments
+	if (argument_count != 0) {
+		// required to stop compiler errors when passing arguments
+		var _ = argument[0];
+	}
 }
 
 /// @desc Calls a function using an array as the parameter array.
@@ -24,23 +27,23 @@ function noop() {
 /// @param {array} variable The id of the array to pass as a parameter array to this script.
 function script_execute_array(_f, _a) {
 	switch(array_length(_a)){
-    case 0: return script_execute(_f);
-    case 1: return script_execute(_f, _a[0]);
-    case 2: return script_execute(_f, _a[0], _a[1]);
-    case 3: return script_execute(_f, _a[0], _a[1], _a[2]);
-    case 4: return script_execute(_f, _a[0], _a[1], _a[2], _a[3]);
-    case 5: return script_execute(_f, _a[0], _a[1], _a[2], _a[3], _a[4]);
-    case 6: return script_execute(_f, _a[0], _a[1], _a[2], _a[3], _a[4], _a[5]);
-    case 7: return script_execute(_f, _a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6]);
-    case 8: return script_execute(_f, _a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7]);
-    case 9: return script_execute(_f, _a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8]);
-    case 10: return script_execute(_f, _a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9]);
-    case 11: return script_execute(_f, _a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10]);
-    case 12: return script_execute(_f, _a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10], _a[11]);
-    case 13: return script_execute(_f, _a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10], _a[11], _a[12]);
-    case 14: return script_execute(_f, _a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10], _a[11], _a[12], _a[13]);
-    case 15: return script_execute(_f, _a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10], _a[11], _a[12], _a[13], _a[14]);
-    case 16: return script_execute(_f, _a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10], _a[11], _a[12], _a[13], _a[14], _a[15]);
+    case 0: return _f();
+    case 1: return _f(_a[0]);
+    case 2: return _f(_a[0], _a[1]);
+    case 3: return _f(_a[0], _a[1], _a[2]);
+    case 4: return _f(_a[0], _a[1], _a[2], _a[3]);
+    case 5: return _f(_a[0], _a[1], _a[2], _a[3], _a[4]);
+    case 6: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5]);
+    case 7: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6]);
+    case 8: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7]);
+    case 9: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8]);
+    case 10: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9]);
+    case 11: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10]);
+    case 12: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10], _a[11]);
+    case 13: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10], _a[11], _a[12]);
+    case 14: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10], _a[11], _a[12], _a[13]);
+    case 15: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10], _a[11], _a[12], _a[13], _a[14]);
+    case 16: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10], _a[11], _a[12], _a[13], _a[14], _a[15]);
     default: show_error("argument count of " + string(array_length(_a)) + " is not supported", false);
 	}
 }

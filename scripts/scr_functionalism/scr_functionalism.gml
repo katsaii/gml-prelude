@@ -1,5 +1,6 @@
 /* Functional Programming Library by Kat @Katsaii
  * `https://github.com/NuxiiGit/functionalism`
+ * Kat @Katsaii
  */
 
 #region iterator

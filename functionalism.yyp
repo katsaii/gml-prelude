@@ -3,6 +3,8 @@
     {"id":{"name":"scr_test_curry","path":"scripts/scr_test_curry/scr_test_curry.yy",},"order":2,},
     {"id":{"name":"scr_functionalism","path":"scripts/scr_functionalism/scr_functionalism.yy",},"order":0,},
     {"id":{"name":"scr_assertion","path":"scripts/scr_assertion/scr_assertion.yy",},"order":3,},
+    {"id":{"name":"scr_test_function_pointers","path":"scripts/scr_test_function_pointers/scr_test_function_pointers.yy",},"order":4,},
+    {"id":{"name":"scr_higher_order_functions","path":"scripts/scr_higher_order_functions/scr_higher_order_functions.yy",},"order":1,},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},"order":0,},
   ],
   "Options": [

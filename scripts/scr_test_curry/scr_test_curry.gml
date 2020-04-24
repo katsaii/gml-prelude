@@ -1,4 +1,6 @@
-/* Tests currying of functions */
+/* Tests currying of functions
+ * Kat @Katsaii
+ */
 
 var prod = function(_a, _b) {
 	return _a * _b;

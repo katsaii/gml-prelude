@@ -14,6 +14,11 @@ function identity(_a) {
 	return _a;
 }
 
+/// @desc Ignores all input. Returns nothing.
+function noop() {
+	var _ = argument_count; // required to stop compiler errors when passing arguments
+}
+
 /// @desc Calls a function using an array as the parameter array.
 /// @param {script} ind The id of the script to call.
 /// @param {array} variable The id of the array to pass as a parameter array to this script.

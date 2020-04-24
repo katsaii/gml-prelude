@@ -172,9 +172,3 @@ function struct_into_iterator(_struct) {
 }
 
 #endregion
-
-#region currying
-
-
-
-#endregion

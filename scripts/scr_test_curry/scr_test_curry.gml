@@ -18,3 +18,6 @@ var dot_curried = curry_quad(dot)(2)(3);
 
 assert_eq(dot(2, 3, 8, 12), dot_curried(8)(12));
 assert_eq(dot(2, 3, 7, 12), dot_curried(7)(12));
+
+var noop_curried = curry(3, noop);
+noop_curried(1)(1)(2)(4);

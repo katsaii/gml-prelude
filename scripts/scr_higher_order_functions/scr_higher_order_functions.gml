@@ -10,16 +10,8 @@ function func_ptr(_name) {
 
 /// @desc The identity function. Returns the input value.
 /// @param {value} value The value to return.
-function identity(_a) {
-	return _a;
-}
-
-/// @desc Ignores all input. Returns nothing.
-function noop() {
-	if (argument_count != 0) {
-		// required to stop compiler errors when passing arguments
-		var _ = argument[0];
-	}
+function identity(_x) {
+	return _x;
 }
 
 /// @desc Calls a function using an array as the parameter array.

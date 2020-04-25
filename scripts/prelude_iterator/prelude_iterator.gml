@@ -34,12 +34,14 @@ function peek(_iter) {
 /// @desc An exception which tells the iterator to stop running.
 function StopIteration() constructor { }
 
-/// @desc Converts an iterator into an array.
+/// @desc Takes the first `n` values from this iterator and puts them into an array.
 /// @param {Iterator} iter The iterator to generate values from.
-function iterate(_iter) {
-	var array = [];
+/// @param {int} [n=infinity] The size of the array. Leave blank for an automatically sized array.
+function take(_iter) {
+	var count = argument_count > 1 ? argument[1] : infinity;
+	var array = array_create(count != infinity ? count : 0, undefined);
 	try {
-		for (var i = 0; true; i += 1) {
+		for (var i = 0; i < count; i += 1) {
 			array[@ i] = next(_iter);
 		}
 	} catch (_exception) {

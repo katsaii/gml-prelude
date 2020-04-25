@@ -1,9 +1,6 @@
-/* Functional Programming Library by Kat @Katsaii
- * `https://github.com/NuxiiGit/functionalism`
+/* Iterators (See: `https://github.com/NuxiiGit/gml-prelude`)
  * Kat @Katsaii
  */
-
-#region iterator
 
 /// @desc Creates a new iterator instance with this function.
 /// @param {script} generator The function which will generate values for the iterator.
@@ -53,5 +50,3 @@ function iterate(_iter) {
 	}
 	return array;
 }
-
-#endregion

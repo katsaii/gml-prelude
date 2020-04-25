@@ -1,4 +1,4 @@
-/* Higher order functions
+/* Higher order functions (See: `https://github.com/NuxiiGit/functionalism`)
  * Kat @Katsaii
  */
 

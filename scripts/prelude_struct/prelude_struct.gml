@@ -1,4 +1,4 @@
-/* Struct operations
+/* Struct operations (See: `https://github.com/NuxiiGit/gml-prelude`)
  * Kat @Katsaii
  */
 

@@ -2,10 +2,10 @@
   "resources": [
     {"id":{"name":"prelude_struct","path":"scripts/prelude_struct/prelude_struct.yy",},"order":3,},
     {"id":{"name":"scr_test_curry","path":"scripts/scr_test_curry/scr_test_curry.yy",},"order":2,},
-    {"id":{"name":"prelude_functionalism","path":"scripts/prelude_functionalism/prelude_functionalism.yy",},"order":0,},
+    {"id":{"name":"prelude_iterator","path":"scripts/prelude_iterator/prelude_iterator.yy",},"order":0,},
     {"id":{"name":"scr_assertion","path":"scripts/scr_assertion/scr_assertion.yy",},"order":3,},
     {"id":{"name":"scr_test_function_pointers","path":"scripts/scr_test_function_pointers/scr_test_function_pointers.yy",},"order":4,},
-    {"id":{"name":"prelude_higher_order_functions","path":"scripts/prelude_higher_order_functions/prelude_higher_order_functions.yy",},"order":1,},
+    {"id":{"name":"prelude_higher_order","path":"scripts/prelude_higher_order/prelude_higher_order.yy",},"order":1,},
     {"id":{"name":"prelude_array","path":"scripts/prelude_array/prelude_array.yy",},"order":2,},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},"order":0,},
   ],

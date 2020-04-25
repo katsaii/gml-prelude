@@ -6,7 +6,7 @@
     "path": "folders/Prelude.yy",
   },
   "resourceVersion": "1.0",
-  "name": "prelude_higher_order_functions",
+  "name": "prelude_higher_order",
   "tags": [],
   "resourceType": "GMScript",
 }

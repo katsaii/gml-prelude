@@ -1,4 +1,4 @@
-/* Array operations
+/* Array operations (See: `https://github.com/NuxiiGit/gml-prelude`)
  * Kat @Katsaii
  */
 

@@ -19,9 +19,9 @@ function struct_clone(_struct) {
 }
 
 /// @desc Calls some procedure for each key-value pairs of a struct.
-/// @param {struct} struct The struct to apply the function to.
 /// @param {script} f The function to apply.
-function struct_foreach(_struct, _f) {
+/// @param {struct} struct The struct to apply the function to.
+function struct_foreach(_f, _struct) {
 	var count = variable_struct_names_count(_struct);
 	var names = variable_struct_get_names(_struct);
 	for (var i = count - 1; i >= 0; i -= 1) {
@@ -32,15 +32,15 @@ function struct_foreach(_struct, _f) {
 }
 
 /// @desc Calls some procedure for each member name of a struct.
-/// @param {struct} struct The struct to apply the function to.
 /// @param {script} f The function to apply.
-function struct_foreach_key(_struct, _f) {
+/// @param {struct} struct The struct to apply the function to.
+function struct_foreach_key(_f, _struct) {
 	struct_foreach(_struct, function(_key, _) { _f(_key); });
 }
 
 /// @desc Calls some procedure for each member value of a struct.
-/// @param {struct} struct The struct to apply the function to.
 /// @param {script} f The function to apply.
-function struct_foreach_value(_struct, _f) {
+/// @param {struct} struct The struct to apply the function to.
+function struct_foreach_value(_f, _struct) {
 	struct_foreach(_struct, function(_, _value) { _f(_value); });
 }

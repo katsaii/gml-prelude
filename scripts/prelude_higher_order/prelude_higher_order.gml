@@ -41,9 +41,9 @@ function script_execute_array(_f, _a) {
 }
 
 /// @desc Generates a new curried function.
-/// @param {int} arg_count The number of arguments to curry.
 /// @param {script} ind the id of the script to apply currying to.
-function CurriedFunction(_count, _f) constructor {
+/// @param {int} arg_count The number of arguments to curry.
+function CurriedFunction(_f, _count) constructor {
 	count = _count;
 	pos = 0;
 	f = _f;
@@ -70,9 +70,9 @@ function CurriedFunction(_count, _f) constructor {
 }
 
 /// @desc Curries a function so arguments can be passed individually.
-/// @param {int} arg_count The number of arguments to curry.
 /// @param {script} ind the id of the script to apply currying to.
-function curry(_count, _f) {
+/// @param {int} arg_count The number of arguments to curry.
+function curry(_f, _count) {
 	return (new CurriedFunction(_count - 1, _f)).call;
 }
 

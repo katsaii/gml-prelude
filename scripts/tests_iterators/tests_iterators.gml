@@ -8,6 +8,8 @@ assert_eq(1, next(array_iter));
 
 assert_eq([2, 3], iterate(array_iter));
 
+assert_eq([undefined, undefined, undefined], take(array_iter, 3));
+
 var struct = {
 	pos : 0,
 	__next__ : function() {

@@ -31,13 +31,31 @@ function peek(_iter) {
 	return _iter.peeked;
 }
 
+/// @desc An exception which tells the iterator to stop running.
+function StopIteration() constructor { }
+
+/// @desc Converts an iterator into an array.
+/// @param {Iterator} iter The iterator to generate values from.
+function iterate(_iter) {
+	var array = [];
+	try {
+		for (var i = 0; true; i += 1) {
+			array[@ i] = next(_iter);
+		}
+	} catch (_exception) {
+		if (instanceof(_exception) != script_get_name(StopIteration))
+		then throw _exception;
+	}
+	return array;
+}
+
 /// @desc Creates an iterator from a struct, array, or function reference.
 /// @param {value} variable The value to convert into an iterator.
 function iterator(_ref) {
 	if (is_struct(_ref)) {
-		show_error("not implemented", true);
+		return iterator_from_struct(_ref);
 	} else if (is_array(_ref)) {
-		show_error("not implemented", true);
+		return iterator_from_array(_ref);
 	} else {
 		return new Iterator(_ref);
 	}
@@ -55,20 +73,24 @@ function iterator_from_struct(_struct) {
 	return new Iterator(generator);
 }
 
-/// @desc An exception which tells the iterator to stop running.
-function StopIteration() constructor { }
-
-/// @desc Converts an iterator into an array.
-/// @param {Iterator} iter The iterator to generate values from.
-function iterate(_iter) {
-	var array = [];
-	try {
-		for (var i = 0; true; i += 1) {
-			array[@ i] = next(_iter);
+/// @desc Creates an iterator from an array.
+/// @param {array} variable The array to convert into an iterator.
+function iterator_from_array(_array) {
+	var count = array_length(_array)
+	var array = array_create(count);
+	array_copy(array, 0, _array, 0, count);
+	var generator = method({
+		array : array,
+		count : count,
+		pos : 0
+	}, function() {
+		if (pos < count) {
+			var item = array[pos];
+			pos += 1;
+			return item;
+		} else {
+			throw new StopIteration();
 		}
-	} catch (_exception) {
-		if (instanceof(_exception) != script_get_name(StopIteration))
-		then throw _exception;
-	}
-	return array;
+	});
+	return new Iterator(generator);
 }

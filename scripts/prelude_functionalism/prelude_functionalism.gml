@@ -56,68 +56,6 @@ function iterate(_iter) {
 
 #endregion
 
-#region array
-
-/// @desc Clones an array.
-/// @param {array} variable The array to clone.
-function array_clone(_array) {
-	if (array_length(_array) < 1) {
-		return [];
-	} else {
-		_array[0] = _array[0];
-		return _array;
-	}
-}
-
-/// @desc Applies a function to all elements of an array and returns a new array.
-/// @param {array} variable The array to apply the function to.
-/// @param {script} f The function to apply to all elements in the array.
-/// @param {int} [n] The size of the output array.
-/// @param {int} [i=0] The index of the array to start at.
-function array_mapf(_array, _f) {
-	var n = argument_count > 2 ? argument[2] : array_length(_array);
-	var i = argument_count > 3 ? argument[3] : 0;
-	var clone = array_create(n);
-	for (var j = 0; j < n; j += 1) {
-		clone[@ j] = _f(_array[j + i]);
-	}
-	return clone;
-}
-
-/// @desc Calls some procedure for each element of an array.
-/// @param {array} variable The array to apply the function to.
-/// @param {script} f The function to apply to all elements in the array.
-/// @param {int} [n] The number of elements to loop through.
-/// @param {int} [i=0] The index of the array to start at.
-function array_foreach(_array, _f) {
-	var n = argument_count > 2 ? argument[2] : array_length(_array);
-	var i = argument_count > 3 ? argument[3] : 0;
-	for (; i < n; i += 1) {
-		_f(_array[i]);
-	}
-}
-
-/// @desc Returns an iterator over all elements of an array.
-/// @param {array} variable The array to convert into an iterator.
-function array_into_iterator(_array) {
-	return new Iterator({
-		array : _array,
-		pos : 0,
-		len : array_length(_array),
-		next : function() {
-			if (pos < len) {
-				var val = array[pos];
-				pos += 1;
-				return val;
-			} else {
-				throw new StopIteration();
-			}
-		}
-	});
-}
-
-#endregion
-
 #region struct
 
 /// @desc Clones a struct.

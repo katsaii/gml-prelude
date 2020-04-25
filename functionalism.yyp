@@ -1,10 +1,10 @@
 {
   "resources": [
     {"id":{"name":"scr_test_curry","path":"scripts/scr_test_curry/scr_test_curry.yy",},"order":2,},
-    {"id":{"name":"scr_functionalism","path":"scripts/scr_functionalism/scr_functionalism.yy",},"order":0,},
+    {"id":{"name":"prelude_functionalism","path":"scripts/prelude_functionalism/prelude_functionalism.yy",},"order":0,},
     {"id":{"name":"scr_assertion","path":"scripts/scr_assertion/scr_assertion.yy",},"order":3,},
     {"id":{"name":"scr_test_function_pointers","path":"scripts/scr_test_function_pointers/scr_test_function_pointers.yy",},"order":4,},
-    {"id":{"name":"scr_higher_order_functions","path":"scripts/scr_higher_order_functions/scr_higher_order_functions.yy",},"order":1,},
+    {"id":{"name":"prelude_higher_order_functions","path":"scripts/prelude_higher_order_functions/prelude_higher_order_functions.yy",},"order":1,},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},"order":0,},
   ],
   "Options": [
@@ -25,7 +25,7 @@
   ],
   "Folders": [
     {"folderPath":"folders/Tests.yy","order":10,"resourceVersion":"1.0","name":"Tests","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Functionalism.yy","order":11,"resourceVersion":"1.0","name":"Functionalism","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Prelude.yy","order":11,"resourceVersion":"1.0","name":"Prelude","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Rooms.yy","order":12,"resourceVersion":"1.0","name":"Rooms","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [

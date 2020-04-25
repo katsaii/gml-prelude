@@ -6,7 +6,7 @@
 /// @param {struct} struct The struct to clone.
 function struct_clone(_struct) {
 	if (instanceof(_struct) != "struct")
-	then throw "structs created using constructor functions are not supported";
+	then show_error("structs created using constructor functions are not supported", false);
 	var clone = { };
 	var count = variable_struct_names_count(_struct);
 	var names = variable_struct_get_names(_struct);

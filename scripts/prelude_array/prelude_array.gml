@@ -40,3 +40,14 @@ function array_foreach(_f, _array) {
 		_f(_array[start + i]);
 	}
 }
+
+/// @desc Enumerates elements in an array.
+/// @param {array} variable The array to enumerate.
+function array_enumerate(_array) {
+	var count = array_length(_array);
+	var array = array_create(count);
+	for (var i = count - 1; i >= 0; i -= 1) {
+		array[@ i] = [i, _array[i]];
+	}
+	return array;
+}

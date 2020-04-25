@@ -1,5 +1,6 @@
 {
   "resources": [
+    {"id":{"name":"prelude_struct","path":"scripts/prelude_struct/prelude_struct.yy",},"order":3,},
     {"id":{"name":"scr_test_curry","path":"scripts/scr_test_curry/scr_test_curry.yy",},"order":2,},
     {"id":{"name":"prelude_functionalism","path":"scripts/prelude_functionalism/prelude_functionalism.yy",},"order":0,},
     {"id":{"name":"scr_assertion","path":"scripts/scr_assertion/scr_assertion.yy",},"order":3,},

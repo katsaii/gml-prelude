@@ -1,6 +1,7 @@
 {
   "resources": [
     {"id":{"name":"prelude_struct","path":"scripts/prelude_struct/prelude_struct.yy",},"order":3,},
+    {"id":{"name":"tests_iterators","path":"scripts/tests_iterators/tests_iterators.yy",},"order":5,},
     {"id":{"name":"tests_curry","path":"scripts/tests_curry/tests_curry.yy",},"order":2,},
     {"id":{"name":"prelude_iterator","path":"scripts/prelude_iterator/prelude_iterator.yy",},"order":0,},
     {"id":{"name":"tests","path":"scripts/tests/tests.yy",},"order":3,},

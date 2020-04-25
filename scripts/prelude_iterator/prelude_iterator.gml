@@ -6,7 +6,7 @@
 /// @param {script} generator The function which will generate values for the iterator.
 function Iterator(_f) constructor {
 	generator = _f;
-	is_peeked = false;
+	has_peeked = false;
 	peeked = undefined;
 }
 

@@ -4,8 +4,8 @@
 
 /// @desc Creates an iterator instance with this function.
 /// @param {script} generator The function which will generate values for the iterator.
-function Iterator(_generator) constructor {
-	generator = _generator;
+function Iterator(_f) constructor {
+	generator = _f;
 	is_peeked = false;
 	peeked = undefined;
 }
@@ -41,6 +41,18 @@ function iterator(_ref) {
 	} else {
 		return new Iterator(_ref);
 	}
+}
+
+/// @desc Creates an iterator from a struct. The method `__iter__` will be
+///       called to get the iterator struct. If `__iter__` does not exist,
+///       the callee will be used as the target. Then, the `__next__`
+///       method will be used to generate values for the iterator.
+/// @param {struct} struct The struct to convert into an iterator.
+function iterator_from_struct(_struct) {
+	var target = variable_struct_exists(_struct, "__iter__") ?
+			_struct.__iter__() : _struct;
+	var generator = target.__next__;
+	return new Iterator(generator);
 }
 
 /// @desc An exception which tells the iterator to stop running.

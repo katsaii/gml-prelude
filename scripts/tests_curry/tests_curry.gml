@@ -20,11 +20,9 @@ assert_eq(dot(2, 3, 8, 12), dot_curried(8)(12));
 assert_eq(dot(2, 3, 7, 12), dot_curried(7)(12));
 
 var custom_print = function(_a, _b, _c) {
-	show_debug_message(string(_a) + "izzard the " + string(_b) + " said " + string(_c));
+	return string(_a) + "izzard the " + string(_b) + " said " + string(_c);
 }
 
 var print_curried = curry(2, custom_print)("mega");
 
-curry(2, print_curried)("unbrave")("Bob");
-
-print_curried("brave", "James");
+assert_eq(curry(2, print_curried)("brave")("James"), print_curried("brave", "James"));

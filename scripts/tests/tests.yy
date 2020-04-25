@@ -6,7 +6,7 @@
     "path": "folders/Tests.yy",
   },
   "resourceVersion": "1.0",
-  "name": "scr_test_curry",
+  "name": "tests",
   "tags": [],
   "resourceType": "GMScript",
 }

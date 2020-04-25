@@ -20,10 +20,10 @@ var struct = {
 
 var struct_iter = iterator(struct);
 
-assert_eq([1, 2, 3, 4], take(struct_iter, 4));
+assert_eq([1, 2, 3, 4], take(4, struct_iter));
 
 drop(struct_iter, 4); // [5, 6, 7, 8]
 
-assert_eq([9], take(struct_iter, 1));
+assert_eq([9], take(1, struct_iter));
 
-assert_eq([], take(struct_iter, 0));
+assert_eq([], take(0, struct_iter));

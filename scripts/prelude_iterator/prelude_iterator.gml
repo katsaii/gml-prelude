@@ -31,6 +31,36 @@ function peek(_iter) {
 	return _iter.peeked;
 }
 
+/// @desc Converts an iterator into an array.
+/// @param {Iterator} iter The iterator to generate values from.
+function iterate(_iter) {
+	var array = [];
+	for (var i = 0; peek(_iter) != undefined; i += 1) {
+		array[@ i] = next(_iter);
+	}
+	return array;
+}
+
+/// @desc Takes the first `n` values from this iterator and puts them into an array.
+/// @param {int} n The number of elements to take.
+/// @param {Iterator} iter The iterator to generate values from.
+function take(_count, _iter) {
+	var array = array_create(_count);
+	for (var i = 0; i < _count; i += 1) {
+		array[@ i] = next(_iter);
+	}
+	return array;
+}
+
+/// @desc Drops the first `n` values from this iterator.
+/// @param {Iterator} iter The iterator to generate values from.
+/// @param {int} n The number of elements to drop.
+function drop(_count, _iter) {
+	repeat (_count) {
+		next(_iter);
+	}
+}
+
 /// @desc Creates an iterator from a struct, array, or function reference.
 /// @param {value} variable The value to convert into an iterator.
 function iterator(_ref) {
@@ -75,34 +105,4 @@ function iterator_from_array(_array) {
 		}
 	});
 	return new Iterator(generator);
-}
-
-/// @desc Converts an iterator into an array.
-/// @param {Iterator} iter The iterator to generate values from.
-function iterate(_iter) {
-	var array = [];
-	for (var i = 0; peek(_iter) != undefined; i += 1) {
-		array[@ i] = next(_iter);
-	}
-	return array;
-}
-
-/// @desc Takes the first `n` values from this iterator and puts them into an array.
-/// @param {Iterator} iter The iterator to generate values from.
-/// @param {int} n The number of elements to take.
-function take(_iter, _count) {
-	var array = array_create(_count);
-	for (var i = 0; i < _count; i += 1) {
-		array[@ i] = next(_iter);
-	}
-	return array;
-}
-
-/// @desc Drops the first `n` values from this iterator.
-/// @param {Iterator} iter The iterator to generate values from.
-/// @param {int} n The number of elements to drop.
-function drop(_iter, _count) {
-	repeat (_count) {
-		next(_iter);
-	}
 }

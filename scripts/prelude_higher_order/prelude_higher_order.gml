@@ -73,7 +73,7 @@ function CurriedFunction(_f, _count) constructor {
 /// @param {script} ind the id of the script to apply currying to.
 /// @param {int} arg_count The number of arguments to curry.
 function curry(_f, _count) {
-	return (new CurriedFunction(_count - 1, _f)).call;
+	return (new CurriedFunction(_count, _f)).call;
 }
 
 /// @desc Returns a new `+` operator section.

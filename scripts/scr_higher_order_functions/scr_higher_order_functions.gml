@@ -92,9 +92,17 @@ function op_product(_rhs) { return method({ rhs : _rhs }, function(_x) { return 
 /// @param {value} rhs The right-hand-side value of the operation.
 function op_divide(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x / _rhs; }); }
 
+/// @desc Returns a new operator section for remainders.
+/// @param {value} rhs The right-hand-side value of the operation.
+function op_modulo(_rhs) { return method({ rhs : _rhs }, function(_x) { return (_x % _rhs + _rhs) % _rhs; }); }
+
+/// @desc Returns a new `div` operator section.
+/// @param {value} rhs The right-hand-side value of the operation.
+function op_quotient(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x div _rhs; }); }
+
 /// @desc Returns a new `%` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_modulo(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x % _rhs; }); }
+function op_remainder(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x % _rhs; }); }
 
 /// @desc Returns a new `==` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
@@ -132,6 +140,10 @@ function op_or(_lhs) { return method({ lhs : _lhs }, function(_x) { return lhs |
 /// @param {value} lhs The left-hand-side value of the operation.
 function op_xor(_lhs) { return method({ lhs : _lhs }, function(_x) { return lhs ^^ _x; }); }
 
+/// @desc Returns a new `!` operator section.
+/// @param {value} value Value of the operatoin.
+function op_negate(_value) { return !_value; }
+
 /// @desc Returns a new `&` operator section.
 /// @param {value} lhs The left-hand-side value of the operation.
 function op_and_bitwise(_lhs) { return method({ lhs : _lhs }, function(_x) { return lhs & _x; }); }
@@ -143,3 +155,7 @@ function op_or_bitwise(_lhs) { return method({ lhs : _lhs }, function(_x) { retu
 /// @desc Returns a new `^` operator section.
 /// @param {value} lhs The left-hand-side value of the operation.
 function op_xor_bitwise(_lhs) { return method({ lhs : _lhs }, function(_x) { return lhs ^ _x; }); }
+
+/// @desc Returns a new `~` operator section.
+/// @param {value} value Value of the operatoin.
+function op_negate_bitwise(_value) { return ~_value; }

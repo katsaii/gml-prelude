@@ -78,55 +78,55 @@ function curry(_count, _f) {
 
 /// @desc Returns a new `+` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_plus(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x + _rhs; }); }
+function op_plus(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x + rhs; }); }
 
 /// @desc Returns a new `-` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_minus(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x - _rhs; }); }
+function op_minus(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x - rhs; }); }
 
 /// @desc Returns a new `*` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_product(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x * _rhs; }); }
+function op_product(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x * rhs; }); }
 
 /// @desc Returns a new `/` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_divide(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x / _rhs; }); }
+function op_divide(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x / rhs; }); }
 
 /// @desc Returns a new operator section for remainders.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_modulo(_rhs) { return method({ rhs : _rhs }, function(_x) { return (_x % _rhs + _rhs) % _rhs; }); }
+function op_modulo(_rhs) { return method({ rhs : _rhs }, function(_x) { return (_x % rhs + rhs) % rhs; }); }
 
 /// @desc Returns a new `div` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_quotient(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x div _rhs; }); }
+function op_quotient(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x div rhs; }); }
 
 /// @desc Returns a new `%` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_remainder(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x % _rhs; }); }
+function op_remainder(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x % rhs; }); }
 
 /// @desc Returns a new `==` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_equal(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x == _rhs; }); }
+function op_equal(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x == rhs; }); }
 
 /// @desc Returns a new `!=` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_nequal(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x != _rhs; }); }
+function op_nequal(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x != rhs; }); }
 
 /// @desc Returns a new `>` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_greater(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x > _rhs; }); }
+function op_greater(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x > rhs; }); }
 
 /// @desc Returns a new `<` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_less(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x < _rhs; }); }
+function op_less(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x < rhs; }); }
 
 /// @desc Returns a new `>=` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_greater_or_equal(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x >= _rhs; }); }
+function op_greater_or_equal(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x >= rhs; }); }
 
 /// @desc Returns a new `<=` operator section.
 /// @param {value} rhs The right-hand-side value of the operation.
-function op_less_or_equal(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x <= _rhs; }); }
+function op_less_or_equal(_rhs) { return method({ rhs : _rhs }, function(_x) { return _x <= rhs; }); }
 
 /// @desc Returns a new `&&` operator section.
 /// @param {value} lhs The left-hand-side value of the operation.

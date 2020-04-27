@@ -41,17 +41,6 @@ function array_foreach(_f, _array) {
 	}
 }
 
-/// @desc Enumerates elements in an array.
-/// @param {array} variable The array to enumerate.
-function array_enumerate(_array) {
-	var count = array_length(_array);
-	var enumerated = array_create(count);
-	for (var i = count - 1; i >= 0; i -= 1) {
-		enumerated[@ i] = [i, _array[i]];
-	}
-	return enumerated;
-}
-
 /// @desc Flattens items in an array.
 /// @param {array} variable The array to flatten.
 function array_flatten(_array) {

@@ -34,3 +34,7 @@ assert_eq([0, "A"], peek(enum_iter));
 assert_eq([0, "A"], next(enum_iter));
 
 assert_eq([[1, "B"], [2, "C"], [3, "D"], [4, "D"]], take(4, enum_iter));
+
+var concat_iter = flatten(enumerate(iterator(["X", "Y", "Z"])));
+
+assert_eq([0, "X", 1, "Y", 2, "Z"], iterate(concat_iter));

@@ -65,6 +65,30 @@ function enumerate(_iter) {
 	}));
 }
 
+/// @desc Flattens a single level of an iterator which returns arrays.
+/// @param {Iterator} iter The iterator to flatten.
+function flatten(_iter) {
+	return new Iterator(method({
+		iter : _iter,
+		pos : 0,
+		len : 0,
+		val : []
+	}, function() {
+		if (pos >= len) {
+			do {
+				val = next(iter);
+				if not (is_array(val))
+				then val = [val];
+				len = array_length(val);
+			} until (len > 0);
+			pos = 0;
+		}
+		var i = pos;
+		pos += 1;
+		return val[i];
+	}));
+}
+
 /// @desc Converts an iterator into an array.
 /// @param {Iterator} iter The iterator to generate values from.
 function iterate(_iter) {

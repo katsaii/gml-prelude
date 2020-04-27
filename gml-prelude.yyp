@@ -7,7 +7,6 @@
     {"id":{"name":"tests","path":"scripts/tests/tests.yy",},"order":3,},
     {"id":{"name":"tests_function_pointers","path":"scripts/tests_function_pointers/tests_function_pointers.yy",},"order":4,},
     {"id":{"name":"prelude_higher_order","path":"scripts/prelude_higher_order/prelude_higher_order.yy",},"order":1,},
-    {"id":{"name":"tests_arrays","path":"scripts/tests_arrays/tests_arrays.yy",},"order":6,},
     {"id":{"name":"prelude_array","path":"scripts/prelude_array/prelude_array.yy",},"order":2,},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},"order":0,},
   ],

@@ -42,3 +42,7 @@ assert_eq(undefined, next(enum_iter));
 var concat_iter = flatten(enumerate(iterator(["X", "Y", "Z"])));
 
 assert_eq([0, "X", 1, "Y", 2, "Z"], iterate(concat_iter));
+
+var map_iter = mapf(function(_x) { return _x * _x; }, iterator([0, 1, 2, 3, 4]));
+
+assert_eq([0, 1, 4, 9, 16], iterate(map_iter));

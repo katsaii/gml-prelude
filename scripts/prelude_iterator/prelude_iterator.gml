@@ -93,6 +93,19 @@ function flatten(_iter) {
 	}));
 }
 
+/// @desc Applies a function to the generator of this iterator.
+/// @param {script} f The function to apply.
+/// @param {Iterator} iter The iterator to map.
+function mapf(_f, _iter) {
+	return new Iterator(method({
+		iter : _iter,
+		f : _f
+	}, function() {
+		var my_value = next(iter);
+		return my_value == undefined ? undefined : f(my_value);
+	}));
+}
+
 /// @desc Converts an iterator into an array.
 /// @param {Iterator} iter The iterator to generate values from.
 function iterate(_iter) {

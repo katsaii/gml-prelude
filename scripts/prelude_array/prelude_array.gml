@@ -40,20 +40,3 @@ function array_foreach(_f, _array) {
 		_f(_array[start + i]);
 	}
 }
-
-/// @desc Flattens items in an array.
-/// @param {array} variable The array to flatten.
-function array_flatten(_array) {
-	var count = array_length(_array);
-	var flattened = [];
-	var pos = 0;
-	for (var i = 0; i < count; i += 1) {
-		var subarray = _array[i];
-		var subcount = array_length(subarray);
-		for (var j = 0; j < subcount; j += 1) {
-			flattened[@ pos] = subarray[j];
-			pos += 1;
-		}
-	}
-	return flattened;
-}

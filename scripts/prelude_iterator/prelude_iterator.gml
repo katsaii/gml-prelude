@@ -60,8 +60,12 @@ function enumerate(_iter) {
 	}, function() {
 		var my_pos = pos;
 		var my_value = next(iter);
-		pos += 1;
-		return [my_pos, my_value];
+		if (my_value == undefined) {
+			return undefined;
+		} else {
+			pos += 1;
+			return [my_pos, my_value];
+		}
 	}));
 }
 

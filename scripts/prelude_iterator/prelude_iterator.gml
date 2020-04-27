@@ -51,6 +51,26 @@ function drop(_count, _iter) {
 	}
 }
 
+/// @desc Produces an iterator which spans over a range.
+/// @param {real} first The first element of the range.
+/// @param {real} last The last element of the range.
+/// @param {real} [step=1] The step of the range.
+function range(_first, _last) {
+	return new Iterator(method({
+		pos : _first,
+		len : _last,
+		step : argument_count > 2 ? argument[2] : 1
+	}, function() {
+		if (pos < len) {
+			var n = pos;
+			pos += step;
+			return n;
+		} else {
+			return undefined;
+		}
+	}));
+}
+
 /// @desc Zips two iterators together.
 /// @param {Iterator} a The iterator first iterator.
 /// @param {Iterator} b The iterator second iterator.
@@ -71,18 +91,12 @@ function zip(_a, _b) {
 /// @desc Enumerates an iterator.
 /// @param {Iterator} iter The iterator to enumerate.
 function enumerate(_iter) {
-	return zip(iterator(method({
-		n : 0
-	}, function() {
-		var my_n = n;
-		n += 1;
-		return my_n;
-	})), _iter);
+	return zip(range(0, infinity), _iter);
 }
 
 /// @desc Flattens a single level of an iterator which returns arrays.
 /// @param {Iterator} iter The iterator to flatten.
-function flatten(_iter) {
+function concat(_iter) {
 	return new Iterator(method({
 		iter : _iter,
 		pos : 0,

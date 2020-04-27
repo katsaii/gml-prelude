@@ -39,7 +39,7 @@ assert_eq([[5, "F"], [6, "K"]], iterate(enum_iter));
 
 assert_eq(undefined, next(enum_iter));
 
-var concat_iter = flatten(enumerate(iterator(["X", "Y", "Z"])));
+var concat_iter = concat(enumerate(iterator(["X", "Y", "Z"])));
 
 assert_eq([0, "X", 1, "Y", 2, "Z"], iterate(concat_iter));
 

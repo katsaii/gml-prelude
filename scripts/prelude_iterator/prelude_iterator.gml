@@ -106,14 +106,28 @@ function mapf(_f, _iter) {
 	}));
 }
 
+/// @desc Applies a left-associative operation to all elements of the iterator.
+/// @param {script} f The function to apply.
+/// @param {script} y0 The default value.
+/// @param {script} iter The iterator to fold.
+function fold(_f, _y0, _iter) {
+	var acc = _y0;
+	for (var i = 0; peek(_iter) != undefined; i += 1) {
+		acc = _f(acc, next(_iter));
+	}
+	return acc;
+}
+
 /// @desc Converts an iterator into an array.
 /// @param {Iterator} iter The iterator to generate values from.
 function iterate(_iter) {
-	var array = [];
-	for (var i = 0; peek(_iter) != undefined; i += 1) {
-		array[@ i] = next(_iter);
-	}
-	return array;
+	return fold(method({
+		pos : 0
+	}, function(_xs, _x) {
+		_xs[@ pos] = _x;
+		pos += 1;
+		return _xs;
+	}), [], _iter);
 }
 
 /// @desc Creates an iterator from a struct, array, or function reference.

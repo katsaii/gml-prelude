@@ -106,6 +106,23 @@ function mapf(_f, _iter) {
 	}));
 }
 
+/// @desc Filters elements of this iterator which this predicate holds true for.
+/// @param {script} p The predicate to check.
+/// @param {Iterator} iter The iterator to filter.
+function filter(_p, _iter) {
+	return new Iterator(method({
+		iter : _iter,
+		p : _p
+	}, function() {
+		while (peek(iter) != undefined) {
+			var my_value = next(iter);
+			if (p(my_value))
+			then return my_value;
+		}
+		return undefined;
+	}));
+}
+
 /// @desc Applies a left-associative operation to all elements of the iterator.
 /// @param {script} f The function to apply.
 /// @param {value} y0 The default value.

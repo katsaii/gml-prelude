@@ -54,3 +54,7 @@ var my_list = fold(func_ptr(ds_list_add), ds_list_create(), list_iter);
 for (var i = 0; i < 3; i += 1) {
 	assert_eq(my_arr[i], my_list[| i]);
 }
+
+var filter_iter = filter(op_less(3), iterator([1, 2, 3, 4, 5, -1, -1, -2]));
+
+assert_eq([1, 2, -1, -1, -2], iterate(filter_iter));

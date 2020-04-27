@@ -27,3 +27,10 @@ drop(4, struct_iter); // [5, 6, 7, 8]
 assert_eq([9], take(1, struct_iter));
 
 assert_eq([], take(0, struct_iter));
+
+var enum_iter = enumerate(iterator(["A", "B", "C", "D", "D", "F", "K"]));
+
+assert_eq([0, "A"], peek(enum_iter));
+assert_eq([0, "A"], next(enum_iter));
+
+assert_eq([[1, "B"], [2, "C"], [3, "D"], [4, "D"]], take(4, enum_iter));

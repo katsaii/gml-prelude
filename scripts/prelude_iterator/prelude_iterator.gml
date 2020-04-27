@@ -31,16 +31,6 @@ function peek(_iter) {
 	return _iter.peeked;
 }
 
-/// @desc Converts an iterator into an array.
-/// @param {Iterator} iter The iterator to generate values from.
-function iterate(_iter) {
-	var array = [];
-	for (var i = 0; peek(_iter) != undefined; i += 1) {
-		array[@ i] = next(_iter);
-	}
-	return array;
-}
-
 /// @desc Takes the first `n` values from this iterator and puts them into an array.
 /// @param {int} n The number of elements to take.
 /// @param {Iterator} iter The iterator to generate values from.
@@ -59,6 +49,30 @@ function drop(_count, _iter) {
 	repeat (_count) {
 		next(_iter);
 	}
+}
+
+/// @desc Enumerates an iterator.
+/// @param {Iterator} iter The iterator to enumerate.
+function enumerate(_iter) {
+	return new Iterator(method({
+		iter : _iter,
+		pos : 0
+	}, function() {
+		var my_pos = pos;
+		var my_value = next(iter);
+		pos += 1;
+		return [my_pos, my_value];
+	}));
+}
+
+/// @desc Converts an iterator into an array.
+/// @param {Iterator} iter The iterator to generate values from.
+function iterate(_iter) {
+	var array = [];
+	for (var i = 0; peek(_iter) != undefined; i += 1) {
+		array[@ i] = next(_iter);
+	}
+	return array;
 }
 
 /// @desc Creates an iterator from a struct, array, or function reference.

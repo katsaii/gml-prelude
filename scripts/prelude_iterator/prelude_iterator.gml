@@ -108,8 +108,8 @@ function mapf(_f, _iter) {
 
 /// @desc Applies a left-associative operation to all elements of the iterator.
 /// @param {script} f The function to apply.
-/// @param {script} y0 The default value.
-/// @param {script} iter The iterator to fold.
+/// @param {value} y0 The default value.
+/// @param {Iterator} iter The iterator to fold.
 function fold(_f, _y0, _iter) {
 	var acc = _y0;
 	while (peek(_iter) != undefined) {

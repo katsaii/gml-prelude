@@ -6,7 +6,7 @@
     "path": "folders/Prelude.yy",
   },
   "resourceVersion": "1.0",
-  "name": "prelude_struct",
+  "name": "prelude_data_structure",
   "tags": [],
   "resourceType": "GMScript",
 }

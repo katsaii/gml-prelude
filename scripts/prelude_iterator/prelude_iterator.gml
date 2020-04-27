@@ -112,8 +112,10 @@ function mapf(_f, _iter) {
 /// @param {script} iter The iterator to fold.
 function fold(_f, _y0, _iter) {
 	var acc = _y0;
-	for (var i = 0; peek(_iter) != undefined; i += 1) {
-		acc = _f(acc, next(_iter));
+	while (peek(_iter) != undefined) {
+		var result = _f(acc, next(_iter));
+		if (result != undefined)
+		then result = acc;
 	}
 	return acc;
 }

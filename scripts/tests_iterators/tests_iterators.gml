@@ -46,3 +46,11 @@ assert_eq([0, "X", 1, "Y", 2, "Z"], iterate(concat_iter));
 var map_iter = mapf(function(_x) { return _x * _x; }, iterator([0, 1, 2, 3, 4]));
 
 assert_eq([0, 1, 4, 9, 16], iterate(map_iter));
+
+var my_arr = ["A", "B", "C"];
+var list_iter = iterator(my_arr);
+var my_list = fold(func_ptr(ds_list_add), ds_list_create(), list_iter);
+
+for (var i = 0; i < 3; i += 1) {
+	assert_eq(my_arr[i], my_list[| i]);
+}

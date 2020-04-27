@@ -51,22 +51,33 @@ function drop(_count, _iter) {
 	}
 }
 
+/// @desc Zips two iterators together.
+/// @param {Iterator} a The iterator first iterator.
+/// @param {Iterator} b The iterator second iterator.
+function zip(_a, _b) {
+	return new Iterator(method({
+		a : _a,
+		b : _b
+	}, function() {
+		if (peek(a) == undefined ||
+				peek(b) == undefined) {
+			return undefined;
+		} else {
+			return [next(a), next(b)];
+		}
+	}));
+}
+
 /// @desc Enumerates an iterator.
 /// @param {Iterator} iter The iterator to enumerate.
 function enumerate(_iter) {
-	return new Iterator(method({
-		iter : _iter,
-		pos : 0
+	return zip(iterator(method({
+		n : 0
 	}, function() {
-		var my_pos = pos;
-		var my_value = next(iter);
-		if (my_value == undefined) {
-			return undefined;
-		} else {
-			pos += 1;
-			return [my_pos, my_value];
-		}
-	}));
+		var my_n = n;
+		n += 1;
+		return my_n;
+	})), _iter);
 }
 
 /// @desc Flattens a single level of an iterator which returns arrays.

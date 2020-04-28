@@ -17,6 +17,37 @@ This library currently supports a range of functional programming methods, as we
 
 ## Usage examples
 
+### Getting Built-In Function Pointers
+
+Built-in functions have usually always been unable to be assigned to variables and called remotely. To get around this, a neat hack can be used: binding a built-in function to an empty struct allows you to use it as a method.
+
+```js
+var my_show_message = method({}, show_message);
+
+my_show_message("it's alive!");
+```
+
+This behaviour has been wrapped up and offered with this library under the function `func_ptr`. This lets you do some very powerful things, such as folding iterators into built-in data structures.
+
+```js
+var arr = ["A", "B", "C"];
+var iter = flatten(enumerate(iterator(arr)));
+var list = fold(func_ptr(ds_list_add),    ds_list_create(), iter);
+                   // or ds_stack_push    ds_stack_create
+                   //    ds_queue_enqueue ds_queue_create
+                   //    etc.
+
+/* list[| 0] == 0
+ * list[| 1] == "A"
+ * list[| 2] == 1
+ * list[| 3] == "B"
+ * list[| 4] == 2
+ * list[| 5] == "C"
+ */
+```
+
+A more detailed explaination of this code can be found in the iterator examples.
+
 ### Iterators
 
 Iterators are extremely useful for having a common interface which can be expanded to any data structure.
@@ -106,8 +137,6 @@ var arr = take(3, iter);
 ```
 
 `arr` now holds an array of 3 values `[2, 3, 4]`, since the first generated value was dropped and the final element of the range was never used.
-
-### Using Built-In Functions
 
 ### Currying
 

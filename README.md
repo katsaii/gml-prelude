@@ -121,7 +121,7 @@ show_message(double(4)) // prints "8", since 4 * 2 = 8
 
 ### Iterators
 
-Iterators are extremely useful for having a common interface which can be expanded to any data structure.
+Iterators are extremely useful for having a general interface for generating values from arbitrary data structures.
 
 There is currently built-in support for creating iterators from arrays, structs, and generator functions. Alternative data structures, such as ds_list/map/stack/queue and buffers are not natively supported, but are able to be written simply.
 
@@ -212,3 +212,35 @@ var array = take(3, iter); // take [2, 3, 4]
 ```
 
 `array` now holds an array of 3 values `[2, 3, 4]`, since the first generated value was dropped and the final element of the range is never used.
+
+#### Advanced Iterator Use
+
+This is where we pick up the pace.
+
+Iterators can be stacked with multiple operations with barely any overhead and complexity from using raw arrays. Below I briefly showcase some examples.
+
+*Interlacing two arrays, `a` and `b`:*
+
+```js
+var a = [ 1 ,  2 ,  3 ,  4 ,  5 ];
+var b = ["A", "B", "C", "D", "E"];
+
+var iter = zip(iterator(a), iterator(b));
+var interlaced = iterate(iter);
+
+// interlaced == [1, "A", 2, "B", 3, "C", 4, "D", 5, "E"]
+```
+
+*Filtering numbers inside a specific range:*
+
+```js
+var a = [-1, -1, 0, 1, 2, 2, 3, 4, 5, 6, 7, 9, 10, 10, 11];
+var range_min = 3;
+var range_max = 10;
+
+var iter = filter(op_less(range_max),
+		filter(op_greater(range_min), iterator(a)));
+var ranged = iterate(iter);
+
+// ranged == [3, 4, 5, 6, 7, 9, 10, 10]
+```

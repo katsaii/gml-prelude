@@ -14,6 +14,18 @@ function identity(_x) {
 	return _x;
 }
 
+/// @desc Composes two functions together.
+/// @param {script} f The function to feed the result of `g(x)`.
+/// @param {script} g The function to feed `x`.
+function compose(_f, _g) {
+	return method({
+		f : _f,
+		g : _g
+	}, function(_x) {
+		return f(g(_x));
+	});
+}
+
 /// @desc Calls a function using an array as the parameter array.
 /// @param {script} ind The id of the script to call.
 /// @param {array} variable The id of the array to pass as a parameter array to this script.

@@ -56,6 +56,23 @@ Here I assign the function `show_message` to a method, and then call it later.
 
 This functionality has been bundled with this library under the name `func_ptr`.
 
+### Function Composition
+
+Function composition is the process of passing the output of one function as the input to another; that is, let `f(x) = y` and `g(y) = z` be functions, and their composition `gf` would be given by `g(f(x))`.
+
+This library contains a simple function called `compose` to achieve this.
+
+```js
+var remote_string_upper = func_ptr(string_upper);
+var remote_show_message = func_ptr(show_message);
+
+var scream_message = compose(remote_show_message, remote_string_upper);
+
+scream_message("hello world"); // prints "HELLO WORLD"
+```
+
+This code will compose the two functions `string_upper` and `show_message` into a new method which prints a message in ALL CAPS!!
+
 ### Currying
 
 Currying is the process of passing arguments individually to a function. This allows you to create domain specific variants of a function by only passing the first couple of arguments before-hand. For example, let's say you have a script which draws your player sprite:

@@ -107,9 +107,31 @@ var arr = take(3, iter);
 
 `arr` now holds an array of 3 values `[2, 3, 4]`, since the first generated value was dropped and the final element of the range was never used.
 
+### Using Built-In Functions
+
 ### Currying
 
-### Using Built-In Functions
+Currying is the process of passing arguments individually to a function. This allows you to create domain specific variants of a function by only passing the first couple of arguments before-hand. For example, let's say you have a script which draws your player sprite:
+
+```js
+function draw_player(_x, _y, _xscale, _yscale, _rot, _colour, _alpha) {
+	draw_sprite_ext(spr_player, 0, _x, _y, _xscale, _yscale, _rot, _colour, _alpha);
+}
+```
+
+Doesn't it look like a pain having to type out all those additional arguments when you only care about the first two? Wouldn't it be nice if you could just pass the first two arguments without caring about what the remaining arguments are? Well, with currying this is possible!
+
+To create the new `draw_player` script, the `curry` function can be used:
+
+```js
+draw_player = curry(2, func_ptr(draw_sprite_ext))(spr_player)(0);
+```
+
+The first argument of `curry` is the number of arguments you want to "curry"; in this case, two (the first two). The second argument is the function you actually want to curry; in this case it is a pointer to a built-in function. The `curry` function then returns a new function with the number of arguments you supplied curried, and this is where the sprite (`spr_player`) and the image index (`0`) are passed *individually*. The resulting function is now assigned to the instance variable `draw_player`, and can be used like any typical function would be, except the first two arguments are automatically subsituted.
+
+```js
+draw_player(x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+```
 
 ### Array and Struct Extensions
 

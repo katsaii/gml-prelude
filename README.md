@@ -15,6 +15,14 @@ This library currently supports a range of functional programming methods, as we
 
 *Though, not exactly. Curried functions exist as wrappers for operators. "Real" operator sections cannot exist.
 
+## Getting Started
+
+### Downloads
+
+There will eventually be pre-compiled scripts available under the [releases](https://github.com/NuxiiGit/gml-prelude/releases) page.
+
+Alternatively, the script files relating to the project can be found in the `scripts` directory; any `.gml` file prefixed with `prelude_` are the files you want to use.
+
 ## Usage examples
 
 ### Array and Struct Extensions
@@ -83,7 +91,7 @@ show_message(double(4)) // prints "8", since 4 * 2 = 8
 
 Iterators are extremely useful for having a common interface which can be expanded to any data structure.
 
-There is current built-in support for creating iterators from arrays, structs, and generator functions. Alternative data structures, such as ds_list/map/stack/queue and buffers are not natively supported, but are able to be written simply.
+There is currently built-in support for creating iterators from arrays, structs, and generator functions. Alternative data structures, such as ds_list/map/stack/queue and buffers are not natively supported, but are able to be written simply.
 
 #### Creating an Array Iterator
 
@@ -157,28 +165,18 @@ Once you have an iterator, you can start generating values using `peek` and `nex
 ```js
 var iter = iterator(["A", "B", "C", "D"]);
 
-var a_peeked = peek(iter);
-var a = next(iter);
-var b = next(iter);
+var a_peeked = peek(iter); // holds "A"
+var a = next(iter);        // holds "A"
+var b = next(iter);        // holds "B"
 ```
-
-`a_peeked` and `a` will both hold the same generated value, `"A"`, whereas `b` will hold the next generated value, `"B"`.
 
 Other important operations include `drop` and `take`. The `drop` function takes a number as an argument, and will skip that number of generated values. The `take` function takes a number as an argument, and will generate that number of values and insert them into an array.
 
 ```js
 var iter = range(1, 5);
 
-drop(1, iter);
-var arr = take(3, iter);
+drop(1, iter);             // drop 1
+var array = take(3, iter); // take [2, 3, 4]
 ```
 
-`arr` now holds an array of 3 values `[2, 3, 4]`, since the first generated value was dropped and the final element of the range was never used.
-
-## Getting Started
-
-### Downloads
-
-There will eventually be pre-compiled scripts available under the [releases](https://github.com/NuxiiGit/gml-prelude/releases) page.
-
-Alternatively, the script files relating to the project can be found in the `scripts` directory; any `.gml` file prefixed with `prelude_` are the files you want to use.
+`array` now holds an array of 3 values `[2, 3, 4]`, since the first generated value was dropped and the final element of the range is never used.

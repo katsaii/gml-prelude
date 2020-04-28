@@ -6,49 +6,78 @@ This repository contains the sorce code for `gml-prelude`, a collection of funct
 
 This library currently supports a range of functional programming methods, as well as some simple usability scripts. The full list of features is as follows:
 
- - Iterators
+ - Array and struct usability operations, such as `foreach` and `mapf`
+ - Passing around and calling built-in function pointers
+ - Function composition
  - Curried functions
  - Operator sections*
- - Passing around and calling built-in function pointers
- - Identity function
- - Array and struct usability operations, such as `foreach` and `mapf`
+ - Iterators
 
 *Though, not exactly. Curried functions exist as wrappers for operators. "Real" operator sections cannot exist.
 
 ## Usage examples
 
+### Array and Struct Extensions
+
 ### Getting Built-In Function Pointers
 
-Built-in functions have usually always been unable to be assigned to variables and called remotely. To get around this, a neat hack can be used: binding a built-in function to an empty struct allows you to use it as a method.
+GameMaker has two kinds of callable objects: functions and methods. Usually, functions cannot be assigned to variables and called remotely without a lot of work. To get around this problem, and to treat functions as though they are methods, we can bind it to the calling object using `method(undefined, function_name)`, like so:
 
 ```js
-var my_show_message = method({}, show_message);
+var remote_show_message = method(undefined, show_message);
 
-my_show_message("it's alive!");
+remote_show_message("It's alive!"); // called remotely
 ```
 
-This behaviour has been wrapped up and offered with this library under the function `func_ptr`. This lets you do some very powerful things, such as folding iterators into built-in data structures.
+Here I assign the function `show_message` to a method, and then call it later.
+
+This functionality has been bundled with this library under the name `func_ptr`.
+
+### Currying
+
+Currying is the process of passing arguments individually to a function. This allows you to create domain specific variants of a function by only passing the first couple of arguments before-hand. For example, let's say you have a script which draws your player sprite:
 
 ```js
-var arr = ["A", "B", "C"];
-var iter = flatten(enumerate(iterator(arr)));
-var list = fold(func_ptr(ds_list_add),    ds_list_create(), iter);
-                   // or ds_stack_push    ds_stack_create
-                   //    ds_queue_enqueue ds_queue_create
-                   //    etc.
-
-/* list[| 0] == 0
- * list[| 1] == "A"
- * list[| 2] == 1
- * list[| 3] == "B"
- * list[| 4] == 2
- * list[| 5] == "C"
- */
+function draw_player(_x, _y, _xscale, _yscale, _rot, _colour, _alpha) {
+	draw_sprite_ext(spr_player, 0, _x, _y, _xscale, _yscale, _rot, _colour, _alpha);
+}
 ```
 
-A more detailed explaination of this code can be found in the iterator examples.
+Doesn't it look like a pain having to type out all those additional arguments when you only really care about the first two? Wouldn't it be nice if you could just pass the first two arguments without caring about what the remaining arguments are? Well, with currying this is possible!
+
+To create the new `draw_player` script, the `curry` function can be used:
+
+```js
+draw_player = curry(2, func_ptr(draw_sprite_ext))(spr_player)(0);
+```
+
+The first argument of `curry` is the number of arguments you want to "curry"; in this case, two (the first two). The second argument is the function you actually want to curry; in this case it is the function `draw_sprite_ext`. Then, the `curry` function returns a method with the number of arguments you supplied curried. The resulting method is assigned to the instance variable `draw_player`, and can be used like any typical function would be, except the first two arguments have been partially applied.
+
+```js
+draw_player(x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+```
 
 #### Operator Sections
+
+Operator sections allow for operators to be used as predicates in higher order functions without the hassle of writing a new function manually. For example, the following expression:
+
+```js
+array_mapf(function(_x) { return _x * 2; }, [1, 2, 3]);
+```
+
+Can be replaced with:
+
+```js
+array_mapf(op_product(2), [1, 2, 3]);
+```
+
+This is because `op_product` returns a method which multiplies any argument it is given by `2`:
+
+```js
+var double = op_product(2);
+
+show_message(double(4)) // prints "8", since 4 * 2 = 8
+```
 
 ### Iterators
 
@@ -145,32 +174,6 @@ var arr = take(3, iter);
 ```
 
 `arr` now holds an array of 3 values `[2, 3, 4]`, since the first generated value was dropped and the final element of the range was never used.
-
-### Currying
-
-Currying is the process of passing arguments individually to a function. This allows you to create domain specific variants of a function by only passing the first couple of arguments before-hand. For example, let's say you have a script which draws your player sprite:
-
-```js
-function draw_player(_x, _y, _xscale, _yscale, _rot, _colour, _alpha) {
-	draw_sprite_ext(spr_player, 0, _x, _y, _xscale, _yscale, _rot, _colour, _alpha);
-}
-```
-
-Doesn't it look like a pain having to type out all those additional arguments when you only care about the first two? Wouldn't it be nice if you could just pass the first two arguments without caring about what the remaining arguments are? Well, with currying this is possible!
-
-To create the new `draw_player` script, the `curry` function can be used:
-
-```js
-draw_player = curry(2, func_ptr(draw_sprite_ext))(spr_player)(0);
-```
-
-The first argument of `curry` is the number of arguments you want to "curry"; in this case, two (the first two). The second argument is the function you actually want to curry; in this case it is a pointer to a built-in function. The `curry` function then returns a new function with the number of arguments you supplied curried, and this is where the sprite (`spr_player`) and the image index (`0`) are passed *individually*. The resulting function is now assigned to the instance variable `draw_player`, and can be used like any typical function would be, except the first two arguments are automatically subsituted.
-
-```js
-draw_player(x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
-```
-
-### Array and Struct Extensions
 
 ## Getting Started
 

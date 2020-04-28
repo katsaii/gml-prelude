@@ -117,11 +117,11 @@ var struct = {
 var iter = iterator(struct);
 ```
 
-### Ranges
+#### Ranges
 
 A useful built-in iterator constructor is `range`. `range` will create a new (potentially infinite) iterator over the supplied range. For example, `range(1, 10)` will return a new iterator which generates values `1` to `10` *inclusive*.
 
-### Basic Iterator Use
+#### Basic Iterator Use
 
 Once you have an iterator, you can start generating values using `peek` and `next`. The `peek` function will return the next generated value, but will not advance the iterator; the `next` function will return the next generated value and will advance the iterator.
 

@@ -244,3 +244,22 @@ var ranged = iterate(iter);
 
 // ranged == [3, 4, 5, 6, 7, 9, 10, 10]
 ```
+
+*Interlacing an array of characters with their character codes, and then folding the iterator into a ds_list:*
+
+```js
+var arr = ["A", "B", "C"];
+
+var iter = concat(mapf(function(_x) { return [ord(_x), _x]; }, iterator(arr)));
+var list = fold(func_ptr(ds_list_add), ds_list_create(), iter);
+
+/* list[| 0] == 65
+ * list[| 1] == "A"
+ * list[| 2] == 66
+ * list[| 3] == "B"
+ * list[| 4] == 67
+ * list[| 5] == "C"
+ */
+```
+
+Detailed information on these operations can be found in the source files of the library.

@@ -58,3 +58,13 @@ for (var i = 0; i < 3; i += 1) {
 var filter_iter = filter(op_less(3), iterator([1, 2, 3, 4, 5, -1, -1, -2]));
 
 assert_eq([1, 2, -1, -1, -2], iterate(filter_iter));
+
+var iter = concat(mapf(function(_x) { return [ord(_x), _x]; }, iterator(["A", "B", "C"])));
+var list = fold(func_ptr(ds_list_add), ds_list_create(), iter);
+
+assert_eq(65, list[| 0]);
+assert_eq("A", list[| 1]);
+assert_eq(66, list[| 2]);
+assert_eq("B", list[| 3]);
+assert_eq(67, list[| 4]);
+assert_eq("C", list[| 5]);

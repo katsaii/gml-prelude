@@ -48,6 +48,8 @@ var list = fold(func_ptr(ds_list_add),    ds_list_create(), iter);
 
 A more detailed explaination of this code can be found in the iterator examples.
 
+#### Operator Sections
+
 ### Iterators
 
 Iterators are extremely useful for having a common interface which can be expanded to any data structure.
@@ -64,6 +66,8 @@ var iter = iterator(["A", "B", "C", "D"]);
 
 In this case the data structure is an array, but it can also be used with functions and structs.
 
+#### Creating a Generator Function Iterator
+
 To create an iterator from a function, you would do:
 
 ```js
@@ -73,6 +77,8 @@ var iter = iterator(function() {
 ```
 
 This iterator isn't particularlly impressive, and will constantly return new random numbers. However, if you have an existing function which is bound to a struct or object, this kind of approach can be useful.
+
+#### Creating a Struct Iterator
 
 Creating an iterator from a struct is a little more effort. Your struct must contain a `__next__` member which tells you the next item to return.
 
@@ -89,6 +95,8 @@ var iter = iterator(struct);
 ```
 
 This iterator is a little more impressive, because it will count up from 1.
+
+#### Creating Finite Iterators
 
 Unfortunately, both of the previous iterators are infinite because they have no well-defined end. To create an iterator which ends, you must return `undefined` in that case. For example, an iterator which only counts up to ten would look like this:
 

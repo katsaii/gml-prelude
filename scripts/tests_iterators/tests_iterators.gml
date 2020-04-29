@@ -2,14 +2,8 @@
  * Kat @Katsaii
  */
 
-var array_iter = new Iterator(function() {
-	static i = 0;
-	i += 1;
-	show_debug_message("GENERATED");
-	return i > 5 ? undefined : i;
-});
-
-assert_eq([1, 2, 3, 4, 5, undefined], array_iter.Take(6));
+var iter = new Iterator(["A", "B", "C"]);
+assert_eq(["A", "B"], iter.Take(2));
 
 /*
 var array_iter = iterator([1, 2, 3]);

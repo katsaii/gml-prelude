@@ -3,10 +3,48 @@
  */
 
 /// @desc Creates an iterator instance with this function.
-/// @param {script} generator The function which will generate values for the iterator.
-function Iterator(_f) constructor {
+/// @param {value} generator The data structure or value to generate values from.
+function Iterator(_generator) constructor {
 	/// @desc The function which generates values for the iterator.
-	generator = _f;
+	generator = _generator;
+	if (is_struct(generator)) {
+		#region from struct
+		if (variable_struct_exists(_struct, "__iter__")) {
+			generator = generator.__iter__();
+		}
+		generator = generator.__next__;
+		#endregion
+	} else if (is_array(generator)) {
+		#region from array
+		generator = method({
+			array : generator,
+			count : array_length(generator) - 1,
+			pos : -1
+		}, function() {
+			if (pos < count) {
+				pos += 1;
+				return array[pos];
+			} else {
+				return undefined;
+			}
+		});
+		#endregion
+	} else if (is_string(_ref)) {
+		#region from string
+		generator = method({
+			str : generator,
+			count : string_length(generator),
+			pos : 0
+		}, function() {
+			if (pos < count) {
+				pos += 1;
+				return string_char_at(str, pos);
+			} else {
+				return undefined;
+			}
+		});
+		#endregion
+	}
 	/// @desc The peeked iterator value.
 	peeked = undefined;
 	/// @desc Advance the iterator and return its next value.
@@ -42,6 +80,26 @@ function Iterator(_f) constructor {
 			Next();
 		}
 	}
+}
+
+/// @desc Produces an iterator which spans over a range.
+/// @param {real} first The first element of the range.
+/// @param {real} last The last element of the range.
+/// @param {real} [step=1] The step of the range.
+function range(_first, _last) {
+	return new Iterator(method({
+		pos : _first,
+		len : _last,
+		step : argument_count > 2 ? argument[2] : 1
+	}, function() {
+		if (pos < len) {
+			var n = pos;
+			pos += step;
+			return n;
+		} else {
+			return undefined;
+		}
+	}));
 }
 
 /*

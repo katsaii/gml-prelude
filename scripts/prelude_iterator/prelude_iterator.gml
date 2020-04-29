@@ -5,6 +5,33 @@
 /// @desc Creates an iterator instance with this function.
 /// @param {script} generator The function which will generate values for the iterator.
 function Iterator(_f) constructor {
+	/// @desc The function which generates values for the iterator.
+	generator = _f;
+	/// @desc The peeked iterator value.
+	peeked = undefined;
+	/// @desc Advance the iterator and return its next value.
+	static Next = function() {
+		if (peeked == undefined) {
+			return generator();
+		} else {
+			var next = peeked;
+			peeked = undefined;
+			return next;
+		}
+	}
+	/// @desc Peek at the next value in the iterator.
+	static Peek = function() {
+		if (peeked == undefined) {
+			peeked = generator();
+		}
+		return peeked;
+	}
+}
+
+/*
+/// @desc Creates an iterator instance with this function.
+/// @param {script} generator The function which will generate values for the iterator.
+function Iterator(_f) constructor {
 	generator = _f;
 	has_peeked = false;
 	peeked = undefined;
@@ -237,3 +264,4 @@ function iterator_from_string(_str) {
 		}
 	}));
 }
+*/

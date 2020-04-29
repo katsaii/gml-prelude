@@ -2,6 +2,25 @@
  * Kat @Katsaii
  */
 
+var array_iter = new Iterator(function() {
+	static i = 0;
+	i += 1;
+	show_debug_message("GENERATED");
+	return i > 5 ? undefined : i;
+});
+
+assert_eq(1, array_iter.Peek());
+assert_eq(1, array_iter.Next());
+assert_eq(2, array_iter.Next());
+assert_eq(3, array_iter.Next());
+assert_eq(4, array_iter.Peek());
+assert_eq(4, array_iter.Peek());
+assert_eq(4, array_iter.Next());
+assert_eq(5, array_iter.Next());
+assert_eq(undefined, array_iter.Peek());
+assert_eq(undefined, array_iter.Next());
+assert_eq(undefined, array_iter.Next());
+/*
 var array_iter = iterator([1, 2, 3]);
 
 assert_eq(1, next(array_iter));
@@ -68,3 +87,4 @@ assert_eq(66, list[| 2]);
 assert_eq("B", list[| 3]);
 assert_eq(67, list[| 4]);
 assert_eq("C", list[| 5]);
+*/

@@ -26,6 +26,22 @@ function Iterator(_f) constructor {
 		}
 		return peeked;
 	}
+	/// @desc Takes the first `n` values from this iterator and puts them into an array.
+	/// @param {int} n The number of elements to take.
+	static Take = function(_count) {
+		var array = array_create(_count);
+		for (var i = 0; i < _count; i += 1) {
+			array[@ i] = Next();
+		}
+		return array;
+	}
+	/// @desc Drops the first `n` values from this iterator.
+	/// @param {int} n The number of elements to drop.
+	static Drop = function(_count) {
+		repeat (_count) {
+			Next();
+		}
+	}
 }
 
 /*

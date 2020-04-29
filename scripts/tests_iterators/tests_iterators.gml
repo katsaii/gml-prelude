@@ -9,17 +9,8 @@ var array_iter = new Iterator(function() {
 	return i > 5 ? undefined : i;
 });
 
-assert_eq(1, array_iter.Peek());
-assert_eq(1, array_iter.Next());
-assert_eq(2, array_iter.Next());
-assert_eq(3, array_iter.Next());
-assert_eq(4, array_iter.Peek());
-assert_eq(4, array_iter.Peek());
-assert_eq(4, array_iter.Next());
-assert_eq(5, array_iter.Next());
-assert_eq(undefined, array_iter.Peek());
-assert_eq(undefined, array_iter.Next());
-assert_eq(undefined, array_iter.Next());
+assert_eq([1, 2, 3, 4, 5, undefined], array_iter.Take(6));
+
 /*
 var array_iter = iterator([1, 2, 3]);
 

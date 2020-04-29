@@ -196,8 +196,7 @@ function iterator(_ref) {
 function iterator_from_struct(_struct) {
 	var target = variable_struct_exists(_struct, "__iter__") ?
 			_struct.__iter__() : _struct;
-	var generator = target.__next__;
-	return new Iterator(generator);
+	return new Iterator(target.__next__);
 }
 
 /// @desc Creates an iterator from an array.
@@ -206,7 +205,7 @@ function iterator_from_array(_array) {
 	var count = array_length(_array);
 	var array = array_create(count);
 	array_copy(array, 0, _array, 0, count);
-	var generator = method({
+	return new Iterator(method({
 		array : array,
 		count : count,
 		pos : 0
@@ -218,14 +217,13 @@ function iterator_from_array(_array) {
 		} else {
 			return undefined;
 		}
-	});
-	return new Iterator(generator);
+	}));
 }
 
 /// @desc Creates an iterator from a string.
 /// @param {string} str The string to convert into an iterator.
 function iterator_from_string(_str) {
-	var generator = method({
+	return new Iterator(method({
 		str : _str,
 		count : string_length(_str),
 		pos : 1
@@ -237,6 +235,5 @@ function iterator_from_string(_str) {
 		} else {
 			return undefined;
 		}
-	});
-	return new Iterator(generator);
+	}));
 }

@@ -181,6 +181,8 @@ function iterator(_ref) {
 		return iterator_from_struct(_ref);
 	} else if (is_array(_ref)) {
 		return iterator_from_array(_ref);
+	} else if (is_string(_ref)) {
+		return iterator_from_string(_ref);
 	} else {
 		return new Iterator(_ref);
 	}
@@ -201,7 +203,7 @@ function iterator_from_struct(_struct) {
 /// @desc Creates an iterator from an array.
 /// @param {array} variable The array to convert into an iterator.
 function iterator_from_array(_array) {
-	var count = array_length(_array)
+	var count = array_length(_array);
 	var array = array_create(count);
 	array_copy(array, 0, _array, 0, count);
 	var generator = method({
@@ -213,6 +215,25 @@ function iterator_from_array(_array) {
 			var item = array[pos];
 			pos += 1;
 			return item;
+		} else {
+			return undefined;
+		}
+	});
+	return new Iterator(generator);
+}
+
+/// @desc Creates an iterator from a string.
+/// @param {string} str The string to convert into an iterator.
+function iterator_from_string(_str) {
+	var generator = method({
+		str : _str,
+		count : string_length(_str),
+		pos : 1
+	}, function() {
+		if (pos <= count) {
+			var char = string_char_at(str, pos);
+			pos += 1;
+			return char;
 		} else {
 			return undefined;
 		}

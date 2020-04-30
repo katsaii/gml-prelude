@@ -97,8 +97,32 @@ function Iterator(_generator) constructor {
 		}));
 	}
 	/// @desc Enumerates this iterator.
-	enumerate = function(_iter) {
+	enumerate = function() {
 		return zip(iterator_range(0, infinity));
+	}
+	/// @desc Flattens a single level of an iterator which returns arrays.
+	concat = function() {
+		var me = self;
+		return new Iterator(method({
+			iter : me,
+			pos : 0,
+			len : 0,
+			val : []
+		}, function() {
+			if (pos >= len) {
+				do {
+					val = iter.next();
+					if not (is_array(val)) {
+						val = [val];
+					}
+					len = array_length(val);
+				} until (len > 0);
+				pos = 0;
+			}
+			var i = pos;
+			pos += 1;
+			return val[i];
+		}));
 	}
 	/// @desc Applies a left-associative operation to all elements of the iterator.
 	/// @param {value} y0 The default value.

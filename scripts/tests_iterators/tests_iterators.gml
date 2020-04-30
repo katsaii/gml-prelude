@@ -3,8 +3,9 @@
  */
 
 var iter = new Iterator([1, 3, "K", 4, 2]);
-var iter2 = iter.enumerate();
-show_message(iter2);
+iter = iter.enumerate();
+iter = iter.concat();
+show_message(iter);
 
 /*
 var array_iter = iterator([1, 2, 3]);

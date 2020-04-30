@@ -71,3 +71,21 @@ assert_eq(66, ds_stack_pop(ds));
 assert_eq("A", ds_stack_pop(ds));
 assert_eq(65, ds_stack_pop(ds));
 ds_stack_destroy(ds);
+
+// tests foreach
+iter = new Iterator(["A", "B", "C"]);
+iter.foreach(function(_x) {
+	static i = 0;
+	switch (i) {
+	case 0:
+		assert_eq("A", _x);
+		break;
+	case 1:
+		assert_eq("B", _x);
+		break;
+	case 2:
+		assert_eq("C", _x);
+		break;
+	}
+	i += 1;
+});

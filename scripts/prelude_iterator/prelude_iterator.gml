@@ -199,6 +199,13 @@ function Iterator(_generator) constructor {
 		}
 		return fold(y0, f);
 	}
+	/// @desc Calls a procedure for all elements of the iterator.
+	/// @param {script} f The procedure to call.
+	foreach = function(_f) {
+		while (peek() != undefined) {
+			_f(next());
+		}
+	}
 	/// @desc Converts an iterator into a string.
 	toString = function() {
 		var str = fold("", function(_xs, _x) {

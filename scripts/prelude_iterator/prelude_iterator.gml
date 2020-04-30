@@ -194,6 +194,7 @@ function Iterator(_generator) constructor {
 			}, function(_xs, _x) {
 				_xs[@ pos] = _x;
 				pos += 1;
+				return _xs;
 			});
 		}
 		return fold(y0, f);

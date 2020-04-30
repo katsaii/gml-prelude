@@ -5,6 +5,7 @@
 var iter = new Iterator([1, 3, "K", 4, 2]);
 iter = iter.enumerate();
 iter = iter.concat();
+iter = iter.map(function(_x) { return string(_x); });
 show_message(iter);
 
 /*

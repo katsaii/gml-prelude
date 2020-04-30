@@ -124,6 +124,34 @@ function Iterator(_generator) constructor {
 			return val[i];
 		}));
 	}
+	/// @desc Applies a function to the generator of this iterator.
+	/// @param {script} f The function to apply.
+	map = function(_f) {
+		var me = self;
+		return new Iterator(method({
+			iter : me,
+			f : _f
+		}, function() {
+			var val = iter.next();
+			return val == undefined ? undefined : f(val);
+		}));
+	}
+	/// @desc Filters out elements of this iterator for which this predicate holds true.
+	/// @param {script} p The predicate to check.
+	filter = function(_p) {
+		return new Iterator(method({
+			iter : _iter,
+			p : _p
+		}, function() {
+			while (iter.peek() != undefined) {
+				var my_value = iter.next();
+				if (p(my_value)) {
+					return my_value;
+				}
+			}
+			return undefined;
+		}));
+	}
 	/// @desc Applies a left-associative operation to all elements of the iterator.
 	/// @param {value} y0 The default value.
 	/// @param {script} f The function to apply.

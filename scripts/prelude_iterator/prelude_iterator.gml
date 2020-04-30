@@ -48,7 +48,7 @@ function Iterator(_generator) constructor {
 	/// @desc The peeked iterator value.
 	peeked = undefined;
 	/// @desc Advance the iterator and return its next value.
-	static Next = function() {
+	next = function() {
 		if (peeked == undefined) {
 			return generator();
 		} else {
@@ -58,7 +58,7 @@ function Iterator(_generator) constructor {
 		}
 	}
 	/// @desc Peek at the next value in the iterator.
-	static Peek = function() {
+	peek = function() {
 		if (peeked == undefined) {
 			peeked = generator();
 		}
@@ -66,7 +66,7 @@ function Iterator(_generator) constructor {
 	}
 	/// @desc Takes the first `n` values from this iterator and puts them into an array.
 	/// @param {int} n The number of elements to take.
-	static Take = function(_count) {
+	take = function(_count) {
 		var array = array_create(_count);
 		for (var i = 0; i < _count; i += 1) {
 			array[@ i] = Next();
@@ -75,7 +75,7 @@ function Iterator(_generator) constructor {
 	}
 	/// @desc Drops the first `n` values from this iterator.
 	/// @param {int} n The number of elements to drop.
-	static Drop = function(_count) {
+	drop = function(_count) {
 		repeat (_count) {
 			Next();
 		}

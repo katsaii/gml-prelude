@@ -95,16 +95,22 @@ function Iterator(_generator) constructor {
 		return acc;
 	}
 	/// @desc Converts an iterator into an array.
-	/// @param {value} [ds_type] The ds_type to fold into. Can be one of: `ds_type_list`, `ds_type_priority`, `ds_type_queue`, or `ds_type_stack`.
+	/// @param {value} [ds_type] The ds_type to fold into. Can be one of: `ds_type_list`, `ds_type_queue`, or `ds_type_stack`.
 	Collect = function() {
 		var y0, f;
 		if (argument_count > 0) {
 			switch (argument[0]) {
 			case ds_type_list:
-			case ds_type_priority:
+				y0 = ds_list_create();
+				f = method(undefined, ds_list_add);
+				break;
 			case ds_type_queue:
+				y0 = ds_queue_create();
+				f = method(undefined, ds_queue_enqueue);
+				break;
 			case ds_type_stack:
-				show_error("not implemented", false);
+				y0 = ds_stack_create();
+				f = method(undefined, ds_stack_push);
 				break;
 			default:
 				show_error("unsupported ds type", false);

@@ -48,17 +48,17 @@ function Iterator(_generator) constructor {
 	/// @desc The peeked iterator value.
 	peeked = undefined;
 	/// @desc Advance the iterator and return its next value.
-	Next = function() {
+	next = function() {
 		if (peeked == undefined) {
 			return generator();
 		} else {
-			var next = peeked;
+			var item = peeked;
 			peeked = undefined;
-			return next;
+			return item;
 		}
 	}
 	/// @desc Peek at the next value in the iterator.
-	Peek = function() {
+	peek = function() {
 		if (peeked == undefined) {
 			peeked = generator();
 		}
@@ -66,27 +66,27 @@ function Iterator(_generator) constructor {
 	}
 	/// @desc Takes the first `n` values from this iterator and puts them into an array.
 	/// @param {int} n The number of elements to take.
-	Take = function(_count) {
+	take = function(_count) {
 		var array = array_create(_count);
 		for (var i = 0; i < _count; i += 1) {
-			array[@ i] = Next();
+			array[@ i] = next();
 		}
 		return array;
 	}
 	/// @desc Drops the first `n` values from this iterator.
 	/// @param {int} n The number of elements to drop.
-	Drop = function(_count) {
+	drop = function(_count) {
 		repeat (_count) {
-			Next();
+			next();
 		}
 	}
 	/// @desc Applies a left-associative operation to all elements of the iterator.
 	/// @param {value} y0 The default value.
 	/// @param {script} f The function to apply.
-	Fold = function(_y0, _f) {
+	fold = function(_y0, _f) {
 		var acc = _y0;
-		while (Peek() != undefined) {
-			var result = _f(acc, Next());
+		while (peek() != undefined) {
+			var result = _f(acc, next());
 			if (result != undefined) {
 				// support for built-in functions, such as `ds_list_add`, which return `undefined`
 				acc = result;
@@ -96,7 +96,7 @@ function Iterator(_generator) constructor {
 	}
 	/// @desc Converts an iterator into an array.
 	/// @param {value} [ds_type] The ds_type to fold into. Can be one of: `ds_type_list`, `ds_type_queue`, or `ds_type_stack`.
-	Collect = function() {
+	collect = function() {
 		var y0, f;
 		if (argument_count > 0) {
 			switch (argument[0]) {
@@ -125,11 +125,11 @@ function Iterator(_generator) constructor {
 				pos += 1;
 			});
 		}
-		return Fold(y0, f);
+		return fold(y0, f);
 	}
 	/// @desc Converts an iterator into a string.
 	toString = function() {
-		var str = Fold("", function(_xs, _x) {
+		var str = fold("", function(_xs, _x) {
 			var msg = _xs;
 			if (msg != "") {
 				msg += ", ";

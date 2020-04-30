@@ -3,7 +3,7 @@
  */
 
 var iter = iterator_range(1, 3);
-assert_eq([1, 3, undefined], iter.Take(3));
+assert_eq([1, 2, 3], iter.Collect());
 
 /*
 var array_iter = iterator([1, 2, 3]);

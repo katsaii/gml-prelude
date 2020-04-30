@@ -29,7 +29,7 @@ function Iterator(_generator) constructor {
 			}
 		});
 		#endregion
-	} else if (is_string(_ref)) {
+	} else if (is_string(generator)) {
 		#region from string
 		generator = method({
 			str : generator,
@@ -48,7 +48,7 @@ function Iterator(_generator) constructor {
 	/// @desc The peeked iterator value.
 	peeked = undefined;
 	/// @desc Advance the iterator and return its next value.
-	next = function() {
+	Next = function() {
 		if (peeked == undefined) {
 			return generator();
 		} else {
@@ -58,7 +58,7 @@ function Iterator(_generator) constructor {
 		}
 	}
 	/// @desc Peek at the next value in the iterator.
-	peek = function() {
+	Peek = function() {
 		if (peeked == undefined) {
 			peeked = generator();
 		}
@@ -66,7 +66,7 @@ function Iterator(_generator) constructor {
 	}
 	/// @desc Takes the first `n` values from this iterator and puts them into an array.
 	/// @param {int} n The number of elements to take.
-	take = function(_count) {
+	Take = function(_count) {
 		var array = array_create(_count);
 		for (var i = 0; i < _count; i += 1) {
 			array[@ i] = Next();
@@ -75,10 +75,33 @@ function Iterator(_generator) constructor {
 	}
 	/// @desc Drops the first `n` values from this iterator.
 	/// @param {int} n The number of elements to drop.
-	drop = function(_count) {
+	Drop = function(_count) {
 		repeat (_count) {
 			Next();
 		}
+	}
+	/// @desc Applies a left-associative operation to all elements of the iterator.
+	/// @param {value} y0 The default value.
+	/// @param {script} f The function to apply.
+	Fold = function(_y0, _f) {
+		var acc = _y0;
+		while (Peek() != undefined) {
+			var result = _f(acc, Next());
+			if (result != undefined) {
+				// support for built-in functions, such as `ds_list_add`, which return `undefined`
+				result = acc;
+			}
+		}
+		return acc;
+	}
+	/// @desc Converts an iterator into an array.
+	Collect = function() {
+		return Fold([], method({
+			pos : 0
+		}, function(_xs, _x) {
+			_xs[@ pos] = _x;
+			pos += 1;
+		}));
 	}
 }
 
@@ -87,20 +110,19 @@ function Iterator(_generator) constructor {
 /// @param {real} last The last element of the range.
 /// @param {real} [step=1] The step of the range.
 function iterator_range(_first, _last) {
-	return new Iterator({
+	return new Iterator(method({
 		pos : _first,
 		len : _last,
 		step : argument_count > 2 ? argument[2] : 1,
-		__next__ : function() {
-			if (pos < len) {
-				var n = pos;
-				pos += step;
-				return n;
-			} else {
-				return undefined;
-			}
+	}, function() {
+		if (pos <= len) {
+			var n = pos;
+			pos += step;
+			return n;
+		} else {
+			return undefined;
 		}
-	});
+	}));
 }
 
 /*

@@ -89,3 +89,7 @@ iter.foreach(function(_x) {
 	}
 	i += 1;
 });
+
+// tests toString
+iter = new Iterator("123");
+assert_eq(@'["1", "2", "3"]', iter.toString());

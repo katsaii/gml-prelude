@@ -102,16 +102,15 @@ function Iterator(_generator) constructor {
 	}
 	/// @desc Flattens a single level of an iterator which returns arrays.
 	concat = function() {
-		var me = self;
 		return new Iterator(method({
-			iter : me,
+			next : self.next,
 			pos : 0,
 			len : 0,
 			val : []
 		}, function() {
 			if (pos >= len) {
 				do {
-					val = iter.next();
+					val = next();
 					if not (is_array(val)) {
 						val = [val];
 					}
@@ -127,12 +126,11 @@ function Iterator(_generator) constructor {
 	/// @desc Applies a function to the generator of this iterator.
 	/// @param {script} f The function to apply.
 	map = function(_f) {
-		var me = self;
 		return new Iterator(method({
-			iter : me,
+			next : self.next,
 			f : _f
 		}, function() {
-			var val = iter.next();
+			var val = next();
 			return val == undefined ? undefined : f(val);
 		}));
 	}
@@ -140,16 +138,17 @@ function Iterator(_generator) constructor {
 	/// @param {script} p The predicate to check.
 	filter = function(_p) {
 		return new Iterator(method({
-			iter : _iter,
+			next : self.next,
 			p : _p
 		}, function() {
-			while (iter.peek() != undefined) {
-				var my_value = iter.next();
-				if (p(my_value)) {
-					return my_value;
+			var val;
+			do {
+				val = next();
+				if (val == undefined) {
+					return undefined;
 				}
-			}
-			return undefined;
+			} until (p(val));
+			return val;
 		}));
 	}
 	/// @desc Applies a left-associative operation to all elements of the iterator.

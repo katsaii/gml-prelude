@@ -3,7 +3,8 @@
  */
 
 var iter = new Iterator([1, 3, "K", 4, 2]);
-show_message(iter.toString());
+var iter2 = iter.enumerate();
+show_message(iter2);
 
 /*
 var array_iter = iterator([1, 2, 3]);

@@ -80,6 +80,26 @@ function Iterator(_generator) constructor {
 			next();
 		}
 	}
+	/// @desc Zips this iterator together with another.
+	/// @param {Iterator} other The iterator to join this with.
+	zip = function(_other) {
+		var me = self;
+		return new Iterator(method({
+			a : _other,
+			b : me
+		}, function() {
+			if (a.peek() == undefined ||
+					b.peek() == undefined) {
+				return undefined;
+			} else {
+				return [a.next(), b.next()];
+			}
+		}));
+	}
+	/// @desc Enumerates this iterator.
+	enumerate = function(_iter) {
+		return zip(iterator_range(0, infinity));
+	}
 	/// @desc Applies a left-associative operation to all elements of the iterator.
 	/// @param {value} y0 The default value.
 	/// @param {script} f The function to apply.

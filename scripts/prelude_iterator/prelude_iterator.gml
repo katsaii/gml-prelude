@@ -82,23 +82,25 @@ function Iterator(_generator) constructor {
 	}
 }
 
-/// @desc Represents a (potentially infinite) range of numbers.
+/// @desc Produces an iterator which spans over a range.
 /// @param {real} first The first element of the range.
 /// @param {real} last The last element of the range.
 /// @param {real} [step=1] The step of the range.
-function Range(_first, _last) constructor {
-	pos = _first;
-	len = _last;
-	step = argument_count > 2 ? argument[2] : 1;
-	__next__ = function() {
-		if (pos < len) {
-			var n = pos;
-			pos += step;
-			return n;
-		} else {
-			return undefined;
+function iterator_range(_first, _last) {
+	return new Iterator({
+		pos : _first,
+		len : _last,
+		step : argument_count > 2 ? argument[2] : 1,
+		__next__ : function() {
+			if (pos < len) {
+				var n = pos;
+				pos += step;
+				return n;
+			} else {
+				return undefined;
+			}
 		}
-	}
+	});
 }
 
 /*

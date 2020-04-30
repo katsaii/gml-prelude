@@ -2,7 +2,7 @@
  * Kat @Katsaii
  */
 
-var iter = new Iterator(new Range(1, 3));
+var iter = iterator_range(1, 3);
 assert_eq([1, 3, undefined], iter.Take(3));
 
 /*

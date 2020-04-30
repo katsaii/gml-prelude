@@ -5,48 +5,8 @@
 /// @desc Creates an iterator instance with this function.
 /// @param {value} generator The data structure or value to generate values from.
 function Iterator(_generator) constructor {
-	/// @desc The function which generates values for the iterator.
-	generator = _generator;
-	if (is_struct(generator)) {
-		#region from struct
-		if (variable_struct_exists(generator, "__iter__")) {
-			generator = generator.__iter__();
-		}
-		generator = generator.__next__;
-		#endregion
-	} else if (is_array(generator)) {
-		#region from array
-		generator = method({
-			array : generator,
-			count : array_length(generator) - 1,
-			pos : -1
-		}, function() {
-			if (pos < count) {
-				pos += 1;
-				return array[pos];
-			} else {
-				return undefined;
-			}
-		});
-		#endregion
-	} else if (is_string(generator)) {
-		#region from string
-		generator = method({
-			str : generator,
-			count : string_length(generator),
-			pos : 0
-		}, function() {
-			if (pos < count) {
-				pos += 1;
-				return string_char_at(str, pos);
-			} else {
-				return undefined;
-			}
-		});
-		#endregion
-	}
-	/// @desc The peeked iterator value.
 	peeked = undefined;
+	generator = undefined;
 	/// @desc Advance the iterator and return its Next value.
 	Next = function() {
 		if (peeked == undefined) {
@@ -295,6 +255,45 @@ function Iterator(_generator) constructor {
 			return msg;
 		});
 		return "[" + str + "]";
+	}
+	// constructor
+	if (is_struct(generator)) {
+		#region from struct
+		if (variable_struct_exists(generator, "__iter__")) {
+			generator = generator.__iter__();
+		}
+		generator = generator.__next__;
+		#endregion
+	} else if (is_array(generator)) {
+		#region from array
+		generator = method({
+			array : generator,
+			count : array_length(generator) - 1,
+			pos : -1
+		}, function() {
+			if (pos < count) {
+				pos += 1;
+				return array[pos];
+			} else {
+				return undefined;
+			}
+		});
+		#endregion
+	} else if (is_string(generator)) {
+		#region from string
+		generator = method({
+			str : generator,
+			count : string_length(generator),
+			pos : 0
+		}, function() {
+			if (pos < count) {
+				pos += 1;
+				return string_char_at(str, pos);
+			} else {
+				return undefined;
+			}
+		});
+		#endregion
 	}
 }
 

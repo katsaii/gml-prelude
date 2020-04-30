@@ -18,7 +18,7 @@ function array_clone(_array) {
 /// @param {array} variable The array to apply the function to.
 /// @param {int} [n] The size of the output array.
 /// @param {int} [i=0] The index of the array to start at.
-function array_mapf(_f, _array) {
+function array_map(_f, _array) {
 	var count = argument_count > 2 ? argument[2] : array_length(_array);
 	var start = argument_count > 3 ? argument[3] : 0;
 	var clone = array_create(count);

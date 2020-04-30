@@ -9,7 +9,7 @@ function Iterator(_generator) constructor {
 	generator = _generator;
 	if (is_struct(generator)) {
 		#region from struct
-		if (variable_struct_exists(_struct, "__iter__")) {
+		if (variable_struct_exists(generator, "__iter__")) {
 			generator = generator.__iter__();
 		}
 		generator = generator.__next__;
@@ -82,16 +82,15 @@ function Iterator(_generator) constructor {
 	}
 }
 
-/// @desc Produces an iterator which spans over a range.
+/// @desc Represents a (potentially infinite) range of numbers.
 /// @param {real} first The first element of the range.
 /// @param {real} last The last element of the range.
 /// @param {real} [step=1] The step of the range.
-function range(_first, _last) {
-	return new Iterator(method({
-		pos : _first,
-		len : _last,
-		step : argument_count > 2 ? argument[2] : 1
-	}, function() {
+function Range(_first, _last) constructor {
+	pos = _first;
+	len = _last;
+	step = argument_count > 2 ? argument[2] : 1;
+	__next__ = function() {
 		if (pos < len) {
 			var n = pos;
 			pos += step;
@@ -99,7 +98,7 @@ function range(_first, _last) {
 		} else {
 			return undefined;
 		}
-	}));
+	}
 }
 
 /*

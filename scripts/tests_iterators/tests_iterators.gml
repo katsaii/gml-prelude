@@ -2,8 +2,8 @@
  * Kat @Katsaii
  */
 
-var iter = new Iterator(["A", "B", "C"]);
-assert_eq(["A", "B"], iter.Take(2));
+var iter = new Iterator(new Range(1, 3));
+assert_eq([1, 3, undefined], iter.Take(3));
 
 /*
 var array_iter = iterator([1, 2, 3]);

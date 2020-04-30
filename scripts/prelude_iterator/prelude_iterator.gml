@@ -79,7 +79,7 @@ function Iterator(_generator) constructor {
 		var array = [];
 		for (var i = 0; true; i += 1) {
 			var peek = Peek();
-			if (peek == undefined || !p(peek)) {
+			if (peek == undefined || !_p(peek)) {
 				break;
 			}
 			array[@ i] = Next();
@@ -92,7 +92,7 @@ function Iterator(_generator) constructor {
 		var array = [];
 		for (var i = 0; true; i += 1) {
 			var peek = Peek();
-			if (peek == undefined || p(peek)) {
+			if (peek == undefined || _p(peek)) {
 				break;
 			}
 			array[@ i] = Next();
@@ -111,7 +111,7 @@ function Iterator(_generator) constructor {
 	DropWhile = function(_p) {
 		while (true) {
 			var peek = Peek();
-			if (peek == undefined || !p(peek)) {
+			if (peek == undefined || !_p(peek)) {
 				break;
 			}
 			Next();
@@ -122,7 +122,7 @@ function Iterator(_generator) constructor {
 	DropUntil = function(_p) {
 		while (true) {
 			var peek = Peek();
-			if (peek == undefined || p(peek)) {
+			if (peek == undefined || _p(peek)) {
 				break;
 			}
 			Next();
@@ -204,6 +204,26 @@ function Iterator(_generator) constructor {
 			} until (p(val));
 			return val;
 		}));
+	}
+	/// @desc Generates values until the iterator is empty, or until an element does not satisfy the predicate.
+	/// @param {script} p The predicate to check.
+	All = function(_p) {
+		while (Peek() != undefined) {
+			if (!_p(Next())) {
+				return false;
+			}
+		}
+		return true;
+	}
+	/// @desc Generates values until the iterator is empty, or until an element satisfies the predicate.
+	/// @param {script} p The predicate to check.
+	Any = function(_p) {
+		while (Peek() != undefined) {
+			if (_p(Next())) {
+				return true;
+			}
+		}
+		return false;
 	}
 	/// @desc Applies a left-associative operation to all elements of the iterator.
 	/// @param {value} y0 The default value.

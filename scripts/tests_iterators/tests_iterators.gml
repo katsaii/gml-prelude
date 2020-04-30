@@ -2,78 +2,72 @@
  * Kat @Katsaii
  */
 
-var iter = new Iterator([1, 3, "K", 4, 2]);
-iter = iter.enumerate();
-iter = iter.filter(function(_x) { return !is_string(_x[1]); });
-iter = iter.concat();
-iter = iter.map(function(_x) { return string(_x); });
-show_message(iter);
+var iter;
+var ds;
+var array;
 
-/*
-var array_iter = iterator([1, 2, 3]);
+// tests array iterators
+iter = new Iterator([1, 2, 3]);
+assert_eq(1, iter.next());
+assert_eq([2, 3], iter.collect());
+assert_eq([undefined, undefined, undefined], iter.take(3));
 
-assert_eq(1, next(array_iter));
-
-assert_eq([2, 3], iterate(array_iter));
-
-assert_eq([undefined, undefined, undefined], take(3, array_iter));
-
-var struct = {
+// tests struct iterators
+iter = new Iterator({
 	pos : 0,
 	__next__ : function() {
 		pos += 1;
 		return pos;
 	}
-};
+});
+assert_eq([1, 2, 3, 4], iter.take(4));
+iter.drop(4); // [5, 6, 7, 8]
+assert_eq([9], iter.take(1));
+assert_eq([], iter.take(0));
 
-var struct_iter = iterator(struct);
+// tests enumeration
+iter = new Iterator(["A", "B", "C", "D", "D", "F", "K"]);
+iter = iter.enumerate();
+assert_eq([0, "A"], iter.peek());
+assert_eq([0, "A"], iter.next());
+assert_eq([[1, "B"], [2, "C"], [3, "D"], [4, "D"]], iter.take(4));
+assert_eq([[5, "F"], [6, "K"]], iter.collect());
+assert_eq(undefined, iter.next());
 
-assert_eq([1, 2, 3, 4], take(4, struct_iter));
+// tests concatenation
+iter = new Iterator(["X", "Y", "Z"]);
+iter = iter.enumerate();
+iter = iter.concat();
+assert_eq([0, "X", 1, "Y", 2, "Z"], iter.collect());
 
-drop(4, struct_iter); // [5, 6, 7, 8]
+// tests mapping
+iter = new Iterator([0, 1, 2, 3, 4]);
+iter = iter.map(function(_x) { return _x * _x; });
+assert_eq([0, 1, 4, 9, 16], iter.collect());
 
-assert_eq([9], take(1, struct_iter));
-
-assert_eq([], take(0, struct_iter));
-
-var enum_iter = enumerate(iterator(["A", "B", "C", "D", "D", "F", "K"]));
-
-assert_eq([0, "A"], peek(enum_iter));
-assert_eq([0, "A"], next(enum_iter));
-
-assert_eq([[1, "B"], [2, "C"], [3, "D"], [4, "D"]], take(4, enum_iter));
-
-assert_eq([[5, "F"], [6, "K"]], iterate(enum_iter));
-
-assert_eq(undefined, next(enum_iter));
-
-var concat_iter = concat(enumerate(iterator(["X", "Y", "Z"])));
-
-assert_eq([0, "X", 1, "Y", 2, "Z"], iterate(concat_iter));
-
-var map_iter = mapf(function(_x) { return _x * _x; }, iterator([0, 1, 2, 3, 4]));
-
-assert_eq([0, 1, 4, 9, 16], iterate(map_iter));
-
-var my_arr = ["A", "B", "C"];
-var list_iter = iterator(my_arr);
-var my_list = fold(func_ptr(ds_list_add), ds_list_create(), list_iter);
-
-for (var i = 0; i < 3; i += 1) {
-	assert_eq(my_arr[i], my_list[| i]);
+// tests folding/collections
+array = ["A", "B", "C"];
+iter = new Iterator(array);
+ds = iter.collect(ds_type_list);
+for (var i = 0; i < array_length(array); i += 1) {
+	assert_eq(array[i], ds[| i]);
 }
+ds_list_destroy(ds);
 
-var filter_iter = filter(op_less(3), iterator([1, 2, 3, 4, 5, -1, -1, -2]));
+// tests filtering
+iter = new Iterator([1, 2, 3, 4, 5, -1, -1, -2]);
+iter = iter.filter(op_less(3));
+assert_eq([1, 2, -1, -1, -2], iter.collect());
 
-assert_eq([1, 2, -1, -1, -2], iterate(filter_iter));
-
-var iter = concat(mapf(function(_x) { return [ord(_x), _x]; }, iterator(["A", "B", "C"])));
-var list = fold(func_ptr(ds_list_add), ds_list_create(), iter);
-
-assert_eq(65, list[| 0]);
-assert_eq("A", list[| 1]);
-assert_eq(66, list[| 2]);
-assert_eq("B", list[| 3]);
-assert_eq(67, list[| 4]);
-assert_eq("C", list[| 5]);
-*/
+// tests folding and other combinations of operations
+iter = new Iterator(["A", "B", "C"]);
+iter = iter.map(function(_x) { return [ord(_x), _x]; });
+iter = iter.concat();
+ds = iter.collect(ds_type_stack);
+assert_eq("C", ds_stack_pop(ds));
+assert_eq(67, ds_stack_pop(ds));
+assert_eq("B", ds_stack_pop(ds));
+assert_eq(66, ds_stack_pop(ds));
+assert_eq("A", ds_stack_pop(ds));
+assert_eq(65, ds_stack_pop(ds));
+ds_stack_destroy(ds);

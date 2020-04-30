@@ -89,7 +89,7 @@ function Iterator(_generator) constructor {
 			var result = _f(acc, Next());
 			if (result != undefined) {
 				// support for built-in functions, such as `ds_list_add`, which return `undefined`
-				result = acc;
+				acc = result;
 			}
 		}
 		return acc;
@@ -126,6 +126,22 @@ function Iterator(_generator) constructor {
 			});
 		}
 		return Fold(y0, f);
+	}
+	/// @desc Converts an iterator into a string.
+	toString = function() {
+		var str = Fold("", function(_xs, _x) {
+			var msg = _xs;
+			if (msg != "") {
+				msg += ", ";
+			}
+			if (is_string(_x)) {
+				msg += "\"" + string_replace_all(_x, "\"", "\\\"") + "\"";
+			} else {
+				msg += string(_x);
+			}
+			return msg;
+		});
+		return "[" + str + "]";
 	}
 }
 

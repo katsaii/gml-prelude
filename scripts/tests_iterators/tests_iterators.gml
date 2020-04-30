@@ -2,11 +2,8 @@
  * Kat @Katsaii
  */
 
-var iter = iterator_range(1, 3);
-var ds = iter.Collect(ds_type_queue);
-assert_eq(1, ds_queue_dequeue(ds));
-assert_eq(2, ds_queue_dequeue(ds));
-assert_eq(3, ds_queue_dequeue(ds));
+var iter = new Iterator([1, 3, "K", 4, 2]);
+show_message(iter.toString());
 
 /*
 var array_iter = iterator([1, 2, 3]);

@@ -73,12 +73,66 @@ function Iterator(_generator) constructor {
 		}
 		return array;
 	}
+	/// @desc Takes values and inserts them into an array whilst some predicate holds.
+	/// @param {script} p The predicate to check.
+	take_while = function(_p) {
+		var array = [];
+		for (var i = 0; true; i += 1) {
+			var item = peek();
+			if (item == undefined || !p(item)) {
+				break;
+			}
+			array[@ i] = next();
+		}
+		return array;
+	}
+	/// @desc Takes values and inserts them into an array until some predicate holds.
+	/// @param {script} p The predicate to check.
+	take_until = function(_p) {
+		var array = [];
+		for (var i = 0; true; i += 1) {
+			var item = peek();
+			if (item == undefined || p(item)) {
+				break;
+			}
+			array[@ i] = next();
+		}
+		return array;
+	}
 	/// @desc Drops the first `n` values from this iterator.
 	/// @param {int} n The number of elements to drop.
 	drop = function(_count) {
 		repeat (_count) {
 			next();
 		}
+	}
+	/// @desc Drops values whilst some predicate holds.
+	/// @param {script} p The predicate to check.
+	drop_while = function(_p) {
+		while (true) {
+			var item = peek();
+			if (item == undefined || !p(item)) {
+				break;
+			}
+			next();
+		}
+	}
+	/// @desc Drops values until some predicate holds.
+	/// @param {script} p The predicate to check.
+	drop_until = function(_p) {
+		while (true) {
+			var item = peek();
+			if (item == undefined || p(item)) {
+				break;
+			}
+			next();
+		}
+	}
+	/// @desc Returns the first element where this predicate holds.
+	/// @param {script} p The predicate to check.
+	first = function(_p) {
+		drop_until(_p);
+		return next();
 	}
 	/// @desc Zips this iterator together with another.
 	/// @param {Iterator} other The iterator to join this with.

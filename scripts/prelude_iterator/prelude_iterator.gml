@@ -278,39 +278,27 @@ function iterator_range(_first, _last) {
 	}));
 }
 
-/// @desc Produces an iterator from a ds_grid in column major order.
+/// @desc Produces an iterator from a ds_grid.
 /// @param {ds_grid} id The id of the ds_grid to convert into an iterator.
-function iterator_from_grid_column_major(_grid) {
+/// @param {bool} [row_major=true] Whether to iterate in row-major order (`true`), versus column-major order (`false`).
+function iterator_from_grid(_grid) {
+	var row_major = argument_count > 1 ? argument[1] : true;
 	return new Iterator(method({
 		grid : _grid,
-		pos : 0
+		pos : 0,
+		rowMajor : row_major
 	}, function() {
 		var w = ds_grid_width(grid);
 		var h = ds_grid_height(grid);
 		if (pos < w * h) {
-			var xord = pos div h;
-			var yord = pos mod h;
-			var next = grid[# xord, yord];
-			pos += 1;
-			return next;
-		} else {
-			return undefined;
-		}
-	}));
-}
-
-/// @desc Produces an iterator from a ds_grid in row major order.
-/// @param {ds_grid} id The id of the ds_grid to convert into an iterator.
-function iterator_from_grid_row_major(_grid) {
-	return new Iterator(method({
-		grid : _grid,
-		pos : 0
-	}, function() {
-		var w = ds_grid_width(grid);
-		var h = ds_grid_height(grid);
-		if (pos < w * h) {
-			var xord = pos mod w;
-			var yord = pos div w;
+			var xord, yord;
+			if (rowMajor) {
+				xord = pos mod w;
+				yord = pos div w;
+			} else {
+				xord = pos div h;
+				yord = pos mod h;
+			}
 			var next = grid[# xord, yord];
 			pos += 1;
 			return next;
@@ -367,26 +355,17 @@ function iterator_from_stack(_stack) {
 
 /// @desc Produces an iterator over minimum values of a ds_priority.
 /// @param {ds_priority} id The id of the ds_priority to convert into an iterator.
-function iterator_from_priority_min(_priority_queue) {
+/// @param {bool} [max=true] Whether to remove values by maximum priority (`true`), versus minimum priority (`false`).
+function iterator_from_priority(_priority_queue) {
+	var priority_max = argument_count > 1 ? argument[1] : true;
 	return new Iterator(method({
-		queue : _priority_queue
+		queue : _priority_queue,
+		priorityMax : priority_max
 	}, function() {
 		if not (ds_priority_empty(queue)) {
-			return ds_priority_delete_min(queue);
-		} else {
-			return undefined;
-		}
-	}));
-}
-
-/// @desc Produces an iterator over maximum values of a ds_priority.
-/// @param {ds_priority} id The id of the ds_priority to convert into an iterator.
-function iterator_from_priority_max(_priority_queue) {
-	return new Iterator(method({
-		queue : _priority_queue
-	}, function() {
-		if not (ds_priority_empty(queue)) {
-			return ds_priority_delete_max(queue);
+			return priorityMax ?
+					ds_priority_delete_max(queue) :
+					ds_priority_delete_min(queue);
 		} else {
 			return undefined;
 		}
@@ -457,7 +436,7 @@ function iterator(_ds) {
 		}
 		switch (ds_type) {
 		case ds_type_grid:
-			return iterator_from_grid_row_major(_ds);
+			return iterator_from_grid(_ds);
 		case ds_type_list:
 			return iterator_from_list(_ds);
 		case ds_type_queue:
@@ -465,7 +444,7 @@ function iterator(_ds) {
 		case ds_type_stack:
 			return iterator_from_stack(_ds);
 		case ds_type_priority:
-			return iterator_from_priority_max(_ds);
+			return iterator_from_priority(_ds);
 		default:
 			show_error("unknown ds_kind (" + string(ds_type) + ")", false);
 		}

@@ -323,6 +323,34 @@ function iterator_from_stack(_stack) {
 	}));
 }
 
+/// @desc Produces an iterator over minimum values of a ds_priority.
+/// @param {ds_priority} id The id of the ds_priority to convert into an iterator.
+function iterator_from_priority_min(_priority_queue) {
+	return new Iterator(method({
+		queue : _priority_queue
+	}, function() {
+		if not (ds_priority_empty(queue)) {
+			return ds_priority_delete_min(queue);
+		} else {
+			return undefined;
+		}
+	}));
+}
+
+/// @desc Produces an iterator over maximum values of a ds_priority.
+/// @param {ds_priority} id The id of the ds_priority to convert into an iterator.
+function iterator_from_priority_max(_priority_queue) {
+	return new Iterator(method({
+		queue : _priority_queue
+	}, function() {
+		if not (ds_priority_empty(queue)) {
+			return ds_priority_delete_max(queue);
+		} else {
+			return undefined;
+		}
+	}));
+}
+
 /// @desc Produces an iterator from a struct.
 /// @param {struct} struct The struct to convert into an iterator.
 function iterator_from_struct(_struct) {
@@ -392,6 +420,8 @@ function iterator(_ds) {
 			return iterator_from_queue(_ds);
 		case ds_type_stack:
 			return iterator_from_stack(_ds);
+		case ds_type_priority:
+			return iterator_from_priority_max(_ds);
 		default:
 			show_error("unknown ds_kind (" + string(ds_type) + ")", false);
 		}

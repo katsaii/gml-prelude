@@ -269,9 +269,9 @@ function iterator_range(_first, _last) {
 		step : argument_count > 2 ? argument[2] : 1,
 	}, function() {
 		if (pos <= len) {
-			var n = pos;
+			var next = pos;
 			pos += step;
-			return n;
+			return next;
 		} else {
 			return undefined;
 		}
@@ -283,12 +283,12 @@ function iterator_range(_first, _last) {
 function iterator_from_list(_list) {
 	return new Iterator(method({
 		list : _list,
-		count : ds_list_size(_list) - 1,
-		pos : -1
+		pos : 0
 	}, function() {
-		if (pos < count) {
+		if (pos < ds_list_size(list)) {
+			var next = list[| pos];
 			pos += 1;
-			return list[| pos];
+			return next;
 		} else {
 			return undefined;
 		}
@@ -324,12 +324,12 @@ function iterator_from_struct(_struct) {
 function iterator_from_array(_array) {
 	return new Iterator(method({
 		array : _array,
-		count : array_length(_array) - 1,
-		pos : -1
+		pos : 0
 	}, function() {
-		if (pos < count) {
+		if (pos < array_length(array)) {
+			var next = array[pos];
 			pos += 1;
-			return array[pos];
+			return next;
 		} else {
 			return undefined;
 		}

@@ -278,6 +278,48 @@ function iterator_range(_first, _last) {
 	}));
 }
 
+/// @desc Produces an iterator from a ds_grid in column major order.
+/// @param {ds_grid} id The id of the ds_grid to convert into an iterator.
+function iterator_from_grid_column_major(_grid) {
+	return new Iterator(method({
+		grid : _grid,
+		pos : 0
+	}, function() {
+		var w = ds_grid_width(grid);
+		var h = ds_grid_height(grid);
+		if (pos < w * h) {
+			var xord = pos div h;
+			var yord = pos mod h;
+			var next = grid[# xord, yord];
+			pos += 1;
+			return next;
+		} else {
+			return undefined;
+		}
+	}));
+}
+
+/// @desc Produces an iterator from a ds_grid in row major order.
+/// @param {ds_grid} id The id of the ds_grid to convert into an iterator.
+function iterator_from_grid_row_major(_grid) {
+	return new Iterator(method({
+		grid : _grid,
+		pos : 0
+	}, function() {
+		var w = ds_grid_width(grid);
+		var h = ds_grid_height(grid);
+		if (pos < w * h) {
+			var xord = pos mod w;
+			var yord = pos div w;
+			var next = grid[# xord, yord];
+			pos += 1;
+			return next;
+		} else {
+			return undefined;
+		}
+	}));
+}
+
 /// @desc Produces an iterator from a ds_list.
 /// @param {ds_list} id The id of the ds_list to convert into an iterator.
 function iterator_from_list(_list) {
@@ -414,6 +456,8 @@ function iterator(_ds) {
 			show_error("incompatible data structure index: data structure indexes must be numbers", false);
 		}
 		switch (ds_type) {
+		case ds_type_grid:
+			return iterator_from_grid_row_major(_ds);
 		case ds_type_list:
 			return iterator_from_list(_ds);
 		case ds_type_queue:

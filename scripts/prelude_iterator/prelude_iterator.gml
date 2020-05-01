@@ -321,15 +321,18 @@ function iterator_from_struct(_struct) {
 
 /// @desc Produces an iterator which generates values over an array.
 /// @param {array} variable The array to convert into an iterator.
-function iterator_from_array(_array) {
+function iterator_from_array(_src) {
+	var count = array_length(_src);
+	var array = array_create(count);
+	array_copy(array, 0, _src, 0, count);
 	return new Iterator(method({
-		array : _array,
-		pos : 0
+		array : array,
+		count : count - 1,
+		pos : -1
 	}, function() {
-		if (pos < array_length(array)) {
-			var next = array[pos];
+		if (pos < count) {
 			pos += 1;
-			return next;
+			return array[pos];
 		} else {
 			return undefined;
 		}

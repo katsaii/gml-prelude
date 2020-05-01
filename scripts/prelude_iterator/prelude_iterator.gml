@@ -295,6 +295,20 @@ function iterator_from_list(_list) {
 	}));
 }
 
+/// @desc Produces an iterator over values of a ds_queue.
+/// @param {ds_queue} id The id of the ds_queue to convert into an iterator.
+function iterator_from_queue(_queue) {
+	return new Iterator(method({
+		queue : _queue
+	}, function() {
+		if not (ds_queue_empty(queue)) {
+			return ds_queue_dequeue(queue);
+		} else {
+			return undefined;
+		}
+	}));
+}
+
 /// @desc Produces an iterator from a struct.
 /// @param {struct} struct The struct to convert into an iterator.
 function iterator_from_struct(_struct) {
@@ -357,6 +371,8 @@ function iterator(_ds) {
 		switch (ds_type) {
 		case ds_type_list:
 			return iterator_from_list(_ds);
+		case ds_type_queue:
+			return iterator_from_queue(_ds);
 		default:
 			show_error("unknown ds_kind (" + string(ds_type) + ")", false);
 		}

@@ -278,6 +278,23 @@ function iterator_range(_first, _last) {
 	}));
 }
 
+/// @desc Produces an iterator from a ds_list.
+/// @param {ds_list} id The id of the ds_list to convert into an iterator.
+function iterator_from_list(_list) {
+	return new Iterator(method({
+		list : _list,
+		count : ds_list_size(_list) - 1,
+		pos : -1
+	}, function() {
+		if (pos < count) {
+			pos += 1;
+			return list[| pos];
+		} else {
+			return undefined;
+		}
+	}));
+}
+
 /// @desc Produces an iterator from a struct.
 /// @param {struct} struct The struct to convert into an iterator.
 function iterator_from_struct(_struct) {
@@ -338,6 +355,8 @@ function iterator(_ds) {
 			show_error("incompatible data structure index: data structure indexes must be numbers", false);
 		}
 		switch (ds_type) {
+		case ds_type_list:
+			return iterator_from_list(_ds);
 		default:
 			show_error("unknown ds_kind (" + string(ds_type) + ")", false);
 		}

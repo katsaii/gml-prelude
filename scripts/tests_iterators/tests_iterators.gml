@@ -93,3 +93,10 @@ iter.ForEach(function(_x) {
 // tests toString
 iter = iterator("123");
 assert_eq(@'["1", "2", "3"]', iter.toString());
+
+// tests built-in data structure iterators
+ds = ds_list_create();
+ds_list_add(ds, "A", "Z", 12);
+iter = iterator(ds, ds_type_list);
+assert_eq(["A", "Z", 12], iter.Collect());
+ds_list_destroy(ds);

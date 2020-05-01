@@ -2,6 +2,14 @@
  * Kat @Katsaii
  */
 
+/// @desc An exception which is used to signal the end of the iteration.
+function EndOFIterationException() constructor {
+	// licherally nothing
+	// respekt
+}
+
+#macro STOP_ITERATION throw EndOfIterationException()
+
 /// @desc Creates an iterator instance with this function.
 /// @param {value} generator The data structure or value to generate values from.
 function Iterator(_generator) constructor {

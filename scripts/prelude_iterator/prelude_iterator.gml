@@ -6,7 +6,7 @@
 /// @param {value} generator The data structure or value to generate values from.
 function Iterator(_generator) constructor {
 	peeked = undefined;
-	generator = undefined;
+	generator = _generator;
 	/// @desc Advance the iterator and return its Next value.
 	Next = function() {
 		if (peeked == undefined) {
@@ -256,45 +256,6 @@ function Iterator(_generator) constructor {
 		});
 		return "[" + str + "]";
 	}
-	// constructor
-	if (is_struct(generator)) {
-		#region from struct
-		if (variable_struct_exists(generator, "__iter__")) {
-			generator = generator.__iter__();
-		}
-		generator = generator.__next__;
-		#endregion
-	} else if (is_array(generator)) {
-		#region from array
-		generator = method({
-			array : generator,
-			count : array_length(generator) - 1,
-			pos : -1
-		}, function() {
-			if (pos < count) {
-				pos += 1;
-				return array[pos];
-			} else {
-				return undefined;
-			}
-		});
-		#endregion
-	} else if (is_string(generator)) {
-		#region from string
-		generator = method({
-			str : generator,
-			count : string_length(generator),
-			pos : 0
-		}, function() {
-			if (pos < count) {
-				pos += 1;
-				return string_char_at(str, pos);
-			} else {
-				return undefined;
-			}
-		});
-		#endregion
-	}
 }
 
 /// @desc Produces an iterator which spans over a range.
@@ -315,4 +276,78 @@ function iterator_range(_first, _last) {
 			return undefined;
 		}
 	}));
+}
+
+/// @desc Produces an iterator from a struct.
+/// @param {struct} struct The struct to convert into an iterator.
+function iterator_from_struct(_struct) {
+	var template = _struct;
+	if (variable_struct_exists(template, "__iter__")) {
+		template = template.__iter__();
+	}
+	return new Iterator(template.__next__);
+}
+
+/// @desc Produces an iterator which generates values over an array.
+/// @param {array} variable The array to convert into an iterator.
+function iterator_from_array(_array) {
+	return new Iterator(method({
+		array : _array,
+		count : array_length(_array) - 1,
+		pos : -1
+	}, function() {
+		if (pos < count) {
+			pos += 1;
+			return array[pos];
+		} else {
+			return undefined;
+		}
+	}));
+}
+
+/// @desc Produces an iterator which generates characters over a string.
+/// @param {string} str The string to convert into an iterator.
+function iterator_from_string(_str) {
+	return new Iterator(method({
+		str : _str,
+		count : string_length(_str),
+		pos : 0
+	}, function() {
+		if (pos < count) {
+			pos += 1;
+			return string_char_at(str, pos);
+		} else {
+			return undefined;
+		}
+	}));
+}
+
+/// @desc Produces an iterator which lazily generates values from a function.
+/// @param {script} f The generator function of the iterator.
+function iterator_from_method(_f) {
+	return new Iterator(_f);
+}
+
+/// @desc Produces an iterator depending on the type of the input.
+/// @param {value} variable The variable which stores the data structure you want to convert into an interator.
+/// @param {int} [ds_type] The type of data structure, if `variable` holds a data structure index.
+function iterator(_ds) {
+	if (argument_count > 1) {
+		var ds_type = argument[1];
+		if not (is_real(ds_type)) {
+			show_error("incompatible data structure index: data structure indexes must be numbers", false);
+		}
+		switch (ds_type) {
+		default:
+			show_error("unknown ds_kind (" + string(ds_type) + ")", false);
+		}
+	} else if (is_struct(_ds)) {
+		return iterator_from_struct(_ds);
+	} else if (is_array(_ds)) {
+		return iterator_from_array(_ds);
+	} else if (is_string(_ds)) {
+		return iterator_from_string(_ds);
+	} else {
+		return iterator_from_method(_ds);
+	}
 }

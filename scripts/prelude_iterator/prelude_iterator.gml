@@ -372,6 +372,28 @@ function iterator_from_priority(_priority_queue) {
 	}));
 }
 
+/// @desc Produces an iterator over elements of a ds_map.
+/// @param {ds_map} id The id of the ds_map to convert into an iterator.
+function iterator_from_map(_map) {
+	return new Iterator(method({
+		map : _map,
+		key : ds_map_find_first(map)
+	}, function() {
+		if (key != undefined) {
+			var next_key = key;
+			var next_value = map[? key];
+			if (next_value == undefined) {
+				key = undefined;
+				return undefined;
+			}
+			key = ds_map_find_next(map, key);
+			return [next_key, next_value];
+		} else {
+			return undefined;
+		}
+	}));
+}
+
 /// @desc Produces an iterator from a struct.
 /// @param {struct} struct The struct to convert into an iterator.
 function iterator_from_struct(_struct) {

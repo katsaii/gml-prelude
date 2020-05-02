@@ -32,6 +32,10 @@ function Iterator(_generator) constructor {
 		}
 		return peeked;
 	}
+	/// @desc Returns whether the iterator is empty.
+	IsEmpty = function() {
+		return Peek() != undefined;
+	}
 	/// @desc Takes the First `n` values from this iterator and puts them into an array.
 	/// @param {int} n The number of elements to Take.
 	Take = function(_count) {
@@ -176,22 +180,19 @@ function Iterator(_generator) constructor {
 	/// @desc Generates values until the iterator is empty, or until an element does not satisfy the predicate.
 	/// @param {script} p The predicate to check.
 	All = function(_p) {
-		while (Peek() != undefined) {
-			if (!_p(Next())) {
-				return false;
-			}
-		}
-		return true;
+		DropWhile(_p);
+		return IsEmpty();
 	}
 	/// @desc Generates values until the iterator is empty, or until an element satisfies the predicate.
 	/// @param {script} p The predicate to check.
 	Any = function(_p) {
-		while (Peek() != undefined) {
-			if (_p(Next())) {
-				return true;
-			}
+		DropUntil(_p);
+		if (IsEmpty()) {
+			return false;
+		} else {
+			Next();
+			return true;
 		}
-		return false;
 	}
 	/// @desc Applies a left-associative operation to all elements of the iterator.
 	/// @param {value} y0 The default value.

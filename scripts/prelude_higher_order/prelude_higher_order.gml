@@ -55,7 +55,7 @@ function script_execute_array(_f, _a) {
 	case 14: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10], _a[11], _a[12], _a[13]);
 	case 15: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10], _a[11], _a[12], _a[13], _a[14]);
 	case 16: return _f(_a[0], _a[1], _a[2], _a[3], _a[4], _a[5], _a[6], _a[7], _a[8], _a[9], _a[10], _a[11], _a[12], _a[13], _a[14], _a[15]);
-	default: show_error("argument count of " + string(array_length(_a)) + " is not supported", false);
+	default: throw "argument count of " + string(array_length(_a)) + " is not supported";
 	}
 }
 

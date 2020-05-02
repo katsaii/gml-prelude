@@ -222,8 +222,7 @@ function Iterator(_generator) constructor {
 				f = method(undefined, ds_stack_push);
 				break;
 			default:
-				show_error("unsupported ds type", false);
-				break;
+				throw "unsupported ds type";
 			}
 		} else {
 			y0 = [];
@@ -458,7 +457,7 @@ function iterator(_ds) {
 	if (argument_count > 1) {
 		var ds_type = argument[1];
 		if not (is_real(ds_type)) {
-			show_error("incompatible data structure index: data structure indexes must be numbers", false);
+			throw "incompatible data structure index: data structure indexes must be numbers";
 		}
 		switch (ds_type) {
 		case ds_type_grid:
@@ -472,7 +471,7 @@ function iterator(_ds) {
 		case ds_type_priority:
 			return iterator_from_priority(_ds);
 		default:
-			show_error("unknown ds_kind (" + string(ds_type) + ")", false);
+			throw "unknown ds_kind (" + string(ds_type) + ")";
 		}
 	} else if (is_struct(_ds)) {
 		return iterator_from_struct(_ds);

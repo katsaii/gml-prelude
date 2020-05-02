@@ -9,7 +9,8 @@ var array;
 // tests array iterators
 iter = iterator([1, 2, 3]);
 assert_eq(1, iter.Next());
-assert_eq([2, 3], iter.Collect());
+assert_eq(2, iter.Next());
+assert_eq([3], iter.Collect());
 assert_eq([undefined, undefined, undefined], iter.Take(3));
 
 // tests struct iterators

@@ -21,12 +21,13 @@ function Iterator(_generator) constructor {
 	Peek = function() {
 		if not (peekedExists) {
 			peeked = generator();
+			peekedExists = true;
 		}
 		return peeked;
 	}
 	/// @desc Returns whether the iterator is empty.
 	IsEmpty = function() {
-		return Peek() != undefined;
+		return Peek() == undefined;
 	}
 	/// @desc Takes the First `n` values from this iterator and puts them into an array.
 	/// @param {int} n The number of elements to Take.
@@ -42,8 +43,7 @@ function Iterator(_generator) constructor {
 	TakeWhile = function(_p) {
 		var array = [];
 		for (var i = 0; true; i += 1) {
-			var peek = Peek();
-			if (peek == undefined || !_p(peek)) {
+			if (IsEmpty() || !_p(Peek())) {
 				break;
 			}
 			array[@ i] = Next();
@@ -56,7 +56,7 @@ function Iterator(_generator) constructor {
 		var array = [];
 		for (var i = 0; true; i += 1) {
 			var peek = Peek();
-			if (peek == undefined || _p(peek)) {
+			if (IsEmpty() || _p(peek)) {
 				break;
 			}
 			array[@ i] = Next();
@@ -74,8 +74,7 @@ function Iterator(_generator) constructor {
 	/// @param {script} p The predicate to check.
 	DropWhile = function(_p) {
 		while (true) {
-			var peek = Peek();
-			if (peek == undefined || !_p(peek)) {
+			if (IsEmpty() || !_p(Peek())) {
 				break;
 			}
 			Next();
@@ -85,8 +84,7 @@ function Iterator(_generator) constructor {
 	/// @param {script} p The predicate to check.
 	DropUntil = function(_p) {
 		while (true) {
-			var peek = Peek();
-			if (peek == undefined || _p(peek)) {
+			if (IsEmpty() || _p(Peek())) {
 				break;
 			}
 			Next();
@@ -106,8 +104,7 @@ function Iterator(_generator) constructor {
 			a : _other,
 			b : me
 		}, function() {
-			if (a.Peek() == undefined ||
-					b.Peek() == undefined) {
+			if (a.IsEmpty() || b.IsEmpty()) {
 				return undefined;
 			} else {
 				return [a.Next(), b.Next()];
@@ -120,15 +117,16 @@ function Iterator(_generator) constructor {
 	}
 	/// @desc Flattens a single level of an iterator which returns arrays.
 	Concat = function() {
+		var me = self;
 		return new Iterator(method({
-			Next : self.Next,
+			iter : me,
 			pos : 0,
 			len : 0,
 			val : []
 		}, function() {
 			if (pos >= len) {
 				do {
-					val = Next();
+					val = iter.Next();
 					if not (is_array(val)) {
 						val = [val];
 					}
@@ -144,27 +142,32 @@ function Iterator(_generator) constructor {
 	/// @desc Applies a function to the generator of this iterator.
 	/// @param {script} f The function to apply.
 	Map = function(_f) {
+		var me = self;
 		return new Iterator(method({
-			Next : self.Next,
+			iter : me,
 			f : _f
 		}, function() {
-			var val = Next();
-			return val == undefined ? undefined : f(val);
+			if (iter.IsEmpty()) {
+				return undefined;
+			} else {
+				return f(iter.Next());
+			}
 		}));
 	}
 	/// @desc Filters out elements of this iterator for which this predicate holds true.
 	/// @param {script} p The predicate to check.
 	Filter = function(_p) {
+		var me = self;
 		return new Iterator(method({
-			Next : self.Next,
+			iter : me,
 			p : _p
 		}, function() {
 			var val;
 			do {
-				val = Next();
-				if (val == undefined) {
+				if (iter.IsEmpty()) {
 					return undefined;
 				}
+				val = iter.Next();
 			} until (p(val));
 			return val;
 		}));
@@ -191,7 +194,7 @@ function Iterator(_generator) constructor {
 	/// @param {script} f The function to apply.
 	Fold = function(_y0, _f) {
 		var acc = _y0;
-		while (Peek() != undefined) {
+		while not (IsEmpty()) {
 			var result = _f(acc, Next());
 			if (result != undefined) {
 				// support for built-in functions, such as `ds_list_add`, which return `undefined`
@@ -237,7 +240,7 @@ function Iterator(_generator) constructor {
 	/// @desc Calls a procedure for all elements of the iterator.
 	/// @param {script} f The procedure to call.
 	ForEach = function(_f) {
-		while (Peek() != undefined) {
+		while not (IsEmpty()) {
 			_f(Next());
 		}
 	}

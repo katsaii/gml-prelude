@@ -1,8 +1,12 @@
 # Iterators
 
-Iterators are an extremely useful tool for handling arbitrary data structures with a familiar interface.
+Iterators are an extremely useful tool for iterating and generating values from arbitrary data structures through a common interface.
 
-There is currently built-in support for creating iterators from arrays, structs, and generator functions. Alternative data structures, such as ds_list/map/stack/queue and buffers are not natively supported, but are able to be written simply.
+## Creating Iterators
+
+This section covers the various ways to create iterators. Currently, the library contains built-in support for creating iterators from ranges, arrays, structs, generator functions, and common data structures.
+
+For most intents and purposes, any iterator can be constructed simply using the `iterator` function, which inteligently decides which kind of iterator to create depending on the input argument(s). Alternatively, you may decide to use the many `iterator_from_*` functions to target a specific data structure, or use the `new Iterator(f)` to construct an iterator using a generator function `f`.
 
 #### Creating an Array Iterator
 

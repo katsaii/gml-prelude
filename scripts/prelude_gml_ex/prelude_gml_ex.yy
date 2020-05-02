@@ -6,7 +6,7 @@
     "path": "folders/Prelude.yy",
   },
   "resourceVersion": "1.0",
-  "name": "prelude_failure",
+  "name": "prelude_gml_ex",
   "tags": [],
   "resourceType": "GMScript",
 }

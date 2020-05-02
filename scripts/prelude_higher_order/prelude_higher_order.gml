@@ -26,6 +26,13 @@ function compose(_f, _g) {
 	});
 }
 
+/// @desc Applies an impure function to an impure value.
+/// @param {value} mv The value to apply the function to.
+/// @param {value} mf The function to apply.
+function apply(_mv, _mf) {
+	return _mf == undefined || _mv == undefined ? undefined : _mf(_mv);
+}
+
 /// @desc Calls a function using an array as the parameter array.
 /// @param {script} ind The id of the script to call.
 /// @param {array} variable The id of the array to pass as a parameter array to this script.

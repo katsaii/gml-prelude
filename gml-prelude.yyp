@@ -1,9 +1,8 @@
 {
   "resources": [
-    {"id":{"name":"prelude_data_structure","path":"scripts/prelude_data_structure/prelude_data_structure.yy",},"order":3,},
+    {"id":{"name":"prelude_gml_ex","path":"scripts/prelude_gml_ex/prelude_gml_ex.yy",},"order":3,},
     {"id":{"name":"tests_iterators","path":"scripts/tests_iterators/tests_iterators.yy",},"order":5,},
     {"id":{"name":"tests_curry","path":"scripts/tests_curry/tests_curry.yy",},"order":2,},
-    {"id":{"name":"prelude_failure","path":"scripts/prelude_failure/prelude_failure.yy",},"order":4,},
     {"id":{"name":"prelude_iterator","path":"scripts/prelude_iterator/prelude_iterator.yy",},"order":0,},
     {"id":{"name":"tests","path":"scripts/tests/tests.yy",},"order":3,},
     {"id":{"name":"tests_function_pointers","path":"scripts/tests_function_pointers/tests_function_pointers.yy",},"order":4,},

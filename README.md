@@ -12,7 +12,7 @@ Another powerful feature is the ability to partially apply function arguments. T
 
 ## Usage examples
 
-In depth examples can be found in the [examples](examples/README.md) section.
+In depth examples can be found in the [examples](examples/) section.
 
 ## Getting Started
 

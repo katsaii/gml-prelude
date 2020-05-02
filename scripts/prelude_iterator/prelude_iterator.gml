@@ -8,7 +8,7 @@ function EndOFIterationException() constructor {
 	// respekt
 }
 
-#macro STOP_ITERATION throw EndOfIterationException()
+//#macro STOP_ITERATION throw EndOfIterationException()
 
 /// @desc Creates an iterator instance with this function.
 /// @param {value} generator The data structure or value to generate values from.

@@ -1,6 +1,10 @@
-### Getting Built-In Function Pointers
+# Higher-Order Functions
 
-GameMaker has two kinds of callable objects: functions and methods. Usually, functions cannot be assigned to variables and called remotely without a lot of work. To get around this problem, and to treat functions as though they are methods, we can bind it to the calling object using `method(undefined, function_name)`, like so:
+This section details various higher-order functions and functional programming techniques which are supported for this library.
+
+## Getting Built-In Function Pointers
+
+GameMaker has two kinds of callable objects: functions and methods. Usually, functions cannot be assigned to variables and called remotely without a lot of work. To get around this problem, and to treat functions as though they are methods, we can bind it to the calling object by using `method(undefined, function_name)`.
 
 ```js
 var remote_show_message = method(undefined, show_message);
@@ -10,13 +14,19 @@ remote_show_message("It's alive!"); // called remotely
 
 Here I assign the function `show_message` to a method, and then call it later.
 
-This functionality has been bundled with this library under the name `func_ptr`.
+This functionality has been bundled with this library under the name of `func_ptr`. So, the previous segment of code can be reduced to:
 
-### Function Composition
+```js
+var remote_show_message = func_ptr(show_message);
 
-Function composition is the process of passing the output of one function as the input to another; that is, let `f(x) = y` and `g(y) = z` be functions, and their composition `gf` would be given by `g(f(x))`.
+remote_show_message("It's alive!"); // also called remotely
+```
 
-This library contains a simple function called `compose` to achieve this.
+## Function Composition
+
+Function composition is the process of passing the output of one function as the input to another; that is, if `f(x) = y` and `g(y) = z` are functions, then their composition `gf` would be given by `g(f(x))`.
+
+This library contains a simple function called `compose` which can achieve this. The first argument is the function which will have the output of second argument fed into it; in other words, the first argument is `g` and the second argument is `f`.
 
 ```js
 var remote_string_upper = func_ptr(string_upper);
@@ -27,7 +37,7 @@ var scream_message = compose(remote_show_message, remote_string_upper);
 scream_message("hello world"); // prints "HELLO WORLD"
 ```
 
-This code will compose the two functions `string_upper` and `show_message` into a new method which prints a message in ALL CAPS!!
+This code will compose the two functions `string_upper` and `show_message` into a new method which prints a message in capital case.
 
 ### Currying
 

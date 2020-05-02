@@ -39,9 +39,9 @@ scream_message("hello world"); // prints "HELLO WORLD"
 
 This code will compose the two functions `string_upper` and `show_message` into a new method which prints a message in capital case.
 
-### Currying
+## Partial Application (Currying)
 
-Currying is the process of passing arguments individually to a function. This allows you to create domain specific variants of a function by only passing the first couple of arguments before-hand. For example, let's say you have a script which draws your player sprite:
+Currying is the concept of being able to pass arguments to a function either individually, or together. This allows you to create domain-specific variants of a function by only applying the first couple of argument before-hand. For example, let's say you have a function which draws your player sprite:
 
 ```js
 function draw_player(_x, _y, _xscale, _yscale, _rot, _colour, _alpha) {
@@ -51,13 +51,13 @@ function draw_player(_x, _y, _xscale, _yscale, _rot, _colour, _alpha) {
 
 Doesn't it look like a pain having to type out all those additional arguments when you only really care about the first two? Wouldn't it be nice if you could just pass the first two arguments without caring about what the remaining arguments are? Well, with currying this is possible!
 
-To create the new `draw_player` script, the `curry` function can be used:
+To create a the new `draw_player` function, the `curry` function can be used:
 
 ```js
 draw_player = curry(2, func_ptr(draw_sprite_ext))(spr_player)(0);
 ```
 
-The first argument of `curry` is the number of arguments you want to "curry"; in this case, two (the first two). The second argument is the function you actually want to curry; in this case it is the function `draw_sprite_ext`. Then, the `curry` function returns a method with the number of arguments you supplied curried. The resulting method is assigned to the instance variable `draw_player`, and can be used like any typical function would be, except the first two arguments have been partially applied.
+The first argument of `curry` is the number of arguments to want to partially apply; in this case, the first two. The second argument is the actual function you want to curry; in this case it is the function `draw_sprite_ext`. Then, the `curry` function returns a method with the number of arguments you supplied curried. The resulting method is assigned to the instance variable `draw_player`, and can be used like any typical function would be.
 
 ```js
 draw_player(x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);

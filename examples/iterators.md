@@ -1,6 +1,6 @@
-### Iterators
+# Iterators
 
-Iterators are extremely useful for having a general interface for generating values from arbitrary data structures.
+Iterators are an extremely useful tool for handling arbitrary data structures with a familiar interface.
 
 There is currently built-in support for creating iterators from arrays, structs, and generator functions. Alternative data structures, such as ds_list/map/stack/queue and buffers are not natively supported, but are able to be written simply.
 

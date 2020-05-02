@@ -14,20 +14,20 @@ function EndOFIterationException() constructor {
 /// @param {value} generator The data structure or value to generate values from.
 function Iterator(_generator) constructor {
 	peeked = undefined;
+	peekedExists = false;
 	generator = _generator;
 	/// @desc Advance the iterator and return its Next value.
 	Next = function() {
-		if (peeked == undefined) {
-			return generator();
+		if (peekedExists) {
+			peekedExists = false;
+			return peeked;
 		} else {
-			var item = peeked;
-			peeked = undefined;
-			return item;
+			return generator();
 		}
 	}
 	/// @desc Peek at the Next value in the iterator.
 	Peek = function() {
-		if (peeked == undefined) {
+		if not (peekedExists) {
 			peeked = generator();
 		}
 		return peeked;

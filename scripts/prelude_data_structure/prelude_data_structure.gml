@@ -44,14 +44,18 @@ function array_foreach(_f, _array) {
 /// @desc Clones a struct.
 /// @param {struct} struct The struct to clone.
 function struct_clone(_struct) {
-	if (instanceof(_struct) != "struct")
-	then show_error("structs created using constructor functions are not supported", false);
+	if (instanceof(_struct) != "struct") {
+		throw "structs created using constructor functions are not supported";
+	}
 	var clone = { };
 	var count = variable_struct_names_count(_struct);
 	var names = variable_struct_get_names(_struct);
 	for (var i = count - 1; i >= 0; i -= 1) {
 		var key = names[i];
 		var val = variable_struct_get(_struct, key);
+		if (is_method(val) && method_get_self(val) == _struct) {
+			throw "cannot clone structs which contain methods bound to self";
+		}
 		variable_struct_set(clone, key, val);
 	}
 	return clone;

@@ -63,18 +63,18 @@ The first argument of `curry` is the number of arguments to want to partially ap
 draw_player(x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 ```
 
-#### Operator Sections
+## Operator Sections
 
 Operator sections allow for operators to be used as predicates in higher order functions without the hassle of writing a new function manually. For example, the following expression:
 
 ```js
-array_mapf(function(_x) { return _x * 2; }, [1, 2, 3]);
+array_map(function(_x) { return _x * 2; }, [1, 2, 3]);
 ```
 
 Can be replaced with:
 
 ```js
-array_mapf(op_product(2), [1, 2, 3]);
+array_map(op_product(2), [1, 2, 3]);
 ```
 
 This is because `op_product` returns a method which multiplies any argument it is given by `2`:

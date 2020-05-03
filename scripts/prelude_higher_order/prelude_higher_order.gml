@@ -5,7 +5,7 @@
 /// @desc Converts a built-in function into a usable function pointer.
 /// @param {function} name The name of the built-in function to obtain.
 function func_ptr(_name) {
-	return method({}, _name);
+	return method(undefined, _name);
 }
 
 /// @desc The identity function. Returns the input value.
@@ -24,13 +24,6 @@ function compose(_f, _g) {
 	}, function(_x) {
 		return f(g(_x));
 	});
-}
-
-/// @desc Applies an impure function to an impure value.
-/// @param {value} mv The value to apply the function to.
-/// @param {value} mf The function to apply.
-function apply(_mv, _mf) {
-	return _mf == undefined || _mv == undefined ? undefined : _mf(_mv);
 }
 
 /// @desc Calls a function using an array as the parameter array.

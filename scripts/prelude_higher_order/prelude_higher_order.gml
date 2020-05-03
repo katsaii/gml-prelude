@@ -74,6 +74,30 @@ function script_execute_array(_f, _a) {
 	throw "argument count of " + string(array_length(_a)) + " is not supported";
 }
 
+/// @desc Generates a new function with a number of arguments partially applied.
+/// @param {script} ind the id of the script or method to apply currying to.
+/// @param {value} [args] The arguments to partially apply to the function.
+function curry(_f) {
+	var count = argument_count - 1;
+	var args = array_create(count);
+	for (var i = count - 1; i >= 0; i -= 1) {
+		args[@ i] = argument[i + 1];
+	}
+	return method({
+		f : _f,
+		closure_count : count,
+		closure : args
+	}, function() {
+		var args = array_create(closure_count + argument_count);
+		array_copy(args, 0, closure, 0, closure_count);
+		for (var i = argument_count - 1; i >= 0; i -= 1) {
+			args[@ closure_count + i] = argument[i];
+		}
+		return script_execute_array(f, args);
+	});
+}
+
+/*
 /// @desc Generates a new curried function.
 /// @param {int} arg_count The number of arguments to curry.
 /// @param {script} ind the id of the script to apply currying to.
@@ -102,10 +126,4 @@ function CurriedFunction(_count, _f) constructor {
 		}
 	}
 }
-
-/// @desc Curries a function so arguments can be passed individually.
-/// @param {script} ind the id of the script to apply currying to.
-/// @param {int} arg_count The number of arguments to curry.
-function curry(_count, _f) {
-	return (new CurriedFunction(_count, _f)).call;
-}
+*/

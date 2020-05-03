@@ -114,6 +114,15 @@ iter = iterator_from_grid(ds, false);
 assert_eq([1, 3, 2, 4], iter.Collect());
 ds_grid_destroy(ds);
 
+// tests map iterator
+ds = ds_map_create();
+ds[? "A"] = -1;
+ds[? "B"] = -2;
+ds[? "C"] = -3;
+iter = iterator(ds, ds_type_map);
+assert_eq([["A", -1], ["B", -2], ["C", -3]], iter.Collect());
+ds_map_destroy(ds);
+
 // tests First and TakeWhile
 iter = iterator_range(1, 15);
 assert_eq(4, iter.First(function(_x) { return _x > 3 }));

@@ -380,7 +380,7 @@ function iterator_from_priority(_priority_queue) {
 function iterator_from_map(_map) {
 	return new Iterator(method({
 		map : _map,
-		key : ds_map_find_first(map)
+		key : ds_map_find_first(_map)
 	}, function() {
 		if (key != undefined) {
 			var next_key = key;
@@ -470,6 +470,8 @@ function iterator(_ds) {
 			return iterator_from_stack(_ds);
 		case ds_type_priority:
 			return iterator_from_priority(_ds);
+		case ds_type_map:
+			return iterator_from_map(_ds);
 		default:
 			throw "unknown ds_kind (" + string(ds_type) + ")";
 		}

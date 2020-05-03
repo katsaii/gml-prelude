@@ -54,7 +54,7 @@ Doesn't it look like a pain having to type out all those additional arguments wh
 To create a the new `draw_player` function, the `curry` function can be used:
 
 ```js
-draw_player = curry(func_ptr(draw_sprite_ext), spr_player, 0);
+draw_player = curry(draw_sprite_ext, spr_player, 0);
 ```
 
 The first argument of `curry` is the function you want to partially apply. Next, any additional arguments are the arguments of the function you are partially applying. Finally, the `curry` function returns a method which contains those arguments applied to the function. The resulting method is assigned to the instance variable `draw_player`, and can be used like any typical function would be.

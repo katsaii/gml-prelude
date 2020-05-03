@@ -95,12 +95,24 @@ iter.ForEach(function(_x) {
 iter = iterator("123");
 assert_eq(@'["1", "2", "3"]', iter.toString());
 
-// tests built-in data structure iterators
+// tests list iterator
 ds = ds_list_create();
 ds_list_add(ds, "A", "Z", 12);
 iter = iterator(ds, ds_type_list);
 assert_eq(["A", "Z", 12], iter.Collect());
 ds_list_destroy(ds);
+
+// tests grid iterator
+ds = ds_grid_create(2, 2);
+ds[# 0, 0] = 1;
+ds[# 1, 0] = 2;
+ds[# 0, 1] = 3;
+ds[# 1, 1] = 4;
+iter = iterator_from_grid(ds, true);
+assert_eq([1, 2, 3, 4], iter.Collect());
+iter = iterator_from_grid(ds, false);
+assert_eq([1, 3, 2, 4], iter.Collect());
+ds_grid_destroy(ds);
 
 // tests First and TakeWhile
 iter = iterator_range(1, 15);

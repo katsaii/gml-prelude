@@ -192,7 +192,46 @@ var iter = iterator_range(1, 3);
 var str = string(iter); // holds "[1, 2, 3]"
 ```
 
+### Iteration
+
+The main idea of iterators is to help generalise iteration, right? This library contains two important methods for iterating through iterators called `ForEach` and `Fold`.
+
+The `ForEach` method takes a procedure `f` as a parameter and calls it for every element of the iterator:
+
+```js
+var iter = iterator([1, "a", false]);
+
+iter.ForEach(function(_x) {
+	show_message(_x); // prints 1
+	                  //        "a"
+	                  //        false
+});
+```
+
+Alternatively, the `Fold` method captures the concept of applying some binary operation to all elements of the iterator. Let's say you have an array of strings `["hello", " ", "world"]`. To concatenate these together we could use the `+` operator like so:
+
+```js
+var array = ["hello", " ", "world"];
+
+var hello_world = array[0] + array[1] + array[2];
+```
+
+This idea of applying `+` over and over again is what fold achieves. Therefore, the previous section of code can be reduced to:
+
+```js
+var array = ["hello", " ", "world"];
+var iter = iterator(array);
+
+var hello_world = iter.Fold("", function(_left, _right) {
+	return _left + _right;
+});
+```
+
+Of course, this is a very basic case. But now imagine you have an array which is 100 values long, or an array which you don't know the size of, it becomes a lot trickier to add all items in that array together. That is why `Fold` is so useful; it abstracts away the boilerplate of `for` loops and accumulators.
+
 ## Advanced Iterator Use
+
+This section picks up the pace, and details additional operations which can be used to modify and process iterators.
 
 This is where we pick up the pace.
 

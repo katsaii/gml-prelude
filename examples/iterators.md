@@ -105,28 +105,50 @@ This iterator only counts up to ten, since in the case that `count > 10`, the it
 
 A useful built-in iterator constructor is `iterator_range`. `iterator_range` will create a new (potentially infinite) iterator over the supplied range. For example, `iterator_range(1, 10)` will return a new iterator which generates values `1` to `10` *inclusive*.
 
-#### Basic Iterator Use
+## Basic Iterator Use
 
-Once you have an iterator, you can start generating values using `peek` and `next`. The `peek` function will return the next generated value, but will not advance the iterator; the `next` function will return the next generated value and will advance the iterator.
+Once you have an iterator, you can start generating values using `Next` and `Peek`.
+
+The `Next` method will return the next generated value and advance the iterator:
 
 ```js
 var iter = iterator(["A", "B", "C", "D"]);
 
-var a_peeked = peek(iter); // holds "A"
-var a = next(iter);        // holds "A"
-var b = next(iter);        // holds "B"
+var a = iter.Next(); // holds "A"
+var b = iter.Next(); // holds "B"
+var c = iter.Next(); // holds "C"
 ```
 
-Other important operations include `drop` and `take`. The `drop` function takes a number as an argument, and will skip that number of generated values. The `take` function takes a number as an argument, and will generate that number of values and insert them into an array.
+The `Peek` function will return the next generated value, but will not advance the iterator.
 
 ```js
-var iter = range(1, 5);
+var iter = iterator(["A", "B", "C", "D"]);
 
-drop(1, iter);             // drop 1
-var array = take(3, iter); // take [2, 3, 4]
+var a_peeked = iter.Peek(); // holds "A"
+var a = iter.Next();        // holds "A"
+var b = iter.Next();        // holds "B"
 ```
 
-`array` now holds an array of 3 values `[2, 3, 4]`, since the first generated value was dropped and the final element of the range is never used.
+### Many at Once
+
+Other important operations include `Take` and `Drop`.
+
+The `Take` method accepts a number `n` as an argument, and will generate `n`-many values and insert them into an array:
+
+```js
+var iter = iterator_range(1, 5);
+
+var array = iter.Take(3); // holds [1, 2, 3]
+```
+
+The `Drop` method takes a number `n` as an argument, and will skip that number of generated values:
+
+```js
+var iter = iterator_range(2, 8);
+
+iter.Drop(2);             // drops [2, 3]
+var array = iter.Take(3); // holds [4, 5, 6]
+```
 
 #### Advanced Iterator Use
 

@@ -101,3 +101,8 @@ ds_list_add(ds, "A", "Z", 12);
 iter = iterator(ds, ds_type_list);
 assert_eq(["A", "Z", 12], iter.Collect());
 ds_list_destroy(ds);
+
+// tests First and TakeWhile
+iter = iterator_range(1, 10);
+assert_eq(4, iter.First(function(_x) { return _x > 3 }));
+assert_eq([5, 6, 7, 8, 9], iter.TakeWhile(function(_x) { return _x < 10 }));

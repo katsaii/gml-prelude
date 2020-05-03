@@ -235,6 +235,10 @@ This section picks up the pace, and details additional operations which can be u
 
 ### Lazy Evaluation
 
+As you might have noticed, unlike typical data structures, iterators can be infinite in size. This can make them very powerful for handling nested data structures and cyclic references.
+
+All of this is achieved through lazy evaluation (also known as [call-by-need](https://en.wikipedia.org/wiki/Evaluation_strategy#Call_by_need)). This means that new values are only ever generated when they are absolutely required. If you only care about the first 10 elements of an infinite iterator, then the remaining values will never be created.
+
 ### Iterator Operations
 
 Iterators can be stacked with multiple operations with barely any overhead or complexity from using raw arrays. Some examples of operations are `Zip`, `Map`, and `Concat`.

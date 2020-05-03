@@ -113,6 +113,8 @@ This section details basic operations you can perform on iterators to generate v
 
 Once you have an iterator, you can start generating values using `Next` and `Peek`.
 
+#### Next
+
 The `Next` method will return the next generated value and advance the iterator:
 
 ```js
@@ -122,6 +124,8 @@ var a = iter.Next(); // holds "A"
 var b = iter.Next(); // holds "B"
 var c = iter.Next(); // holds "C"
 ```
+
+#### Peek
 
 The `Peek` function will return the next generated value, but will not advance the iterator.
 
@@ -137,6 +141,8 @@ var b = iter.Next();        // holds "B"
 
 Other important operations include `Take` and `Drop`.
 
+#### Take
+
 The `Take` method accepts a number `n` as an argument, and will generate `n`-many values and insert them into an array:
 
 ```js
@@ -144,6 +150,8 @@ var iter = iterator_range(1, 5);
 
 var array = iter.Take(3); // holds [1, 2, 3]
 ```
+
+#### Drop
 
 The `Drop` method takes a number `n` as an argument, and will skip that number of generated values:
 
@@ -196,6 +204,8 @@ var str = string(iter); // holds "[1, 2, 3]"
 
 The main idea of iterators is to help generalise iteration, right? This library contains two important methods for iterating through iterators called `ForEach` and `Fold`.
 
+#### ForEach
+
 The `ForEach` method takes a procedure `f` as a parameter and calls it for every element of the iterator:
 
 ```js
@@ -207,6 +217,8 @@ iter.ForEach(function(_x) {
 	                  //        false
 });
 ```
+
+#### Fold
 
 Alternatively, the `Fold` method captures the concept of applying some binary operation to all elements of the iterator. Let's say you have an array of strings `["hello", " ", "world"]`. To concatenate these together we could use the `+` operator like so:
 
@@ -243,6 +255,8 @@ All of this is achieved through lazy evaluation (also known as [call-by-need](ht
 
 Iterators can be stacked with multiple operations with barely any overhead or complexity from using raw arrays. Some examples of operations are `Zip`, `Map`, and `Concat`.
 
+#### Zip
+
 The `Zip` method takes a second iterator as an argument, and returns a new iterator which generate pairs of values that correspond to the generated values of each iterator:
 
 ```js
@@ -254,6 +268,8 @@ var iter = a.Zip(b);
 var array = iter.Collect(); // holds [["w", "h"], ["o", "e"], ["r", "l"], ["l", "l"], ["d", "o"]]
 ```
 
+#### Map
+
 The `Map` method takes a function as an argument, and returns a new iterator which applies that function to each generated value of the previous iterator:
 
 ```js
@@ -262,6 +278,8 @@ var iter = iterator_range(1, infinity);
 
 var array = iter.Take(4); // holds [1, 4, 9, 16]
 ```
+
+#### Concat
 
 The `Concat` method converts an iterator wich generates arrays into an iterator which also iterates over those arrays; that is, a two-dimensional array can be flattened into a single-dimensional array:
 

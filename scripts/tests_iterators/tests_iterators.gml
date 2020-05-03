@@ -57,7 +57,7 @@ ds_list_destroy(ds);
 
 // tests filtering
 iter = iterator([1, 2, 3, 4, 5, -1, -1, -2]);
-iter = iter.Filter(op_less(3));
+iter = iter.Filter(function(_x) { return _x < 3 });
 assert_eq([1, 2, -1, -1, -2], iter.Collect());
 
 // tests folding and other combinations of operations

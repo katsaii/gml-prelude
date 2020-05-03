@@ -107,6 +107,10 @@ A useful built-in iterator constructor is `iterator_range`. `iterator_range` wil
 
 ## Basic Iterator Use
 
+This section details basic operations you can perform on iterators to generate values.
+
+### One at a Time
+
 Once you have an iterator, you can start generating values using `Next` and `Peek`.
 
 The `Next` method will return the next generated value and advance the iterator:
@@ -150,7 +154,7 @@ iter.Drop(2);             // drops [2, 3]
 var array = iter.Take(3); // holds [4, 5, 6]
 ```
 
-#### Advanced Iterator Use
+## Advanced Iterator Use
 
 This is where we pick up the pace.
 

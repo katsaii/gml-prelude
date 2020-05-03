@@ -120,7 +120,7 @@ ds[? "A"] = -1;
 ds[? "B"] = -2;
 ds[? "C"] = -3;
 iter = iterator(ds, ds_type_map);
-assert_eq([["A", -1], ["B", -2], ["C", -3]], iter.Collect());
+assert_eq(true, array_is_permutation([["A", -1], ["B", -2], ["C", -3]], iter.Collect()));
 ds_map_destroy(ds);
 
 // tests First and TakeWhile

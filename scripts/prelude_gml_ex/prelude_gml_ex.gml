@@ -41,6 +41,43 @@ function array_foreach(_f, _array) {
 	}
 }
 
+/// @desc Returns whether two arrays are permutations of each other. Assumes non-duplicate elements.
+/// @param {array} a The subset to check.
+/// @param {array} b The superset to check.
+function array_is_permutation(_a, _b) {
+	return array_is_subset(_a, _b) && array_is_subset(_b, _a);
+}
+
+/// @desc Checks whether one array is a subset of another. Assumes non-duplicate elements.
+/// @param {array} a The subset to check.
+/// @param {array} b The superset to check.
+function array_is_subset(_a, _b) {
+	var count = array_length(_a);
+	for (var i = count - 1; i >= 0; i -= 1) {
+		if not (array_contains(_b, _a[i])) {
+			return false;
+		}
+	}
+	return true;
+}
+
+/// @desc Checks whether an array contains a value.
+/// @param {array} variable The array to consider.
+/// @param {value} value The value to compare.
+function array_contains(_array, _target) {
+	var count = array_length(_array);
+	var compare_arrays = is_array(_target);
+	for (var i = count - 1; i >= 0; i -= 1) {
+		var val = _array[i];
+		if (compare_arrays && is_array(val) &&
+				array_equals(val, _target) ||
+				val == _target) {
+			return true;
+		} 
+	}
+	return false;
+}
+
 /// @desc Clones a struct.
 /// @param {struct} struct The struct to clone.
 function struct_clone(_struct) {

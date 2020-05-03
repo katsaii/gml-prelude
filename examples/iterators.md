@@ -233,51 +233,37 @@ Of course, this is a very basic case. But now imagine you have an array which is
 
 This section picks up the pace, and details additional operations which can be used to modify and process iterators.
 
-This is where we pick up the pace.
+### Lazy Evaluation
 
-Iterators can be stacked with multiple operations with barely any overhead and complexity from using raw arrays. Below I briefly showcase some examples.
+### Iterator Operations
 
-*Interlacing two arrays, `a` and `b`:*
+Iterators can be stacked with multiple operations with barely any overhead or complexity from using raw arrays. Some examples of operations are `Zip`, `Map`, and `Concat`.
 
-```js
-var a = [ 1 ,  2 ,  3 ,  4 ,  5 ];
-var b = ["A", "B", "C", "D", "E"];
-
-var iter = zip(iterator(a), iterator(b));
-var interlaced = iterate(iter);
-
-// interlaced == [1, "A", 2, "B", 3, "C", 4, "D", 5, "E"]
-```
-
-*Filtering numbers inside a specific range:*
+The `Zip` method takes a second iterator as an argument, and returns a new iterator which generate pairs of values that correspond to the generated values of each iterator:
 
 ```js
-var a = [-1, -1, 0, 1, 2, 2, 3, 4, 5, 6, 7, 9, 10, 10, 11];
-var range_min = 3;
-var range_max = 10;
+var a = iterator("hello");
+var b = iterator("world");
 
-var iter = filter(op_less(range_max),
-		filter(op_greater(range_min), iterator(a)));
-var ranged = iterate(iter);
+var iter = a.Zip(b);
 
-// ranged == [3, 4, 5, 6, 7, 9, 10, 10]
+var array = iter.Collect(); // holds [["w", "h"], ["o", "e"], ["r", "l"], ["l", "l"], ["d", "o"]]
 ```
 
-*Interlacing an array of characters with their character codes, and then folding the iterator into a ds_list:*
+The `Map` method takes a function as an argument, and returns a new iterator which applies that function to each generated value of the previous iterator:
 
 ```js
-var arr = ["A", "B", "C"];
+var iter = iterator_range(1, infinity);
+    iter = iter.Map(function(_x) { return _x * _x });
 
-var iter = concat(mapf(function(_x) { return [ord(_x), _x]; }, iterator(arr)));
-var list = fold(func_ptr(ds_list_add), ds_list_create(), iter);
-
-/* list[| 0] == 65
- * list[| 1] == "A"
- * list[| 2] == 66
- * list[| 3] == "B"
- * list[| 4] == 67
- * list[| 5] == "C"
- */
+var array = iter.Take(4); // holds [1, 4, 9, 16]
 ```
 
-Detailed information on these operations can be found in the source files of the library.
+The `Concat` method converts an iterator wich generates arrays into an iterator which also iterates over those arrays; that is, a two-dimensional array can be flattened into a single-dimensional array:
+
+```js
+var iter = iterator([["W", vk_up], ["A", vk_left], ["S", vk_down], ["D", vk_right]]);
+    iter = iter.Concat();
+
+var array = iter.Collect(); // holds ["W", vk_up, "A", vk_left, "S", vk_down, "D", vk_right]
+```

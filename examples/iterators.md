@@ -78,16 +78,16 @@ var iter = iterator(vec3);
 
 This iterator will iterate over the three (`x`, `y`, and `z`) values of a `Vec3`.
 
-#### Creating Finite Iterators
+### Finite Iterators
 
-Unfortunately, both of the previous iterators are infinite because they have no well-defined end. To create an iterator which ends, you must return `undefined` in that case. For example, an iterator which only counts up to ten would look like this:
+Some of the previous examples of iterators are infinite because they have no well-defined end state. To create an iterator which does end, you must return `undefined` in that case. As an example:
 
 ```js
 var struct = {
 	count : 0,
 	__next__ : function() {
 		count += 1;
-		if (count < 10) {
+		if (count <= 10) {
 			return count;
 		} else {
 			// end of iterator
@@ -99,9 +99,11 @@ var struct = {
 var iter = iterator(struct);
 ```
 
-#### Ranges
+This iterator only counts up to ten, since in the case that `count > 10`, the iterator returns `undefined`. This signals the end of the iterator.
 
-A useful built-in iterator constructor is `range`. `range` will create a new (potentially infinite) iterator over the supplied range. For example, `range(1, 10)` will return a new iterator which generates values `1` to `10` *inclusive*.
+### Ranges
+
+A useful built-in iterator constructor is `iterator_range`. `iterator_range` will create a new (potentially infinite) iterator over the supplied range. For example, `iterator_range(1, 10)` will return a new iterator which generates values `1` to `10` *inclusive*.
 
 #### Basic Iterator Use
 

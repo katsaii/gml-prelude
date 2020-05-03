@@ -154,6 +154,44 @@ iter.Drop(2);             // drops [2, 3]
 var array = iter.Take(3); // holds [4, 5, 6]
 ```
 
+### Collecting Iterators
+
+If you require your iterator to be converted into a collection, such as an array or a ds_list, then this is possible with the `Collect` method. To collect an iterator into an array, simply call the method out-right:
+
+```js
+var iter = iterator_range(1, 5);
+
+var array = iter.Collect(); // holds [1, 2, 3, 4, 5]
+```
+
+Howeverm, if you want to convert the iterator into an alternative data structure, such as a ds_list or a ds_stack, you should pass the `ds_type_` as a parameter. For example, to collect an iterator into a stack:
+
+```js
+var iter = iterator(["A", "B", "C"]);
+
+var stack = iter.Collect(ds_type_stack);
+```
+
+Currently, the only supported built-in collections are: arrays, `ds_type_list`, `ds_type_queue`, and `ds_type_stack`.
+
+### Converting an Iterator to a String
+
+If you need to an easy way to display the contents of an iterator, then you can use the `toString` method:
+
+```js
+var iter = iterator_range(1, 3);
+
+var str = iter.toString(); // holds "[1, 2, 3]"
+```
+
+Alternatively, you can use the built-in `string` function directly:
+
+```js
+var iter = iterator_range(1, 3);
+
+var str = string(iter); // holds "[1, 2, 3]"
+```
+
 ## Advanced Iterator Use
 
 This is where we pick up the pace.

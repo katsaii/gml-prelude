@@ -96,34 +96,3 @@ function curry(_f) {
 		return script_execute_array(f, args);
 	});
 }
-
-/*
-/// @desc Generates a new curried function.
-/// @param {int} arg_count The number of arguments to curry.
-/// @param {script} ind the id of the script to apply currying to.
-function CurriedFunction(_count, _f) constructor {
-	count = _count;
-	pos = 0;
-	f = _f;
-	closure = array_create(count, undefined);
-	call = function() {
-		var param_count = argument_count;
-		var params = array_create(param_count);
-		for (var i = param_count - 1; i >= 0; i -= 1) {
-			params[@ i] = argument[i];
-		}
-		if (pos < count) {
-			var child = new CurriedFunction(count, f);
-			child.pos = pos + 1;
-			array_copy(child.closure, 0, closure, 0, pos);
-			child.closure[@ pos] = param_count == 1 ? params[0] : params;
-			return child.call;
-		} else {
-			var arguments = array_create(count + param_count);
-			array_copy(arguments, 0, closure, 0, count);
-			array_copy(arguments, count, params, 0, param_count);
-			return script_execute_array(f, arguments);
-		}
-	}
-}
-*/

@@ -6,21 +6,21 @@ Iterators are an extremely useful tool for iterating and generating values from 
 
 This section covers the various ways to create iterators. Currently, the library contains built-in support for creating iterators from ranges, arrays, structs, generator functions, and common data structures.
 
-For most intents and purposes, any iterator can be constructed simply using the `iterator` function, which inteligently decides which kind of iterator to create depending on the input argument(s). Alternatively, you may decide to use the many `iterator_from_*` functions to target a specific data structure, or use the `new Iterator(f)` to construct an iterator using a generator function `f`.
+For most intents and purposes, any iterator can be constructed simply using the `iterator` function, which inteligently decides which kind of iterator to create depending on the input argument(s). Alternatively, you may decide to use the many `iterator_from_*` functions to target a specific data structure, or use the `new Iterator(f)` to construct an iterator using a generator function `f`. Regardless, if you are unsure what data structure your variable holds, you should use the `iterator` function alone.
 
-#### Creating an Array Iterator
+### Creating an Array Iterator
 
-The function `iterator` takes a data structure and converts it into an iterator.
+An array iterator can be created simply using the `iterator` function:
 
 ```js
 var iter = iterator(["A", "B", "C", "D"]);
 ```
 
-In this case the data structure is an array, but it can also be used with functions and structs.
+Alternatively, you can use `iterator_from_array` to specifically target arrays if you know your data structure will always be an array.
 
-#### Creating a Generator Function Iterator
+### Creating a Generator Function Iterator
 
-To create an iterator from a function, you would do:
+To create an iterator from a function, you can use the `iterator` function:
 
 ```js
 var iter = iterator(function() {
@@ -28,11 +28,13 @@ var iter = iterator(function() {
 });
 ```
 
-This iterator isn't particularlly impressive, and will constantly return new random numbers. However, if you have an existing function which is bound to a struct or object, this kind of approach can be useful.
+This iterator isn't particularlly impressive since it will constantly return new random numbers. However, if you have a method which is bound a struct or object, this kind of approach can be useful.
 
-#### Creating a Struct Iterator
+Alternatively, you can use `iterator_from_method` to specifically target generator functions.
 
-Creating an iterator from a struct is a little more effort. Your struct must contain a `__next__` member which tells you the next item to return.
+### Creating a Struct Iterator
+
+There is a little more work to creating an iterator from a struct. Your struct must contain a `__next__` member which tells you the next item to return:
 
 ```js
 var struct = {
@@ -47,6 +49,34 @@ var iter = iterator(struct);
 ```
 
 This iterator is a little more impressive, because it will count up from 1.
+
+This approach is also compatible with structs created using constructor functions:
+
+```js
+function Vec3(_x, _y, _z) constructor {
+	x = _x;
+	y = _y;
+	z = _z;
+	__next__ = function() {
+		static i = 0;
+		i += 1;
+		switch (i) {
+		case 1:
+			return x;
+		case 2:
+			return y;
+		case 3:
+			i = 0;
+			return z;
+		}
+	}
+}
+
+var vec3 = new Vec3(3, 12, 0);
+var iter = iterator(vec3);
+```
+
+This iterator will iterate over the three (`x`, `y`, and `z`) values of a `Vec3`.
 
 #### Creating Finite Iterators
 

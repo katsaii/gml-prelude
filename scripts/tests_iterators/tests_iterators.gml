@@ -153,3 +153,8 @@ assert_eq("I", iter.Next());
 assert_eq("J", iter.Peek());
 iter.Seek(iter.Location() + 2);
 assert_eq("L", iter.Next());
+
+// tests Append
+iter = new Iterator("hello");
+iter = iter.Append(new Iterator("world"));
+assert_eq("helloworld", iter.Fold("", function(_xs, _x) { return _xs + _x }));

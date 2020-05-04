@@ -154,6 +154,21 @@ function Iterator(_generator) constructor {
 			}
 		}));
 	}
+	/// @desc Joins two iterators together, such that when the first ends the second begins.
+	/// @param {script} other The iterator to append onto this one.
+	Append = function(_other) {
+		var me = self;
+		return new Iterator(method({
+			a : me,
+			b : _other
+		}, function() {
+			if (a.IsEmpty()) {
+				return b.Next();
+			} else {
+				return a.Next();
+			}
+		}));
+	}
 	/// @desc Filters out elements of this iterator for which this predicate holds true.
 	/// @param {script} p The predicate to check.
 	Filter = function(_p) {

@@ -141,3 +141,13 @@ assert_eq(true, iter.Any(function(_x) { return _x == 150 }));
 iter = new Iterator(["hello", " ", "world"]);
 iter = iter.Concat();
 assert_eq("hello world", iter.Fold("", function(_xs, _x) { return _xs + _x }));
+
+// tests Seek and Reset
+iter = new Iterator(["I", "J", "K", "L"]);
+assert_eq("I", iter.Next());
+iter.Seek(2);
+assert_eq("K", iter.Next());
+assert_eq("L", iter.Peek());
+iter.Reset();
+assert_eq("I", iter.Next());
+assert_eq("J", iter.Peek());

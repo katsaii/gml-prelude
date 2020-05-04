@@ -27,6 +27,9 @@ function GridReader(_grid) {
 		return grid[# xord, yord];
 	}
 	__next__ = Read;
+	__seek__ = function(_pos) {
+		pos = _pos;
+	}
 }
 
 /// @desc Creates a reader which returns elements of a ds_list.
@@ -43,6 +46,9 @@ function ListReader(_list) {
 		return next;
 	}
 	__next__ = Read;
+	__seek__ = function(_pos) {
+		pos = _pos;
+	}
 }
 
 /// @desc Creates a reader which returns elements of a ds_queue.
@@ -105,6 +111,15 @@ function MapReader(_map) {
 		return [next_key, next_value];
 	}
 	__next__ = Read;
+	__seek__ = function(_pos) {
+		key = ds_map_find_first(map);
+		repeat (_pos) {
+			if (key == undefined) {
+				break;
+			}
+			key = ds_map_find_next(map, key);
+		}
+	}
 }
 
 /// @desc Creates a reader which returns elements of an array.
@@ -113,16 +128,20 @@ function ArrayReader(_array) constructor {
 	var count = array_length(_array);
 	array = array_create(count);
 	array_copy(array, 0, _array, 0, count);
-	len = count - 1;
-	pos = -1;
+	len = count;
+	pos = 0;
 	Read = function() {
 		if (pos >= len) {
 			return undefined;
 		}
+		var next = array[pos];
 		pos += 1;
-		return array[pos];
+		return next;
 	}
 	__next__ = Read;
+	__seek__ = function(_pos) {
+		pos = _pos;
+	}
 }
 
 /// @desc Creates a reader which returns individual characters of a string.
@@ -139,6 +158,9 @@ function CharacterReader(_str) constructor {
 		return string_char_at(str, pos);
 	}
 	__next__ = Read;
+	__seek__ = function(_pos) {
+		pos = _pos;
+	}
 }
 
 /// @desc Creates an iterator instance with this function.

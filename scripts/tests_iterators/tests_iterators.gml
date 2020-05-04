@@ -140,7 +140,7 @@ assert_eq(true, iter.Any(function(_x) { return _x == 150 }));
 // tests string concatenation
 iter = new Iterator(["hello", " ", "world"]);
 iter = iter.Concat();
-assert_eq("hello world", iter.Fold("", function(_xs, _x) { return _xs + _x }));
+assert_eq("hello world", iter.Sum(ty_string));
 
 // tests Seek and Reset
 iter = new Iterator(["I", "J", "K", "L"]);

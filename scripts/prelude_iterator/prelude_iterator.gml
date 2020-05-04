@@ -442,6 +442,13 @@ function Iterator(_ds) constructor {
 			return true;
 		}
 	}
+	/// @desc Calls a procedure for all elements of the iterator.
+	/// @param {script} f The procedure to call.
+	ForEach = function(_f) {
+		while not (IsEmpty()) {
+			_f(Next());
+		}
+	}
 	/// @desc Applies a left-associative operation to all elements of the iterator.
 	/// @param {value} y0 The default value.
 	/// @param {script} f The function to apply.
@@ -489,12 +496,39 @@ function Iterator(_ds) constructor {
 		}
 		return Fold(y0, f);
 	}
-	/// @desc Calls a procedure for all elements of the iterator.
-	/// @param {script} f The procedure to call.
-	ForEach = function(_f) {
-		while not (IsEmpty()) {
-			_f(Next());
+	/// @desc Adds elements of this iterator together.
+	/// @param {number} type The type of elements to sum.
+	Sum = function(_type) {
+		var y0, f;
+		if (_type == ty_real) {
+			y0 = 0;
+			f = function(_xs, _x) {
+				var val;
+				if (is_real(_x)) {
+					val = _x;
+				} else {
+					try {
+						val = real(_x);
+					} catch (_) {
+						throw "incompatible number type";
+					}
+				}
+				return _xs + val;
+			};
+		} else if (_type == ty_string) {
+			y0 = "";
+			f = function(_xs, _x) {
+				var a = _xs;
+				var b = _x;
+				if not (is_string(b)) {
+					b = string(b);
+				}
+				return a + b;
+			};
+		} else {
+			throw "unsupported sum type: must be `ty_real` or `ty_string`";
 		}
+		return Fold(y0, f);
 	}
 	/// @desc Converts an iterator into a string.
 	toString = function() {

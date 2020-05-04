@@ -2,7 +2,111 @@
  * Kat @Katsaii
  */
 
-/// @desc Creates a reader which returns individual elements of an array.
+/// @desc Creates a reader which returns elements of a ds_grid.
+/// @param {ds_grid} id The id of the ds_grid to read.
+/// @param {bool} [row_major=true] Whether to iterate in row-major order (`true`), versus column-major order (`false`).
+function GridReader(_grid) {
+	grid = _grid;
+	pos = 0;
+	rowMajor = argument_count > 1 ? argument[1] : true;
+	Read = function() {
+		var w = ds_grid_width(grid);
+		var h = ds_grid_height(grid);
+		if (pos >= w * h) {
+			return undefined;
+		}
+		var xord, yord;
+		if (rowMajor) {
+			xord = pos mod w;
+			yord = pos div w;
+		} else {
+			xord = pos div h;
+			yord = pos mod h;
+		}
+		pos += 1;
+		return grid[# xord, yord];
+	}
+}
+
+/// @desc Creates a reader which returns elements of a ds_list.
+/// @param {ds_list} id The id of the ds_list to read.
+function ListReader(_list) {
+	list = _list;
+	pos = 0;
+	Read = function() {
+		if (pos >= ds_list_size(list)) {
+			return undefined;
+		}
+		var next = list[| pos];
+		pos += 1;
+		return next;
+	}
+	__next__ = Read;
+}
+
+/// @desc Creates a reader which returns elements of a ds_queue.
+/// @param {ds_queue} id The id of the ds_queue to read.
+function QueueReader(_queue) {
+	queue = _queue;
+	Read = function() {
+		if (ds_queue_empty(queue)) {
+			return undefined;
+		}
+		return ds_queue_dequeue(queue);
+	}
+	__next__ = Read;
+}
+
+/// @desc Creates a reader which returns elements of a ds_stack.
+/// @param {ds_stack} id The id of the ds_stack to read.
+function StackReader(_stack) {
+	stack = _stack;
+	Read = function() {
+		if (ds_stack_empty(stack)) {
+			return undefined;
+		}
+		return ds_stack_pop(stack);
+	}
+	__next__ = Read;
+}
+
+/// @desc Creates a reader which returns elements of a ds_priority.
+/// @param {ds_priority} id The id of the ds_priority to read.
+/// @param {bool} [max=true] Whether to remove values by maximum priority (`true`), versus minimum priority (`false`).
+function PriorityQueueReader(_queue) {
+	queue = _queue;
+	takeMaximum = argument_count > 1 ? argument[1] : true;
+	Read = function() {
+		if (ds_priority_empty(queue)) {
+			return undefined;
+		}
+		return takeMaximum ? ds_priority_delete_max(queue) : ds_priority_delete_min(queue);
+	}
+	__next__ = Read;
+}
+
+/// @desc Creates a reader which returns key-value pairs of a ds_map.
+/// @param {ds_map} id The id of the ds_map to read.
+function MapReader(_map) {
+	map = _map;
+	key = ds_map_find_first(map);
+	Read = function() {
+		if (key == undefined) {
+			return undefined;
+		}
+		var next_key = key;
+		var next_value = map[? key];
+		if (next_value == undefined) {
+			key = undefined;
+			return undefined;
+		}
+		key = ds_map_find_next(map, key);
+		return [next_key, next_value];
+	}
+	__next__ = Read;
+}
+
+/// @desc Creates a reader which returns elements of an array.
 /// @param {array} variable The array to read.
 function ArrayReader(_array) constructor {
 	var count = array_length(_array);
@@ -13,10 +117,9 @@ function ArrayReader(_array) constructor {
 	Read = function() {
 		if (pos >= len) {
 			return undefined;
-		} else {
-			pos += 1;
-			return array[pos];
 		}
+		pos += 1;
+		return array[pos];
 	}
 	__next__ = Read;
 }
@@ -30,10 +133,9 @@ function CharacterReader(_str) constructor {
 	Read = function() {
 		if (pos >= len) {
 			return undefined;
-		} else {
-			pos += 1;
-			return string_char_at(str, pos);
 		}
+		pos += 1;
+		return string_char_at(str, pos);
 	}
 	__next__ = Read;
 }
@@ -50,17 +152,23 @@ function Iterator(_ds) constructor {
 		}
 		switch (ds_type) {
 		case ds_type_grid:
-			throw "unimplemented";
+			reader = new GridReader(_ds);
+			break;
 		case ds_type_list:
-			throw "unimplemented";
+			reader = new ListReader(_ds);
+			break;
 		case ds_type_queue:
-			throw "unimplemented";
+			reader = new QueueReader(_ds);
+			break;
 		case ds_type_stack:
-			throw "unimplemented";
+			reader = new StackReader(_ds);
+			break;
 		case ds_type_priority:
-			throw "unimplemented";
+			reader = new PriorityQueueReader(_ds);
+			break;
 		case ds_type_map:
-			throw "unimplemented";
+			reader = new MapReader(_ds);
+			break;
 		default:
 			throw "unknown ds_kind (" + string(ds_type) + ")";
 		}

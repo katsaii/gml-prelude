@@ -190,6 +190,8 @@ function Iterator(_ds) constructor {
 	}
 	/// @desc The generator function.
 	generator = reader.__next__;
+	/// @desc The seek function.
+	seeker = variable_struct_exists(reader, "__seek__") ? reader.__seek__ : undefined;
 	/// @desc The peeked value.
 	peeked = undefined;
 	/// @desc Whether a peeked value exists.
@@ -210,6 +212,17 @@ function Iterator(_ds) constructor {
 			peekedExists = true;
 		}
 		return peeked;
+	}
+	/// @desc Sets the current iterator location.
+	Seek = function(_pos) {
+		if (seeker == undefined) {
+			throw "invalid operation: iterator does not support seeking. implement a `__seek__` method to use this behaviour";
+		}
+		seeker(_pos);
+	}
+	/// @desc Resets the iterator.
+	Reset = function() {
+		Seek(0);
 	}
 	/// @desc Returns whether the iterator is empty.
 	IsEmpty = function() {

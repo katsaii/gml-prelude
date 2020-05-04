@@ -541,7 +541,7 @@ function Iterator(_ds) constructor {
 					throw "incompatible number type";
 				}
 			}
-			return _xs + val;
+			return _xs * val;
 		});
 	}
 	/// @desc Converts an iterator into a string.

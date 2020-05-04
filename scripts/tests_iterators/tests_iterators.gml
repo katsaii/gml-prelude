@@ -158,3 +158,9 @@ assert_eq("L", iter.Next());
 iter = new Iterator("hello");
 iter = iter.Append(new Iterator("world"));
 assert_eq("helloworld", iter.Fold("", function(_xs, _x) { return _xs + _x }));
+
+// tests Sum and Product
+iter = new Iterator("123920");
+assert_eq(17, iter.Sum(ty_real));
+iter.Reset();
+assert_eq(0, iter.Product(ty_real));

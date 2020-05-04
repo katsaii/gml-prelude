@@ -245,6 +245,7 @@ function Iterator(_ds) constructor {
 	/// @desc Resets the iterator.
 	Reset = function() {
 		Seek(0);
+		peekedExists = false; // discard peeked value if one exists
 	}
 	/// @desc Returns whether the iterator is empty.
 	IsEmpty = function() {

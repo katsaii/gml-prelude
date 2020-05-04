@@ -151,3 +151,5 @@ assert_eq("L", iter.Next());
 iter.Reset();
 assert_eq("I", iter.Next());
 assert_eq("J", iter.Peek());
+iter.Seek(iter.Location() + 2);
+assert_eq("L", iter.Next());

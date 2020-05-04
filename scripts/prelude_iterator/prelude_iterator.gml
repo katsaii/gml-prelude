@@ -162,11 +162,7 @@ function Iterator(_generator) constructor {
 			a : me,
 			b : _other
 		}, function() {
-			if (a.IsEmpty()) {
-				return b.Next();
-			} else {
-				return a.Next();
-			}
+			return a.IsEmpty() ? b.Next() : a.Next();
 		}));
 	}
 	/// @desc Filters out elements of this iterator for which this predicate holds true.
@@ -499,4 +495,16 @@ function iterator(_ds) {
 	} else {
 		return iterator_from_method(_ds);
 	}
+}
+
+/// @desc Returns whether a value is certainly possible to be iterated over.
+///       This does not mean the value cannot be iterated over, but just means that this value is
+///       definitely possible to iterate over 100% of the time. Some data structures can only be
+///       converted into iterators under certain circumstances, or cannot be inferred from the value
+///       alone; that is, ds_lists may be iterable, but because they are represented as number there
+///       is no way to distinguish a data structure from a number, a resource, or a script name.
+/// @param {value} value The value you want to check.
+function is_iterable(_value) {
+	return is_struct(_value) && variable_struct_exists(_value, "__next__") ||
+			is_array(_value) || is_string(_value);
 }

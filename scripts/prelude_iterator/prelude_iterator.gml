@@ -518,17 +518,34 @@ function Iterator(_ds) constructor {
 		} else if (_type == ty_string) {
 			y0 = "";
 			f = function(_xs, _x) {
-				var a = _xs;
-				var b = _x;
-				if not (is_string(b)) {
-					b = string(b);
+				var val;
+				if (is_string(_x)) {
+					val = _x;
+				} else {
+					val = string(_x);
 				}
-				return a + b;
+				return _xs + val;
 			};
 		} else {
 			throw "unsupported sum type: must be `ty_real` or `ty_string`";
 		}
 		return Fold(y0, f);
+	}
+	/// @desc Multiplies elements of this iterator together.
+	Product = function() {
+		return Fold(1, function(_xs, _x) {
+			var val;
+			if (is_real(_x)) {
+				val = _x;
+			} else {
+				try {
+					val = real(_x);
+				} catch (_) {
+					throw "incompatible number type";
+				}
+			}
+			return _xs + val;
+		});
 	}
 	/// @desc Converts an iterator into a string.
 	toString = function() {

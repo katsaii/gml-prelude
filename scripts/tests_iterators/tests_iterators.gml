@@ -147,7 +147,7 @@ iter = new Iterator(["I", "J", "K", "L"]);
 assert_eq("I", iter.Next());
 iter.Seek(2);
 assert_eq("K", iter.Next());
-assert_eq("L", iter.Peek());
+assert_eq("L", iter.Next());
 iter.Reset();
 assert_eq("I", iter.Next());
 assert_eq("J", iter.Peek());

@@ -238,7 +238,7 @@ function Iterator(_ds) constructor {
 	/// @desc Sets the current iterator location.
 	Seek = function(_pos) {
 		if (seeker == undefined) {
-			throw "invalid operation: iterator does not support seeking. implement a `__seek__` method to use this behaviour";
+			throw "invalid operation: iterator does not support seeking! implement a `__seek__` method to use this behaviour";
 		}
 		seeker(_pos);
 	}

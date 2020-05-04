@@ -278,3 +278,31 @@ var iter = new Iterator([["W", vk_up], ["A", vk_left], ["S", vk_down], ["D", vk_
 
 var array = iter.Collect(); // holds ["W", vk_up, "A", vk_left, "S", vk_down, "D", vk_right]
 ```
+
+### Indexable Iterators
+
+If your data structure has some internal state which determines "how far along" in the iteration it is, you might want to consider implementing a `__seek__` method. This method enables iterators which implement it to be indexed at arbitrary locations using the `Seek` method, and even totally reset using the `Reset` method. This is particularly useful if you would like to use the same iterator repetitively.
+
+```js
+var abc_reader = {
+	n : 0,
+	__next__ : function() {
+		var char = chr(65 + n);
+		n += 1;
+		return char;
+	},
+	__seek__ : function(_pos) {
+		n = _pos;
+	}
+}
+
+var iter = new Iterator(abc_reader);
+var a = iter.Next();      // holds "A"
+var b = iter.Next();      // holds "B"
+iter.Seek(6);
+var h = iter.Next();      // holds "H"
+var i = iter.Next();      // holds "I"
+iter.Reset();
+var also_a = iter.Next(); // holds "A"
+var also_b = iter.Next(); // holds "B"
+```

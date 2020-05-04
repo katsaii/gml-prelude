@@ -140,4 +140,4 @@ assert_eq(true, iter.Any(function(_x) { return _x == 150 }));
 // tests string concatenation
 iter = iterator(["hello", " ", "world"]);
 iter = iter.Concat();
-assert_eq("hello world", iter.Fold("", function(_acc, _x) { return _acc + _x }));
+assert_eq("hello world", iter.Fold("", function(_xs, _x) { return _xs + _x }));

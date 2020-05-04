@@ -221,7 +221,7 @@ function Iterator(_generator) constructor {
 		return acc;
 	}
 	/// @desc Converts an iterator into an array.
-	/// @param {value} [ds_type] The ds_type to Fold into. Can be one of: `ds_type_list`, `ds_type_queue`, or `ds_type_stack`.
+	/// @param {value} [type] The type to Fold into. Can be one of: `ds_type_list`, `ds_type_queue`, `ds_type_stack`.
 	Collect = function() {
 		var y0, f;
 		if (argument_count > 0) {
@@ -239,7 +239,7 @@ function Iterator(_generator) constructor {
 				f = method(undefined, ds_stack_push);
 				break;
 			default:
-				throw "unsupported ds type";
+				throw "unsupported collection type";
 			}
 		} else {
 			y0 = [];

@@ -2,12 +2,47 @@
  * Kat @Katsaii
  */
 
+/// @desc Creates a string reader which returns individual characters of a string.
+/// @param {string} str The string to read.
+function CharReader(_str) constructor {
+	str = _str;
+	count = string_length(str);
+	pos = 0;
+	Read = function() {
+		if (pos >= count) {
+			return undefined;
+		} else {
+			pos += 1;
+			return string_char_at(str, pos);
+		}
+	}
+	__next__ = Read;
+}
+
 /// @desc Creates an iterator instance with this function.
-/// @param {value} generator The data structure or value to generate values from.
-function Iterator(_generator) constructor {
+/// @param {value} variable The data structure or value to generate values from.
+/// @param {int} [ds_type] The type of data structure, if `variable` holds a data structure index.
+function Iterator(_ds) constructor {
+	var reader;
+	if (is_struct(_ds)) {
+		reader = _ds;
+	} else if (is_string(_ds)) {
+		reader = new CharReader(_ds);
+	} else {
+		throw "unsupported data structure";
+	}
+	if (variable_struct_exists(reader, "__iter__")) {
+		reader = reader.__iter__();
+	}
+	if not (variable_struct_exists(reader, "__next__")) {
+		throw "invalid struct format: requires `__next__` method";
+	}
+	/// @desc The generator function.
+	generator = reader.__next__;
+	/// @desc The peeked value.
 	peeked = undefined;
+	/// @desc Whether a peeked value exists.
 	peekedExists = false;
-	generator = _generator;
 	/// @desc Advance the iterator and return its Next value.
 	Next = function() {
 		if (peekedExists) {

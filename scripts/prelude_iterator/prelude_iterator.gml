@@ -2,14 +2,33 @@
  * Kat @Katsaii
  */
 
-/// @desc Creates a string reader which returns individual characters of a string.
+/// @desc Creates a reader which returns individual elements of an array.
+/// @param {array} variable The array to read.
+function ArrayReader(_array) constructor {
+	var count = array_length(_array);
+	array = array_create(count);
+	array_copy(array, 0, _array, 0, count);
+	len = count - 1;
+	pos = -1;
+	Read = function() {
+		if (pos >= len) {
+			return undefined;
+		} else {
+			pos += 1;
+			return array[pos];
+		}
+	}
+	__next__ = Read;
+}
+
+/// @desc Creates a reader which returns individual characters of a string.
 /// @param {string} str The string to read.
-function CharReader(_str) constructor {
+function CharacterReader(_str) constructor {
 	str = _str;
-	count = string_length(str);
+	len = string_length(str);
 	pos = 0;
 	Read = function() {
-		if (pos >= count) {
+		if (pos >= len) {
 			return undefined;
 		} else {
 			pos += 1;
@@ -24,10 +43,33 @@ function CharReader(_str) constructor {
 /// @param {int} [ds_type] The type of data structure, if `variable` holds a data structure index.
 function Iterator(_ds) constructor {
 	var reader;
-	if (is_struct(_ds)) {
+	if (argument_count > 1) {
+		var ds_type = argument[1];
+		if not (is_real(ds_type)) {
+			throw "incompatible data structure index: data structure indexes must be numbers";
+		}
+		switch (ds_type) {
+		case ds_type_grid:
+			throw "unimplemented";
+		case ds_type_list:
+			throw "unimplemented";
+		case ds_type_queue:
+			throw "unimplemented";
+		case ds_type_stack:
+			throw "unimplemented";
+		case ds_type_priority:
+			throw "unimplemented";
+		case ds_type_map:
+			throw "unimplemented";
+		default:
+			throw "unknown ds_kind (" + string(ds_type) + ")";
+		}
+	} if (is_struct(_ds)) {
 		reader = _ds;
+	} else if (is_array(_ds)) {
+		reader = new ArrayReader(_ds);
 	} else if (is_string(_ds)) {
-		reader = new CharReader(_ds);
+		reader = new CharacterReader(_ds);
 	} else {
 		throw "unsupported data structure";
 	}

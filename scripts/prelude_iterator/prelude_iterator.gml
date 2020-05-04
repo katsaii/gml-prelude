@@ -464,24 +464,21 @@ function Iterator(_ds) constructor {
 		return acc;
 	}
 	/// @desc Converts an iterator into an array.
-	/// @param {value} [type] The type to Fold into. Can be one of: `ds_type_list`, `ds_type_queue`, `ds_type_stack`.
+	/// @param {value} [ds_type] The type to Fold into. Can be one of: `ds_type_list`, `ds_type_queue`, `ds_type_stack`.
 	Collect = function() {
 		var y0, f;
 		if (argument_count > 0) {
-			switch (argument[0]) {
-			case ds_type_list:
+			var ds_type = argument[0];
+			if (ds_type == ds_type_list) {
 				y0 = ds_list_create();
 				f = method(undefined, ds_list_add);
-				break;
-			case ds_type_queue:
+			} else if (ds_type == ds_type_queue) {
 				y0 = ds_queue_create();
 				f = method(undefined, ds_queue_enqueue);
-				break;
-			case ds_type_stack:
+			} else if (ds_type == ds_type_stack) {
 				y0 = ds_stack_create();
 				f = method(undefined, ds_stack_push);
-				break;
-			default:
+			} else {
 				throw "unsupported collection type";
 			}
 		} else {

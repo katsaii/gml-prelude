@@ -120,23 +120,29 @@ function Iterator(_generator) constructor {
 		var me = self;
 		return new Iterator(method({
 			iter : me,
-			pos : 0,
-			len : 0,
-			val : []
+			inner : undefined
 		}, function() {
-			if (pos >= len) {
-				do {
-					val = iter.Next();
-					if not (is_array(val)) {
-						val = [val];
+			while (true) {
+				if (inner == undefined) {
+					if (iter.IsEmpty()) {
+						return undefined;
+					} else if (inner == undefined) {
+						// get new inner value
+						var val = iter.Next();
+						if (is_iterable(val)) {
+							inner = iterator(val);
+						} else {
+							return val;
+						}
 					}
-					len = array_length(val);
-				} until (len > 0);
-				pos = 0;
+				}
+				// consume inner iterator
+				if (inner.IsEmpty()) {
+					inner = undefined;
+				} else {
+					return inner.Next();
+				}
 			}
-			var i = pos;
-			pos += 1;
-			return val[i];
 		}));
 	}
 	/// @desc Applies a function to the generator of this iterator.

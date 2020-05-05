@@ -36,11 +36,11 @@ function array_find_index(_array, _value) {
 }
 
 /// @desc Applies a function to all elements of an array and returns a new array.
-/// @param {script} f The function to apply to all elements in the array.
 /// @param {array} variable The array to apply the function to.
+/// @param {script} f The function to apply to all elements in the array.
 /// @param {int} [n] The size of the output array.
 /// @param {int} [i=0] The index of the array to start at.
-function array_map(_f, _array) {
+function array_map(_array, _f) {
 	var count = argument_count > 2 ? argument[2] : array_length(_array);
 	var start = argument_count > 3 ? argument[3] : 0;
 	var clone = array_create(count);
@@ -51,11 +51,11 @@ function array_map(_f, _array) {
 }
 
 /// @desc Calls some procedure for each element of an array.
-/// @param {script} f The function to apply to all elements in the array.
 /// @param {array} variable The array to apply the function to.
+/// @param {script} f The function to apply to all elements in the array.
 /// @param {int} [n] The number of elements to loop through.
 /// @param {int} [i=0] The index of the array to start at.
-function array_foreach(_f, _array) {
+function array_foreach(_array, _f) {
 	var count = argument_count > 2 ? argument[2] : array_length(_array);
 	var start = argument_count > 3 ? argument[3] : 0;
 	for (var i = 0; i < count; i += 1) {
@@ -156,9 +156,9 @@ function struct_clone(_struct) {
 }
 
 /// @desc Calls some procedure for each key-value pairs of a struct.
-/// @param {script} f The function to apply.
 /// @param {struct} struct The struct to apply the function to.
-function struct_foreach(_f, _struct) {
+/// @param {script} f The function to apply.
+function struct_foreach(_struct, _f) {
 	var count = variable_struct_names_count(_struct);
 	var names = variable_struct_get_names(_struct);
 	for (var i = count - 1; i >= 0; i -= 1) {
@@ -169,15 +169,15 @@ function struct_foreach(_f, _struct) {
 }
 
 /// @desc Calls some procedure for each member name of a struct.
-/// @param {script} f The function to apply.
 /// @param {struct} struct The struct to apply the function to.
-function struct_foreach_key(_f, _struct) {
+/// @param {script} f The function to apply.
+function struct_foreach_key(_struct, _f) {
 	struct_foreach(_struct, function(_key, _) { _f(_key); });
 }
 
 /// @desc Calls some procedure for each member value of a struct.
-/// @param {script} f The function to apply.
 /// @param {struct} struct The struct to apply the function to.
-function struct_foreach_value(_f, _struct) {
+/// @param {script} f The function to apply.
+function struct_foreach_value(_struct, _f) {
 	struct_foreach(_struct, function(_, _value) { _f(_value); });
 }

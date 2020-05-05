@@ -17,6 +17,10 @@ function assert_eq(_expects, _got) {
 	show_debug_message((pass ? "PASS" : "FAIL") + " (" + callstack[1] + "): " + msg);
 }
 
+function assert_neq(_expects, _got) {
+	assert_true(_expects != _got);
+}
+
 function assert_true(_condition) {
 	assert_eq(true, _condition);
 }

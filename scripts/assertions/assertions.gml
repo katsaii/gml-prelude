@@ -16,3 +16,11 @@ function assert_eq(_expects, _got) {
 	var callstack = debug_get_callstack();
 	show_debug_message((pass ? "PASS" : "FAIL") + " (" + callstack[1] + "): " + msg);
 }
+
+function assert_true(_condition) {
+	assert_eq(true, _condition);
+}
+
+function assert_false(_condition) {
+	assert_eq(false, _condition);
+}

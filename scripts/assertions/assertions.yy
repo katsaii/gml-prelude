@@ -6,7 +6,7 @@
     "path": "folders/Tests.yy",
   },
   "resourceVersion": "1.0",
-  "name": "tests",
+  "name": "assertions",
   "tags": [],
   "resourceType": "GMScript",
 }

@@ -4,7 +4,7 @@
     {"id":{"name":"tests_iterators","path":"scripts/tests_iterators/tests_iterators.yy",},"order":5,},
     {"id":{"name":"tests_curry","path":"scripts/tests_curry/tests_curry.yy",},"order":2,},
     {"id":{"name":"prelude_iterator","path":"scripts/prelude_iterator/prelude_iterator.yy",},"order":0,},
-    {"id":{"name":"tests","path":"scripts/tests/tests.yy",},"order":3,},
+    {"id":{"name":"assertions","path":"scripts/assertions/assertions.yy",},"order":3,},
     {"id":{"name":"tests_function_pointers","path":"scripts/tests_function_pointers/tests_function_pointers.yy",},"order":4,},
     {"id":{"name":"prelude_higher_order","path":"scripts/prelude_higher_order/prelude_higher_order.yy",},"order":1,},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},"order":0,},

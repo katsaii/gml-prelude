@@ -22,7 +22,8 @@ assert_eq(-1, array_find_index(array, "X", 2, 3));
 // tests map
 array = ["A", "B", "C", "D"];
 assert_eq([65, 66, 67, 68], array_map(array, func_ptr(ord)));
-assert_eq(["Bizard", "Cizard"], array_map(array, function(_x) { return _x + "izard" }, 2, 1));
+var result = array_map(array, function(_x) { return _x + "izard" }, 2, 1);
+assert_eq(["Bizard", "Cizard"], result);
 
 // tests foreach
 array = [1, 2, 3];

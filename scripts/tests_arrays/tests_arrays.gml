@@ -50,3 +50,5 @@ var f = function(_xs, _x) {
 }
 assert_eq("fishward-alpha-beta-gamma", array_foldl(array, y0, f));
 assert_eq("alpha-beta-gamma-fishward", array_foldr(array, y0, f));
+assert_eq("fishward-beta-gamma", array_foldl(array, y0, f, 2, 1));
+assert_eq("alpha-beta-fishward", array_foldr(array, y0, f, 2));

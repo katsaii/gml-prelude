@@ -91,6 +91,19 @@ function array_foldl(_array, _y0, _f) {
 	return acc;
 }
 
+/// @desc Applies a right-associative operation to all elements of this array in sequence.
+/// @param {array} variable The array to consider.
+/// @param {value} y0 The default value.
+/// @param {script} f The function to apply.
+function array_foldr(_array, _y0, _f) {
+	var count = array_length(_array);
+	var acc = _y0;
+	for (var i = count - 1; i >= 0; i -= 1) {
+		acc = _f(_array[i], acc);
+	}
+	return acc;
+}
+
 /// @desc Clones a struct.
 /// @param {struct} struct The struct to clone.
 function struct_clone(_struct) {

@@ -172,12 +172,20 @@ function struct_foreach(_struct, _f) {
 /// @param {struct} struct The struct to apply the function to.
 /// @param {script} f The function to apply.
 function struct_foreach_key(_struct, _f) {
-	struct_foreach(_struct, function(_key, _) { _f(_key); });
+	struct_foreach(_struct, method({
+		f : _f
+	}, function(_key, _) {
+		f(_key);
+	}));
 }
 
 /// @desc Calls some procedure for each member value of a struct.
 /// @param {struct} struct The struct to apply the function to.
 /// @param {script} f The function to apply.
 function struct_foreach_value(_struct, _f) {
-	struct_foreach(_struct, function(_, _value) { _f(_value); });
+	struct_foreach(_struct, method({
+		f : _f
+	}, function(_, _value) {
+		f(_value);
+	}));
 }

@@ -22,11 +22,14 @@ function array_empty(_array) {
 /// @desc Returns the index of an element in an array. Returns `-1` if the value does not exist.
 /// @param {array} variable The array to search.
 /// @param {value} value The value to search for.
+/// @param {int} [n] The number of elements to loop through.
+/// @param {int} [i=0] The index of the array to start at.
 function array_find_index(_array, _value) {
-	var count = array_length(_array);
-	for (var i = 0; i < count; i += 1) {
-		if (_value == _array[i]) {
-			return i;
+	var count = argument_count > 2 ? argument[2] : array_length(_array);
+	var start = argument_count > 3 ? argument[3] : 0;
+	for (var i = count - 1; i >= 0; i -= 1) {
+		if (_value == _array[start + i]) {
+			return start + i;
 		}
 	}
 	return -1;
@@ -83,11 +86,14 @@ function array_is_subset(_a, _b) {
 /// @desc Checks whether an array contains a value.
 /// @param {array} variable The array to consider.
 /// @param {value} value The value to compare.
+/// @param {int} [n] The number of elements to loop through.
+/// @param {int} [i=0] The index of the array to start at.
 function array_contains(_array, _target) {
-	var count = array_length(_array);
+	var count = argument_count > 2 ? argument[2] : array_length(_array);
+	var start = argument_count > 3 ? argument[3] : 0;
 	var compare_arrays = is_array(_target);
 	for (var i = count - 1; i >= 0; i -= 1) {
-		var val = _array[i];
+		var val = _array[start + i];
 		if (compare_arrays && is_array(val) &&
 				array_equals(val, _target) ||
 				val == _target) {
@@ -101,11 +107,14 @@ function array_contains(_array, _target) {
 /// @param {array} variable The array to consider.
 /// @param {value} y0 The default value.
 /// @param {script} f The function to apply.
+/// @param {int} [n] The number of elements to loop through.
+/// @param {int} [i=0] The index of the array to start at.
 function array_foldl(_array, _y0, _f) {
-	var count = array_length(_array);
+	var count = argument_count > 2 ? argument[2] : array_length(_array);
+	var start = argument_count > 3 ? argument[3] : 0;
 	var acc = _y0;
 	for (var i = 0; i < count; i += 1) {
-		acc = _f(acc, _array[i]);
+		acc = _f(acc, _array[start + i]);
 	}
 	return acc;
 }
@@ -114,11 +123,14 @@ function array_foldl(_array, _y0, _f) {
 /// @param {array} variable The array to consider.
 /// @param {value} y0 The default value.
 /// @param {script} f The function to apply.
+/// @param {int} [n] The number of elements to loop through.
+/// @param {int} [i=0] The index of the array to start at.
 function array_foldr(_array, _y0, _f) {
-	var count = array_length(_array);
+	var count = argument_count > 2 ? argument[2] : array_length(_array);
+	var start = argument_count > 3 ? argument[3] : 0;
 	var acc = _y0;
 	for (var i = count - 1; i >= 0; i -= 1) {
-		acc = _f(_array[i], acc);
+		acc = _f(_array[start + i], acc);
 	}
 	return acc;
 }

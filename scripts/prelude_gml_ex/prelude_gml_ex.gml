@@ -78,6 +78,19 @@ function array_contains(_array, _target) {
 	return false;
 }
 
+/// @desc Applies a left-associative operation to all elements of this array in sequence.
+/// @param {array} variable The array to consider.
+/// @param {value} y0 The default value.
+/// @param {script} f The function to apply.
+function array_foldl(_array, _y0, _f) {
+	var count = array_length(_array);
+	var acc = _y0;
+	for (var i = 0; i < count; i += 1) {
+		acc = _f(acc, _array[i]);
+	}
+	return acc;
+}
+
 /// @desc Clones a struct.
 /// @param {struct} struct The struct to clone.
 function struct_clone(_struct) {

@@ -41,3 +41,12 @@ array_foreach(array, function(_x) {
 		break;
 	}
 });
+
+// tests folding
+array = ["alpha", "beta", "gamma"];
+var y0 = "fishward";
+var f = function(_xs, _x) {
+	return _xs + "-" + _x;
+}
+assert_eq("fishward-alpha-beta-gamma", array_foldl(array, y0, f));
+assert_eq("alpha-beta-gamma-fishward", array_foldr(array, y0, f));

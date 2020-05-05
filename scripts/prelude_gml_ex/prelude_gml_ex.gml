@@ -110,8 +110,8 @@ function array_contains(_array, _target) {
 /// @param {int} [n] The number of elements to loop through.
 /// @param {int} [i=0] The index of the array to start at.
 function array_foldl(_array, _y0, _f) {
-	var count = argument_count > 2 ? argument[2] : array_length(_array);
-	var start = argument_count > 3 ? argument[3] : 0;
+	var count = argument_count > 3 ? argument[3] : array_length(_array);
+	var start = argument_count > 4 ? argument[4] : 0;
 	var acc = _y0;
 	for (var i = 0; i < count; i += 1) {
 		acc = _f(acc, _array[start + i]);
@@ -126,8 +126,8 @@ function array_foldl(_array, _y0, _f) {
 /// @param {int} [n] The number of elements to loop through.
 /// @param {int} [i=0] The index of the array to start at.
 function array_foldr(_array, _y0, _f) {
-	var count = argument_count > 2 ? argument[2] : array_length(_array);
-	var start = argument_count > 3 ? argument[3] : 0;
+	var count = argument_count > 3 ? argument[3] : array_length(_array);
+	var start = argument_count > 4 ? argument[4] : 0;
 	var acc = _y0;
 	for (var i = count - 1; i >= 0; i -= 1) {
 		acc = _f(_array[start + i], acc);

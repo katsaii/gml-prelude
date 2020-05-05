@@ -13,6 +13,25 @@ function array_clone(_array) {
 	}
 }
 
+/// @desc Returns whether an array is empty.
+/// @param {array} variable The array to check.
+function array_empty(_array) {
+	return array_length(_array) < 1;
+}
+
+/// @desc Returns the index of an element in an array. Returns `-1` if the value does not exist.
+/// @param {array} variable The array to search.
+/// @param {value} value The value to search for.
+function array_find_index(_array, _value) {
+	var count = array_length(_array);
+	for (var i = 0; i < count; i += 1) {
+		if (_value == _array[i]) {
+			return i;
+		}
+	}
+	return -1;
+}
+
 /// @desc Applies a function to all elements of an array and returns a new array.
 /// @param {script} f The function to apply to all elements in the array.
 /// @param {array} variable The array to apply the function to.

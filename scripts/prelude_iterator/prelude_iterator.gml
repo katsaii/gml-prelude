@@ -377,37 +377,6 @@ function Iterator(_ds) constructor {
 	enumerate = function() {
 		return zip(range(0, infinity));
 	}
-	/// @desc Flattens a single level of an iterator which returns arrays.
-	concat = function() {
-		var me = self;
-		return new Iterator({
-			iter : me,
-			inner : undefined,
-			__next__ : function() {
-				while (true) {
-					if (inner == undefined) {
-						if (iter.isEmpty()) {
-							return undefined;
-						} else if (inner == undefined) {
-							// get new inner value
-							var val = iter.next();
-							if (is_struct(val) && instanceof(val) == "Iterator") {
-								inner = val;
-							} else {
-								return val;
-							}
-						}
-					}
-					// consume inner iterator
-					if (inner.isEmpty()) {
-						inner = undefined;
-					} else {
-						return inner.next();
-					}
-				}
-			}
-		});
-	}
 	/// @desc Applies a function to the generator of this iterator.
 	/// @param {script} f The function to apply.
 	map = function(_f) {

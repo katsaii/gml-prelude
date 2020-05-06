@@ -35,12 +35,6 @@ assert_eq([[1, "B"], [2, "C"], [3, "D"], [4, "D"]], iter.take(4));
 assert_eq([[5, "F"], [6, "K"]], iter.collect());
 assert_eq(undefined, iter.next());
 
-// tests concatenation
-iter = new Iterator(["X", "Y", "Z"]);
-iter = iter.enumerate();
-iter = iter.concat();
-assert_eq([0, "X", 1, "Y", 2, "Z"], iter.collect());
-
 // tests mapping
 iter = new Iterator([0, 1, 2, 3, 4]);
 iter = iter.map(function(_x) { return _x * _x; });
@@ -63,14 +57,10 @@ assert_eq([1, 2, -1, -1, -2], iter.collect());
 // tests folding and other combinations of operations
 iter = new Iterator(["A", "B", "C"]);
 iter = iter.map(function(_x) { return [ord(_x), _x]; });
-iter = iter.concat();
 ds = iter.collect(ds_type_stack);
-assert_eq("C", ds_stack_pop(ds));
-assert_eq(67, ds_stack_pop(ds));
-assert_eq("B", ds_stack_pop(ds));
-assert_eq(66, ds_stack_pop(ds));
-assert_eq("A", ds_stack_pop(ds));
-assert_eq(65, ds_stack_pop(ds));
+assert_eq([67, "C"], ds_stack_pop(ds));
+assert_eq([66, "B"], ds_stack_pop(ds));
+assert_eq([65, "A"], ds_stack_pop(ds));
 ds_stack_destroy(ds);
 
 // tests forEach
@@ -139,7 +129,6 @@ assert_eq(true, iter.some(function(_x) { return _x == 150 }));
 
 // tests string concatenation
 iter = new Iterator(["hello", " ", "world"]);
-iter = iter.concat();
 assert_eq("hello world", iter.sum(ty_string));
 
 // tests seek and reset

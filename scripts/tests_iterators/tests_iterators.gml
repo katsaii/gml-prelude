@@ -176,3 +176,8 @@ assert_eq(undefined, iter.next());
 iter = new Iterator(new WordReader("a:1,b:2,c:3", ","));
 iter = iter.map(function(_x) { return new Iterator(new WordReader(_x, ":")).collect() });
 assert_eq([["a", "1"], ["b", "2"], ["c", "3"]], iter.collect());
+
+// tests iterate
+iter = iterate(0, function(_x) { return _x + 1 });
+iter.drop(10);
+assert_eq([10, 11, 12, 13, 14], iter.take(5));

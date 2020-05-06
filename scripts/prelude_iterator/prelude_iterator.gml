@@ -583,3 +583,18 @@ function range(_first, _last) {
 		}
 	});
 }
+
+/// @desc Produces an iterator which repetitively applies some function to an initial value.
+/// @param {value} value The first element of the sequence.
+/// @param {script} f The function to apply.
+function iterate(_first, _f) {
+	return new Iterator({
+		acc : _first,
+		f : _f,
+		__next__ : function() {
+			var val = acc;
+			acc = f(acc);
+			return val;
+		}
+	});
+}

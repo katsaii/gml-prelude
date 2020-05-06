@@ -577,6 +577,9 @@ function range(_first, _last) {
 			var val = pos;
 			pos += step;
 			return val;
+		},
+		__seek__ : function(_pos) {
+			pos = _pos;
 		}
 	});
 }

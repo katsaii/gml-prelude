@@ -163,6 +163,37 @@ function CharacterReader(_str) constructor {
 	}
 }
 
+/// @desc Creates a reader which returns slices of a string separated by a delimiter.
+/// @param {string} str The string to read.
+/// @param {string} delimiter The string to use as a delimiter.
+function WordReader(_str, _delimiter) constructor {
+	str = _str;
+	delimiter = _delimiter;
+	len = string_length(delimiter);
+	pos = 1;
+	read = function() {
+		if (str == undefined) {
+			return undefined;
+		}
+		var val;
+		if (str == "") {
+			val = str;
+			str = undefined;
+		} else {
+			var count = string_pos(delimiter, str) - pos;
+			if (count >= 0) {
+				val = string_copy(str, pos, count);
+				str = string_delete(str, pos, count + len);
+			} else {
+				val = str;
+				str = "";
+			}
+		}
+		return val;
+	}
+	__next__ = read;
+}
+
 /// @desc Creates an iterator instance with this function.
 /// @param {value} variable The data structure or value to generate values from.
 /// @param {int} [ds_type] The type of data structure, if `variable` holds a data structure index.

@@ -100,65 +100,65 @@ This section details basic operations you can perform on iterators to generate v
 
 ### One at a Time
 
-Once you have an iterator, you can start generating values using `Next` and `Peek`.
+Once you have an iterator, you can start generating values using `next` and `peek`.
 
 #### Next
 
-The `Next` method will return the next generated value and advance the iterator:
+The `next` method will return the next generated value and advance the iterator:
 
 ```js
 var iter = new Iterator(["A", "B", "C", "D"]);
 
-var a = iter.Next(); // holds "A"
-var b = iter.Next(); // holds "B"
-var c = iter.Next(); // holds "C"
+var a = iter.next(); // holds "A"
+var b = iter.next(); // holds "B"
+var c = iter.next(); // holds "C"
 ```
 
 #### Peek
 
-The `Peek` function will return the next generated value, but will not advance the iterator.
+The `peek` function will return the next generated value, but will not advance the iterator.
 
 ```js
 var iter = new Iterator(["A", "B", "C", "D"]);
 
-var a_peeked = iter.Peek(); // holds "A"
-var a = iter.Next();        // holds "A"
-var b = iter.Next();        // holds "B"
+var a_peeked = iter.peek(); // holds "A"
+var a = iter.next();        // holds "A"
+var b = iter.next();        // holds "B"
 ```
 
 ### Many at Once
 
-Other important operations include `Take` and `Drop`.
+Other important operations include `take` and `drop`.
 
 #### Take
 
-The `Take` method accepts a number `n` as an argument, and will generate `n`-many values and insert them into an array:
+The `take` method accepts a number `n` as an argument, and will generate `n`-many values and insert them into an array:
 
 ```js
 var iter = range(1, 5);
 
-var array = iter.Take(3); // holds [1, 2, 3]
+var array = iter.take(3); // holds [1, 2, 3]
 ```
 
 #### Drop
 
-The `Drop` method takes a number `n` as an argument, and will skip that number of generated values:
+The `drop` method takes a number `n` as an argument, and will skip that number of generated values:
 
 ```js
 var iter = range(2, 8);
 
-iter.Drop(2);             // drops [2, 3]
-var array = iter.Take(3); // holds [4, 5, 6]
+iter.drop(2);             // drops [2, 3]
+var array = iter.take(3); // holds [4, 5, 6]
 ```
 
 ### Collecting Iterators
 
-If you require your iterator to be converted into a collection, such as an array or a ds_list, then this is possible with the `Collect` method. To collect an iterator into an array, simply call the method out-right:
+If you require your iterator to be converted into a collection, such as an array or a ds_list, then this is possible with the `collect` method. To collect an iterator into an array, simply call the method out-right:
 
 ```js
 var iter = range(1, 5);
 
-var array = iter.Collect(); // holds [1, 2, 3, 4, 5]
+var array = iter.collect(); // holds [1, 2, 3, 4, 5]
 ```
 
 Howeverm, if you want to convert the iterator into an alternative data structure, such as a ds_list or a ds_stack, you should pass the `ds_type_` as a parameter. For example, to collect an iterator into a stack:
@@ -166,7 +166,7 @@ Howeverm, if you want to convert the iterator into an alternative data structure
 ```js
 var iter = new Iterator(["A", "B", "C"]);
 
-var stack = iter.Collect(ds_type_stack);
+var stack = iter.collect(ds_type_stack);
 ```
 
 Currently, the only supported built-in collections are: arrays, `ds_type_list`, `ds_type_queue`, and `ds_type_stack`.
@@ -191,16 +191,16 @@ var str = string(iter); // holds "[1, 2, 3]"
 
 ### Iteration
 
-The main idea of iterators is to help generalise iteration, right? This library contains two important methods for iterating through iterators called `ForEach` and `Fold`.
+The main idea of iterators is to help generalise iteration, right? This library contains two important methods for iterating through iterators called `forEach` and `fold`.
 
 #### ForEach
 
-The `ForEach` method takes a procedure `f` as a parameter and calls it for every element of the iterator:
+The `forEach` method takes a procedure `f` as a parameter and calls it for every element of the iterator:
 
 ```js
 var iter = new Iterator([1, "a", false]);
 
-iter.ForEach(function(_x) {
+iter.forEach(function(_x) {
 	show_message(_x); // prints 1
 	                  //        "a"
 	                  //        false
@@ -209,7 +209,7 @@ iter.ForEach(function(_x) {
 
 #### Fold
 
-Alternatively, the `Fold` method captures the concept of applying some binary operation to all elements of the iterator. Let's say you have an array of strings `["hello", " ", "world"]`. To concatenate these together we could use the `+` operator like so:
+Alternatively, the `fold` method captures the concept of applying some binary operation to all elements of the iterator. Let's say you have an array of strings `["hello", " ", "world"]`. To concatenate these together we could use the `+` operator like so:
 
 ```js
 var array = ["hello", " ", "world"];
@@ -223,12 +223,12 @@ This idea of applying `+` over and over again is what fold achieves. Therefore, 
 var array = ["hello", " ", "world"];
 var iter = new Iterator(array);
 
-var hello_world = iter.Fold("", function(_left, _right) {
+var hello_world = iter.fold("", function(_left, _right) {
 	return _left + _right;
 });
 ```
 
-Of course, this is a very basic case. But now imagine you have an array which is 100 values long, or an array which you don't know the size of, it becomes a lot trickier to add all items in that array together. That is why `Fold` is so useful; it abstracts away the boilerplate of `for` loops and accumulators.
+Of course, this is a very basic case. But now imagine you have an array which is 100 values long, or an array which you don't know the size of, it becomes a lot trickier to add all items in that array together. That is why `fold` is so useful; it abstracts away the boilerplate of `for` loops and accumulators.
 
 ## Advanced Iterator Use
 
@@ -242,46 +242,46 @@ All of this is achieved through lazy evaluation (also known as [call-by-need](ht
 
 ### Iterator Operations
 
-Iterators can be stacked with multiple operations with barely any overhead or complexity from using raw arrays. Some examples of operations are `Zip`, `Map`, and `Concat`.
+Iterators can be stacked with multiple operations with barely any overhead or complexity from using raw arrays. Some examples of operations are `zip`, `map`, and `concat`.
 
 #### Zip
 
-The `Zip` method takes a second iterator as an argument, and returns a new iterator which generate pairs of values that correspond to the generated values of each iterator:
+The `zip` method takes a second iterator as an argument, and returns a new iterator which generate pairs of values that correspond to the generated values of each iterator:
 
 ```js
 var a = new Iterator("hello");
 var b = new Iterator("world");
 
-var iter = a.Zip(b);
+var iter = a.zip(b);
 
-var array = iter.Collect(); // holds [["w", "h"], ["o", "e"], ["r", "l"], ["l", "l"], ["d", "o"]]
+var array = iter.collect(); // holds [["w", "h"], ["o", "e"], ["r", "l"], ["l", "l"], ["d", "o"]]
 ```
 
 #### Map
 
-The `Map` method takes a function as an argument, and returns a new iterator which applies that function to each generated value of the previous iterator:
+The `map` method takes a function as an argument, and returns a new iterator which applies that function to each generated value of the previous iterator:
 
 ```js
 var iter = range(1, infinity);
-    iter = iter.Map(function(_x) { return _x * _x });
+    iter = iter.map(function(_x) { return _x * _x });
 
-var array = iter.Take(4); // holds [1, 4, 9, 16]
+var array = iter.take(4); // holds [1, 4, 9, 16]
 ```
 
 #### Concat
 
-The `Concat` method converts an iterator wich generates arrays into an iterator which also iterates over those arrays; that is, a two-dimensional array can be flattened into a single-dimensional array:
+The `concat` method converts an iterator wich generates arrays into an iterator which also iterates over those arrays; that is, a two-dimensional array can be flattened into a single-dimensional array:
 
 ```js
 var iter = new Iterator([["W", vk_up], ["A", vk_left], ["S", vk_down], ["D", vk_right]]);
-    iter = iter.Concat();
+    iter = iter.concat();
 
-var array = iter.Collect(); // holds ["W", vk_up, "A", vk_left, "S", vk_down, "D", vk_right]
+var array = iter.collect(); // holds ["W", vk_up, "A", vk_left, "S", vk_down, "D", vk_right]
 ```
 
 ### Indexable Iterators
 
-If your data structure has some internal state which determines "how far along" in the iteration it is, you might want to consider implementing a `__seek__` method. This method enables iterators which implement it to be indexed at arbitrary locations using the `Seek` method, and even totally reset using the `Reset` method. This is particularly useful if you would like to use the same iterator repetitively.
+If your data structure has some internal state which determines "how far along" in the iteration it is, you might want to consider implementing a `__seek__` method. This method enables iterators which implement it to be indexed at arbitrary locations using the `seek` method, and even totally reset using the `reset` method. This is particularly useful if you would like to use the same iterator repetitively.
 
 ```js
 var abc_reader = {
@@ -297,12 +297,12 @@ var abc_reader = {
 }
 
 var iter = new Iterator(abc_reader);
-var a = iter.Next();      // holds "A"
-var b = iter.Next();      // holds "B"
-iter.Seek(6);
-var h = iter.Next();      // holds "H"
-var i = iter.Next();      // holds "I"
-iter.Reset();
-var also_a = iter.Next(); // holds "A"
-var also_b = iter.Next(); // holds "B"
+var a = iter.next();      // holds "A"
+var b = iter.next();      // holds "B"
+iter.seek(6);
+var h = iter.next();      // holds "H"
+var i = iter.next();      // holds "I"
+iter.reset();
+var also_a = iter.next(); // holds "A"
+var also_b = iter.next(); // holds "B"
 ```

@@ -85,13 +85,13 @@ function curry(_f) {
 	}
 	return method({
 		f : _f,
-		closure_count : count,
+		len : count,
 		closure : args
 	}, function() {
-		var args = array_create(closure_count + argument_count);
-		array_copy(args, 0, closure, 0, closure_count);
+		var args = array_create(len + argument_count);
+		array_copy(args, 0, closure, 0, len);
 		for (var i = argument_count - 1; i >= 0; i -= 1) {
-			args[@ closure_count + i] = argument[i];
+			args[@ len + i] = argument[i];
 		}
 		return script_execute_array(f, args);
 	});

@@ -9,7 +9,7 @@ function GridReader(_grid) {
 	grid = _grid;
 	pos = 0;
 	rowMajor = argument_count > 1 ? argument[1] : true;
-	Read = function() {
+	read = function() {
 		var w = ds_grid_width(grid);
 		var h = ds_grid_height(grid);
 		if (pos >= w * h) {
@@ -26,7 +26,7 @@ function GridReader(_grid) {
 		pos += 1;
 		return grid[# xord, yord];
 	}
-	__next__ = Read;
+	__next__ = read;
 	__seek__ = function(_pos) {
 		pos = _pos;
 	}
@@ -37,7 +37,7 @@ function GridReader(_grid) {
 function ListReader(_list) {
 	list = _list;
 	pos = 0;
-	Read = function() {
+	read = function() {
 		if (pos >= ds_list_size(list)) {
 			return undefined;
 		}
@@ -45,7 +45,7 @@ function ListReader(_list) {
 		pos += 1;
 		return val;
 	}
-	__next__ = Read;
+	__next__ = read;
 	__seek__ = function(_pos) {
 		pos = _pos;
 	}
@@ -55,26 +55,26 @@ function ListReader(_list) {
 /// @param {ds_queue} id The id of the ds_queue to read.
 function QueueReader(_queue) {
 	queue = _queue;
-	Read = function() {
+	read = function() {
 		if (ds_queue_empty(queue)) {
 			return undefined;
 		}
 		return ds_queue_dequeue(queue);
 	}
-	__next__ = Read;
+	__next__ = read;
 }
 
 /// @desc Creates a reader which returns elements of a ds_stack.
 /// @param {ds_stack} id The id of the ds_stack to read.
 function StackReader(_stack) {
 	stack = _stack;
-	Read = function() {
+	read = function() {
 		if (ds_stack_empty(stack)) {
 			return undefined;
 		}
 		return ds_stack_pop(stack);
 	}
-	__next__ = Read;
+	__next__ = read;
 }
 
 /// @desc Creates a reader which returns elements of a ds_priority.
@@ -83,13 +83,13 @@ function StackReader(_stack) {
 function PriorityQueueReader(_queue) {
 	queue = _queue;
 	takeMaximum = argument_count > 1 ? argument[1] : true;
-	Read = function() {
+	read = function() {
 		if (ds_priority_empty(queue)) {
 			return undefined;
 		}
 		return takeMaximum ? ds_priority_delete_max(queue) : ds_priority_delete_min(queue);
 	}
-	__next__ = Read;
+	__next__ = read;
 }
 
 /// @desc Creates a reader which returns key-value pairs of a ds_map.
@@ -97,7 +97,7 @@ function PriorityQueueReader(_queue) {
 function MapReader(_map) {
 	map = _map;
 	key = ds_map_find_first(map);
-	Read = function() {
+	read = function() {
 		if (key == undefined) {
 			return undefined;
 		}
@@ -110,7 +110,7 @@ function MapReader(_map) {
 		key = ds_map_find_next(map, key);
 		return [next_key, next_value];
 	}
-	__next__ = Read;
+	__next__ = read;
 	__seek__ = function(_pos) {
 		key = ds_map_find_first(map);
 		repeat (_pos) {
@@ -130,7 +130,7 @@ function ArrayReader(_array) constructor {
 	array_copy(array, 0, _array, 0, count);
 	len = count;
 	pos = 0;
-	Read = function() {
+	read = function() {
 		if (pos >= len) {
 			return undefined;
 		}
@@ -138,7 +138,7 @@ function ArrayReader(_array) constructor {
 		pos += 1;
 		return val;
 	}
-	__next__ = Read;
+	__next__ = read;
 	__seek__ = function(_pos) {
 		pos = _pos;
 	}
@@ -150,14 +150,14 @@ function CharacterReader(_str) constructor {
 	str = _str;
 	len = string_length(str);
 	pos = 0;
-	Read = function() {
+	read = function() {
 		if (pos >= len) {
 			return undefined;
 		}
 		pos += 1;
 		return string_char_at(str, pos);
 	}
-	__next__ = Read;
+	__next__ = read;
 	__seek__ = function(_pos) {
 		pos = _pos;
 	}
@@ -220,8 +220,8 @@ function Iterator(_ds) constructor {
 	peeked = undefined;
 	/// @desc Whether a peeked value exists.
 	peekedExists = false;
-	/// @desc Advance the iterator and return its Next value.
-	Next = function() {
+	/// @desc Advance the iterator and return its next value.
+	next = function() {
 		if (peekedExists) {
 			peekedExists = false;
 			return peeked;
@@ -230,8 +230,8 @@ function Iterator(_ds) constructor {
 			return generator();
 		}
 	}
-	/// @desc Peek at the Next value in the iterator.
-	Peek = function() {
+	/// @desc peek at the next value in the iterator.
+	peek = function() {
 		if not (peekedExists) {
 			peeked = generator();
 			peekedExists = true;
@@ -239,11 +239,11 @@ function Iterator(_ds) constructor {
 		return peeked;
 	}
 	/// @desc Returns the current iterator location.
-	Location = function(_pos) {
+	location = function(_pos) {
 		return pos;
 	}
 	/// @desc Sets the current iterator location.
-	Seek = function(_pos) {
+	seek = function(_pos) {
 		if (seeker == undefined) {
 			throw "invalid operation: iterator does not support seeking! implement a `__seek__` method to use this behaviour";
 		}
@@ -252,101 +252,101 @@ function Iterator(_ds) constructor {
 		peekedExists = false; // discard peeked value if one exists
 	}
 	/// @desc Resets the iterator.
-	Reset = function() {
-		Seek(0);
+	reset = function() {
+		seek(0);
 	}
 	/// @desc Returns whether the iterator is empty.
-	IsEmpty = function() {
-		return Peek() == undefined;
+	isEmpty = function() {
+		return peek() == undefined;
 	}
-	/// @desc Takes the First `n` values from this iterator and puts them into an array.
-	/// @param {int} n The number of elements to Take.
-	Take = function(_count) {
+	/// @desc Takes the first `n` values from this iterator and puts them into an array.
+	/// @param {int} n The number of elements to take.
+	take = function(_count) {
 		var array = array_create(_count);
 		for (var i = 0; i < _count; i += 1) {
-			array[@ i] = Next();
+			array[@ i] = next();
 		}
 		return array;
 	}
 	/// @desc Takes values and inserts them into an array whilst some predicate holds.
 	/// @param {script} p The predicate to check.
-	TakeWhile = function(_p) {
+	takeWhile = function(_p) {
 		var array = [];
 		for (var i = 0; true; i += 1) {
-			if (IsEmpty() || !_p(Peek())) {
+			if (isEmpty() || !_p(peek())) {
 				break;
 			}
-			array[@ i] = Next();
+			array[@ i] = next();
 		}
 		return array;
 	}
 	/// @desc Takes values and inserts them into an array until some predicate holds.
 	/// @param {script} p The predicate to check.
-	TakeUntil = function(_p) {
+	takeUntil = function(_p) {
 		var array = [];
 		for (var i = 0; true; i += 1) {
-			if (IsEmpty() || _p(Peek())) {
+			if (isEmpty() || _p(peek())) {
 				break;
 			}
-			array[@ i] = Next();
+			array[@ i] = next();
 		}
 		return array;
 	}
-	/// @desc Drops the First `n` values from this iterator.
-	/// @param {int} n The number of elements to Drop.
-	Drop = function(_count) {
+	/// @desc Drops the first `n` values from this iterator.
+	/// @param {int} n The number of elements to drop.
+	drop = function(_count) {
 		repeat (_count) {
-			Next();
+			next();
 		}
 	}
 	/// @desc Drops values whilst some predicate holds.
 	/// @param {script} p The predicate to check.
-	DropWhile = function(_p) {
+	dropWhile = function(_p) {
 		while (true) {
-			if (IsEmpty() || !_p(Peek())) {
+			if (isEmpty() || !_p(peek())) {
 				break;
 			}
-			Next();
+			next();
 		}
 	}
 	/// @desc Drops values until some predicate holds.
 	/// @param {script} p The predicate to check.
-	DropUntil = function(_p) {
+	dropUntil = function(_p) {
 		while (true) {
-			if (IsEmpty() || _p(Peek())) {
+			if (isEmpty() || _p(peek())) {
 				break;
 			}
-			Next();
+			next();
 		}
 	}
-	/// @desc Returns the First element where this predicate holds.
+	/// @desc Returns the first element where this predicate holds.
 	/// @param {script} p The predicate to check.
-	First = function(_p) {
-		DropUntil(_p);
-		return Next();
+	first = function(_p) {
+		dropUntil(_p);
+		return next();
 	}
 	/// @desc Zips this iterator together with another.
 	/// @param {Iterator} other The iterator to join this with.
-	Zip = function(_other) {
+	zip = function(_other) {
 		var me = self;
 		return new Iterator({
 			a : _other,
 			b : me,
 			__next__ : function() {
-				if (a.IsEmpty() || b.IsEmpty()) {
+				if (a.isEmpty() || b.isEmpty()) {
 					return undefined;
 				} else {
-					return [a.Next(), b.Next()];
+					return [a.next(), b.next()];
 				}
 			}
 		});
 	}
 	/// @desc Enumerates this iterator.
-	Enumerate = function() {
-		return Zip(range(0, infinity));
+	enumerate = function() {
+		return zip(range(0, infinity));
 	}
 	/// @desc Flattens a single level of an iterator which returns arrays.
-	Concat = function() {
+	concat = function() {
 		var me = self;
 		return new Iterator({
 			iter : me,
@@ -354,11 +354,11 @@ function Iterator(_ds) constructor {
 			__next__ : function() {
 				while (true) {
 					if (inner == undefined) {
-						if (iter.IsEmpty()) {
+						if (iter.isEmpty()) {
 							return undefined;
 						} else if (inner == undefined) {
 							// get new inner value
-							var val = iter.Next();
+							var val = iter.next();
 							if (is_struct(val) && variable_struct_exists(val, "__next__") ||
 									is_array(val) || is_string(val)) {
 								inner = new Iterator(val);
@@ -368,10 +368,10 @@ function Iterator(_ds) constructor {
 						}
 					}
 					// consume inner iterator
-					if (inner.IsEmpty()) {
+					if (inner.isEmpty()) {
 						inner = undefined;
 					} else {
-						return inner.Next();
+						return inner.next();
 					}
 				}
 			}
@@ -379,35 +379,35 @@ function Iterator(_ds) constructor {
 	}
 	/// @desc Applies a function to the generator of this iterator.
 	/// @param {script} f The function to apply.
-	Map = function(_f) {
+	map = function(_f) {
 		var me = self;
 		return new Iterator({
 			iter : me,
 			f : _f,
 			__next__ : function() {
-				if (iter.IsEmpty()) {
+				if (iter.isEmpty()) {
 					return undefined;
 				} else {
-					return f(iter.Next());
+					return f(iter.next());
 				}
 			}
 		});
 	}
 	/// @desc Joins two iterators together, such that when the first ends the second begins.
 	/// @param {script} other The iterator to append onto this one.
-	Append = function(_other) {
+	append = function(_other) {
 		var me = self;
 		return new Iterator({
 			a : me,
 			b : _other,
 			__next__ : function() {
-				return a.IsEmpty() ? b.Next() : a.Next();
+				return a.isEmpty() ? b.next() : a.next();
 			}
 		});
 	}
 	/// @desc Filters out elements of this iterator for which this predicate holds true.
 	/// @param {script} p The predicate to check.
-	Filter = function(_p) {
+	filter = function(_p) {
 		var me = self;
 		return new Iterator({
 			iter : me,
@@ -415,10 +415,10 @@ function Iterator(_ds) constructor {
 			__next__ : function() {
 				var val;
 				do {
-					if (iter.IsEmpty()) {
+					if (iter.isEmpty()) {
 						return undefined;
 					}
-					val = iter.Next();
+					val = iter.next();
 				} until (p(val));
 				return val;
 			}
@@ -426,35 +426,35 @@ function Iterator(_ds) constructor {
 	}
 	/// @desc Generates values until the iterator is empty, or until an element does not satisfy the predicate.
 	/// @param {script} p The predicate to check.
-	Each = function(_p) {
-		DropWhile(_p);
-		return IsEmpty();
+	each = function(_p) {
+		dropWhile(_p);
+		return isEmpty();
 	}
 	/// @desc Generates values until the iterator is empty, or until an element satisfies the predicate.
 	/// @param {script} p The predicate to check.
-	Some = function(_p) {
-		DropUntil(_p);
-		if (IsEmpty()) {
+	some = function(_p) {
+		dropUntil(_p);
+		if (isEmpty()) {
 			return false;
 		} else {
-			Next();
+			next();
 			return true;
 		}
 	}
 	/// @desc Calls a procedure for all elements of the iterator.
 	/// @param {script} f The procedure to call.
-	ForEach = function(_f) {
-		while not (IsEmpty()) {
-			_f(Next());
+	forEach = function(_f) {
+		while not (isEmpty()) {
+			_f(next());
 		}
 	}
 	/// @desc Applies a left-associative operation to all elements of the iterator.
 	/// @param {value} y0 The default value.
 	/// @param {script} f The function to apply.
-	Fold = function(_y0, _f) {
+	fold = function(_y0, _f) {
 		var acc = _y0;
-		while not (IsEmpty()) {
-			var result = _f(acc, Next());
+		while not (isEmpty()) {
+			var result = _f(acc, next());
 			if (result != undefined) {
 				// support for built-in functions, such as `ds_list_add`, which return `undefined`
 				acc = result;
@@ -463,8 +463,8 @@ function Iterator(_ds) constructor {
 		return acc;
 	}
 	/// @desc Converts an iterator into an array.
-	/// @param {value} [ds_type] The type to Fold into. Can be one of: `ds_type_list`, `ds_type_queue`, `ds_type_stack`.
-	Collect = function() {
+	/// @param {value} [ds_type] The type to fold into. Can be one of: `ds_type_list`, `ds_type_queue`, `ds_type_stack`.
+	collect = function() {
 		var y0, f;
 		if (argument_count > 0) {
 			var ds_type = argument[0];
@@ -490,11 +490,11 @@ function Iterator(_ds) constructor {
 				return _xs;
 			});
 		}
-		return Fold(y0, f);
+		return fold(y0, f);
 	}
 	/// @desc Adds elements of this iterator together.
 	/// @param {number} type The type of elements to sum.
-	Sum = function(_type) {
+	sum = function(_type) {
 		var y0, f;
 		if (_type == ty_real) {
 			y0 = 0;
@@ -525,11 +525,11 @@ function Iterator(_ds) constructor {
 		} else {
 			throw "unsupported sum type: must be `ty_real` or `ty_string`";
 		}
-		return Fold(y0, f);
+		return fold(y0, f);
 	}
 	/// @desc Multiplies elements of this iterator together.
-	Product = function() {
-		return Fold(1, function(_xs, _x) {
+	product = function() {
+		return fold(1, function(_xs, _x) {
 			var val;
 			if (is_real(_x)) {
 				val = _x;
@@ -545,7 +545,7 @@ function Iterator(_ds) constructor {
 	}
 	/// @desc Converts an iterator into a string.
 	toString = function() {
-		var str = Fold("", function(_xs, _x) {
+		var str = fold("", function(_xs, _x) {
 			var msg = _xs;
 			if (msg != "") {
 				msg += ", ";
@@ -562,7 +562,7 @@ function Iterator(_ds) constructor {
 }
 
 /// @desc Produces an iterator which spans over a range.
-/// @param {real} First The First element of the range.
+/// @param {real} first The first element of the range.
 /// @param {real} last The last element of the range.
 /// @param {real} [step=1] The step of the range.
 function range(_first, _last) {

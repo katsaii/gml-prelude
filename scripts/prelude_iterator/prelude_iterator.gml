@@ -391,9 +391,8 @@ function Iterator(_ds) constructor {
 						} else if (inner == undefined) {
 							// get new inner value
 							var val = iter.next();
-							if (is_struct(val) && variable_struct_exists(val, "__next__") ||
-									is_array(val) || is_string(val)) {
-								inner = new Iterator(val);
+							if (is_struct(val) && instanceof(val) == "Iterator") {
+								inner = val;
 							} else {
 								return val;
 							}

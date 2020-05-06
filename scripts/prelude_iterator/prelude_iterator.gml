@@ -427,13 +427,13 @@ function Iterator(_ds) constructor {
 	}
 	/// @desc Generates values until the iterator is empty, or until an element does not satisfy the predicate.
 	/// @param {script} p The predicate to check.
-	All = function(_p) {
+	Each = function(_p) {
 		DropWhile(_p);
 		return IsEmpty();
 	}
 	/// @desc Generates values until the iterator is empty, or until an element satisfies the predicate.
 	/// @param {script} p The predicate to check.
-	Any = function(_p) {
+	Some = function(_p) {
 		DropUntil(_p);
 		if (IsEmpty()) {
 			return false;

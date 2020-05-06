@@ -129,13 +129,13 @@ assert_eq(4, iter.First(function(_x) { return _x > 3 }));
 assert_eq([5, 6, 7, 8, 9], iter.TakeWhile(function(_x) { return _x < 10 }));
 assert_eq([10, 11, 12, 13, 14], iter.TakeUntil(function(_x) { return _x == 15 }));
 
-// tests All
+// tests Each
 iter = range(0, 100, 2);
-assert_eq(true, iter.All(function(_x) { return _x % 2 == 0 }));
+assert_eq(true, iter.Each(function(_x) { return _x % 2 == 0 }));
 
-// tests Any
+// tests Some
 iter = range(0, infinity);
-assert_eq(true, iter.Any(function(_x) { return _x == 150 }));
+assert_eq(true, iter.Some(function(_x) { return _x == 150 }));
 
 // tests string concatenation
 iter = new Iterator(["hello", " ", "world"]);

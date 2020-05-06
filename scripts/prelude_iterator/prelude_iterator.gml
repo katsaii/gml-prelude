@@ -212,8 +212,8 @@ function Iterator(_ds) constructor {
 	}
 	/// @desc The generator function.
 	generator = reader.__next__;
-	/// @desc The seek function.
-	seeker = variable_struct_exists(reader, "__seek__") ? reader.__seek__ : undefined;
+	/// @desc The indexing function.
+	index = variable_struct_exists(reader, "__seek__") ? reader.__seek__ : undefined;
 	/// @desc The current position of the iterator.
 	pos = 0;
 	/// @desc The peeked value.
@@ -239,17 +239,23 @@ function Iterator(_ds) constructor {
 		return peeked;
 	}
 	/// @desc Returns the current iterator location.
-	location = function(_pos) {
+	location = function() {
 		return pos;
 	}
 	/// @desc Sets the current iterator location.
+	/// @param {number} pos The position to index.
 	seek = function(_pos) {
-		if (seeker == undefined) {
-			throw "invalid operation: iterator does not support seeking! implement a `__seek__` method to use this behaviour";
+		if (index == undefined) {
+			throw "invalid operation: iterator does not support indexing! implement a `__seek__` method to use this behaviour";
 		}
-		seeker(_pos);
+		index(_pos);
 		pos = _pos;
 		peekedExists = false; // discard peeked value if one exists
+	}
+	/// @desc Sets the current iterator location relative to the current.
+	/// @param {number} offset The number to nudge by.
+	nudge = function(_offset) {
+		seek(location() + _offset);
 	}
 	/// @desc Resets the iterator.
 	reset = function() {

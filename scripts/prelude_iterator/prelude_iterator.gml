@@ -163,6 +163,21 @@ function CharacterReader(_str) constructor {
 	}
 }
 
+/// @desc Creates a reader which returns lines of a file.
+/// @param {file} file The file to read.
+function FileReader(_file) constructor {
+	file = _file;
+	read = function() {
+		if (file_text_eof(file)) {
+			return undefined;
+		}
+		var line = file_text_read_string(file);
+		file_text_readln(file);
+		return line;
+	}
+	__next__ = read;
+}
+
 /// @desc Creates a reader which returns slices of a string separated by a delimiter.
 /// @param {string} str The string to read.
 /// @param {string} delimiter The string to use as a delimiter.

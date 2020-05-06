@@ -181,3 +181,9 @@ assert_eq([["a", "1"], ["b", "2"], ["c", "3"]], iter.collect());
 iter = iterate(0, function(_x) { return _x + 1 });
 iter.drop(10);
 assert_eq([10, 11, 12, 13, 14], iter.take(5));
+
+// tests file reader
+ds = file_text_open_from_string("line1\nline2\nline3");
+iter = new Iterator(new FileReader(ds));
+assert_eq(["line1", "line2", "line3"], iter.collect());
+file_text_close(ds);

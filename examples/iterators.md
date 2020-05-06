@@ -94,6 +94,8 @@ This iterator only counts up to ten, since in the case that `count > 10`, the it
 
 A useful built-in iterator constructor is `range`. The `range` function will create a new (potentially infinite) iterator over the supplied range. For example, `range(1, 10)` will return a new iterator which generates values `1` to `10` *inclusive*.
 
+An additional, optional argument can be passed to the `range` function to decide the step of the range; that is, the value to increment each element of the range by. The default step is `1`.
+
 ## Basic Iterator Use
 
 This section details basic operations you can perform on iterators to generate values.

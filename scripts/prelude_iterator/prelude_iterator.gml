@@ -144,6 +144,21 @@ function ArrayReader(_array) constructor {
 	}
 }
 
+/// @desc Creates a reader which returns lines of a file.
+/// @param {file} file The file to read.
+function FileReader(_file) constructor {
+	file = _file;
+	read = function() {
+		if (file_text_eof(file)) {
+			return undefined;
+		}
+		var line = file_text_read_string(file);
+		file_text_readln(file);
+		return line;
+	}
+	__next__ = read;
+}
+
 /// @desc Creates a reader which returns individual characters of a string.
 /// @param {string} str The string to read.
 function CharacterReader(_str) constructor {
@@ -161,21 +176,6 @@ function CharacterReader(_str) constructor {
 	__seek__ = function(_pos) {
 		pos = _pos;
 	}
-}
-
-/// @desc Creates a reader which returns lines of a file.
-/// @param {file} file The file to read.
-function FileReader(_file) constructor {
-	file = _file;
-	read = function() {
-		if (file_text_eof(file)) {
-			return undefined;
-		}
-		var line = file_text_read_string(file);
-		file_text_readln(file);
-		return line;
-	}
-	__next__ = read;
 }
 
 /// @desc Creates a reader which returns slices of a string separated by a delimiter.

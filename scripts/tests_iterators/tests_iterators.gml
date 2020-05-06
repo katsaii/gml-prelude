@@ -171,3 +171,14 @@ iter = new Iterator("123920");
 assert_eq(17, iter.sum(ty_real));
 iter.reset();
 assert_eq(0, iter.product(ty_real));
+
+// tests word reader
+iter = new Iterator(new WordReader(",a,b,cd,e,f1,,", ","));
+assert_eq(["", "a", "b", "cd", "e", "f1", "", ""], iter.collect());
+assert_eq(undefined, iter.next());
+iter = new Iterator(new WordReader("", ","));
+assert_eq("", iter.next());
+assert_eq(undefined, iter.next());
+iter = new Iterator(new WordReader("wizardfizardblizardgizard", "izard"));
+assert_eq(["w", "f", "bl", "g", ""], iter.collect());
+assert_eq(undefined, iter.next());

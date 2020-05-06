@@ -41,9 +41,9 @@ function ListReader(_list) {
 		if (pos >= ds_list_size(list)) {
 			return undefined;
 		}
-		var next = list[| pos];
+		var val = list[| pos];
 		pos += 1;
-		return next;
+		return val;
 	}
 	__next__ = Read;
 	__seek__ = function(_pos) {
@@ -134,9 +134,9 @@ function ArrayReader(_array) constructor {
 		if (pos >= len) {
 			return undefined;
 		}
-		var next = array[pos];
+		var val = array[pos];
 		pos += 1;
-		return next;
+		return val;
 	}
 	__next__ = Read;
 	__seek__ = function(_pos) {
@@ -285,8 +285,7 @@ function Iterator(_ds) constructor {
 	TakeUntil = function(_p) {
 		var array = [];
 		for (var i = 0; true; i += 1) {
-			var peek = Peek();
-			if (IsEmpty() || _p(peek)) {
+			if (IsEmpty() || _p(Peek())) {
 				break;
 			}
 			array[@ i] = Next();
@@ -575,9 +574,9 @@ function range(_first, _last) {
 			if (pos > len) {
 				return undefined;
 			}
-			var next = pos;
+			var val = pos;
 			pos += step;
-			return next;
+			return val;
 		}
 	});
 }

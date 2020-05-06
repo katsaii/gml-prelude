@@ -182,3 +182,9 @@ assert_eq(undefined, iter.next());
 iter = new Iterator(new WordReader("wizardfizardblizardgizard", "izard"));
 assert_eq(["w", "f", "bl", "g", ""], iter.collect());
 assert_eq(undefined, iter.next());
+
+// tests nested readers
+iter = new Iterator(new WordReader("a:1,b:2,c:3", ","));
+iter = iter.map(function(_x) { return new WordReader(_x, ":") });
+iter = iter.concat();
+assert_eq(["a", "1", "b", "2", "c", "3"], iter.collect());

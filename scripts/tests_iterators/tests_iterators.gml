@@ -154,6 +154,13 @@ assert_eq("J", iter.peek());
 iter.seek(iter.location() + 2);
 assert_eq("L", iter.next());
 
+// tests nudge
+iter = new Iterator("hiya");
+iter.nudge(3);
+assert_eq("a", iter.peek());
+iter.nudge(-2);
+assert_eq("i", iter.next());
+
 // tests append
 iter = new Iterator("hello");
 iter = iter.append(new Iterator("world"));

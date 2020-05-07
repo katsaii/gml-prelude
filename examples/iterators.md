@@ -47,7 +47,28 @@ var iter = new Iterator(reader);
 
 This variant will produce an iterator which generates slices of a string separated by some delimiter; in this case, the delimiter was `" "`.
 
-### Creating a Struct Iterator
+### Creating Iterators From Data Structures
+
+Unfortunately, due to how data structures are implemented in GML, the `Iterator` constructor does not have enough information to correctly create an iterator from data structures. Therefore, you should also pass the `ds_type_*` of the data structure you intend to use:
+
+```js
+var list = ds_list_create();
+ds_list_add(list, 1, 2, 3);
+var iter = new Iterator(list, ds_type_list);
+```
+
+Alternatively, you can pass an instance of the corresponding reader struct. The following table details the `ds_type_*` and its corresponding reader struct:
+
+| Type             | Reader              |
+|------------------|---------------------|
+| ds_type_grid     | GridReader          |
+| ds_type_list     | ListReader          |
+| ds_type_queue    | QueueReader         |
+| ds_type_stack    | StackReader         |
+| ds_type_priority | PriorityQueueReader |
+| ds_type_map      | MapReader           |
+
+### Writing Custom Iterators Using Structs
 
 There is a little more work to creating an iterator from a struct. Your struct must contain a `__next__` member which tells you the next item to return. The following iterator will count up from 1:
 
@@ -91,7 +112,7 @@ var iter = new Iterator(vec3);
 
 This iterator will iterate over the three (`x`, `y`, and `z`) values of a `Vec3`.
 
-### Finite Iterators
+### Writing Finite Iterators
 
 Some of the previous examples of iterators are infinite because they have no well-defined end state. To create an iterator which does end, you must return `undefined` in that case. As an example:
 

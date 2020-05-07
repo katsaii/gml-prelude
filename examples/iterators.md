@@ -23,6 +23,30 @@ var reader = new ArrayReader(["A", "B", "C", "D"]);
 var iter = new Iterator(reader);
 ```
 
+### Creating a String Iterator
+
+Much like array iterators, you should create a string iterator by using the `Iterator` constructor:
+
+```js
+var iter = new Iterator("hello world");
+```
+
+This will create an iterator which generates individual characters of the string. This is the same as creating an iterator from an instance of the `CharacterReader` struct:
+
+```js
+var reader = new CharacterReader("hello world");
+var iter = new Iterator(reader);
+```
+
+Alternatively, you can use a different string iterator by passing in an instance of the `WordReader` struct:
+
+```js
+var reader = new WordReader("hello world", " ");
+var iter = new Iterator(reader);
+```
+
+This variant will produce an iterator which generates slices of a string separated by some delimiter; in this case, the delimiter was `" "`.
+
 ### Creating a Struct Iterator
 
 There is a little more work to creating an iterator from a struct. Your struct must contain a `__next__` member which tells you the next item to return. The following iterator will count up from 1:
@@ -66,30 +90,6 @@ var iter = new Iterator(vec3);
 ```
 
 This iterator will iterate over the three (`x`, `y`, and `z`) values of a `Vec3`.
-
-### Creating a String Iterator
-
-Much like array iterators, you should create a string iterator by using the `Iterator` constructor:
-
-```js
-var iter = new Iterator("hello world");
-```
-
-This will create an iterator which generates individual characters of the string. This is the same as creating an iterator from an instance of the `CharacterReader` struct:
-
-```js
-var reader = new CharacterReader("hello world");
-var iter = new Iterator(reader);
-```
-
-Alternatively, you can use a different string iterator by passing in an instance of the `WordReader` struct:
-
-```js
-var reader = new WordReader("hello world", " ");
-var iter = new Iterator(reader);
-```
-
-This variant will produce an iterator which generates slices of a string separated by some delimiter; in this case, the delimiter was `" "`.
 
 ### Finite Iterators
 

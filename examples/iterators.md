@@ -6,7 +6,13 @@ Iterators are an extremely useful tool for iterating and generating values from 
 
 This section covers the various ways to create iterators. Currently, the library contains built-in support for creating iterators from ranges, arrays, structs, and common data structures.
 
-To create an iterator, you should use the `new Iterator(ds)` constructor function `ds` is the data structure you want to convert into an iterator. The constructor then intelligently decides what sort of iterator you need.
+To create an iterator, you should use the `new Iterator(ds)` constructor function `ds` is the data structure you want to convert into an iterator. The constructor then intelligently decides what sort of iterator you need. However, this unfortunately does not apply to data structures such as `ds_list` or `ds_map`. For those kinds of data structures you should pass the corresponding `ds_type_*` as an additional argument:
+
+```js
+var iter = new Iterator(list, ds_type_list);
+```
+
+This segment of code will create an iterator from a list.
 
 ### Creating an Array Iterator
 

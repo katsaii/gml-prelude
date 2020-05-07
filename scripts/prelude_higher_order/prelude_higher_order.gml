@@ -16,7 +16,7 @@ function identity(_x) {
 
 /// @desc The no-op function. Takes nothing and returns nothing.
 function noop() {
-	return;
+	return undefined;
 }
 
 /// @desc Composes two functions together.

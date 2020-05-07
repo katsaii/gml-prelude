@@ -120,6 +120,16 @@ A useful built-in iterator constructor is `range`. The `range` function will cre
 
 An additional, optional argument can be passed to the `range` function to decide the step of the range; that is, the value to increment each element of the range by. The default step is `1`.
 
+### Creating a File Iterator
+
+An auxiliary iterator which was included in this library was the file iterator. This iterator acts as a wrapper for the `file_text_*` functions, except it gives you the benefit of iterators. This iterator can be created by supplying an instance of the `FileReader` struct:
+
+```js
+var file = file_text_open("./test.txt");
+var reader = new FileReader(file);
+var iter = new Iterator(reader);
+```
+
 ## Basic Iterator Use
 
 This section details basic operations you can perform on iterators to generate values.

@@ -80,6 +80,16 @@ This will create an iterator which generates individual characters of the string
 ```js
 var reader = new CharacterReader("hello world");
 var iter = new Iterator(reader);
+```
+
+Alternatively, you can use a different string iterator by passing in an instance of the `WordReader` struct:
+
+```js
+var reader = new WordReader("hello world", " ");
+var iter = new Iterator(reader);
+```
+
+This variant will produce an iterator which generates slices of a string separated by some delimiter; in this case, the delimiter was `" "`.
 
 ### Finite Iterators
 

@@ -59,7 +59,7 @@ var iter = new Iterator(list, ds_type_list);
 
 Alternatively, you can pass an instance of the corresponding reader struct. The following table details the `ds_type_*` and its corresponding reader struct:
 
-<center>
+<p align="center">
 
 | Type               | Reader                |
 |--------------------|-----------------------|
@@ -70,7 +70,7 @@ Alternatively, you can pass an instance of the corresponding reader struct. The 
 | `ds_type_priority` | `PriorityQueueReader` |
 | `ds_type_map`      | `MapReader`           |
 
-</center>
+</p>
 
 ### Writing Custom Iterators Using Structs
 

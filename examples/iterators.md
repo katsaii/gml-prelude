@@ -59,14 +59,18 @@ var iter = new Iterator(list, ds_type_list);
 
 Alternatively, you can pass an instance of the corresponding reader struct. The following table details the `ds_type_*` and its corresponding reader struct:
 
-| Type             | Reader              |
-|------------------|---------------------|
-| ds_type_grid     | GridReader          |
-| ds_type_list     | ListReader          |
-| ds_type_queue    | QueueReader         |
-| ds_type_stack    | StackReader         |
-| ds_type_priority | PriorityQueueReader |
-| ds_type_map      | MapReader           |
+<center>
+
+| Type               | Reader                |
+|--------------------|-----------------------|
+| `ds_type_grid`     | `GridReader`          |
+| `ds_type_list`     | `ListReader`          |
+| `ds_type_queue`    | `QueueReader`         |
+| `ds_type_stack`    | `StackReader`         |
+| `ds_type_priority` | `PriorityQueueReader` |
+| `ds_type_map`      | `MapReader`           |
+
+</center>
 
 ### Writing Custom Iterators Using Structs
 

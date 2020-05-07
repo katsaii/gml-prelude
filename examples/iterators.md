@@ -4,15 +4,9 @@ Iterators are an extremely useful tool for iterating and generating values from 
 
 ## Creating Iterators
 
-This section covers the various ways to create iterators. Currently, the library contains built-in support for creating iterators from ranges, arrays, structs, and common data structures.
+This section covers the various ways to create iterators. Currently, the library contains built-in support for creating iterators from ranges, arrays, structs, strings, and common data structures.
 
-To create an iterator, you should use the `new Iterator(ds)` constructor function `ds` is the data structure you want to convert into an iterator. The constructor then intelligently decides what sort of iterator you need. However, this unfortunately does not apply to data structures such as `ds_list` or `ds_map`. For those kinds of data structures you should pass the corresponding `ds_type_*` as an additional argument:
-
-```js
-var iter = new Iterator(list, ds_type_list);
-```
-
-This segment of code will create an iterator from a list.
+To create an iterator, you should use the `Iterator` constructor function. Passing an array, struct, or string to this constructor will cause it to intelligently decide what sort of iterator you need.
 
 ### Creating an Array Iterator
 
@@ -72,6 +66,20 @@ var iter = new Iterator(vec3);
 ```
 
 This iterator will iterate over the three (`x`, `y`, and `z`) values of a `Vec3`.
+
+### Creating a String Iterator
+
+Much like array iterators, you should create a string iterator by using the `Iterator` constructor:
+
+```js
+var iter = new Iterator("hello world");
+```
+
+This will create an iterator which generates individual characters of the string. This is the same as creating an iterator from an instance of the `CharacterReader` struct:
+
+```js
+var reader = new CharacterReader("hello world");
+var iter = new Iterator(reader);
 
 ### Finite Iterators
 

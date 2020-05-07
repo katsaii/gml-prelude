@@ -14,6 +14,11 @@ function identity(_x) {
 	return _x;
 }
 
+/// @desc The no-op function. Takes nothing and returns nothing.
+function noop() {
+	return;
+}
+
 /// @desc Composes two functions together.
 /// @param {script} f The function to feed the result of `g(x)`.
 /// @param {script} g The function to feed `x`.

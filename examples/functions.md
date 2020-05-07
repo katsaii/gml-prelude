@@ -62,3 +62,7 @@ The first argument of `curry` is the function you want to partially apply. Next,
 ```js
 draw_player(x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 ```
+
+## The Identity Function
+
+The identity function is nothing special, and is simply a function which returns its input; that is, it is the case that `identity(x) == x` for all possible values `x`. This sort of function is actually fairly useful to define "no behaviour" in situations where a function is required. For example, perhaps you have a higher-order function which uses some function `f` to define or modify some `Enemy` struct. Using the identity function, you can just let the struct pass through without any modification.

@@ -320,37 +320,15 @@ function Iterator(_ds) constructor {
 				return iter.next();
 			}
 		});
-		/*var array = [];
-		for (var i = 0; true; i += 1) {
-			if (isEmpty() || !_p(peek())) {
-				break;
-			}
-			array[@ i] = next();
-		}
-		return array;*/
 	}
 	/// @desc Returns an iterator which takes values.until some predicate holds.
 	/// @param {script} p The predicate to check.
 	takeUntil = function(_p) {
-		var me = self;
-		return new Iterator({
-			iter : me,
-			p : _p,
-			__next__ : function() {
-				if (iter.isEmpty() || p(iter.peek())) {
-					return undefined;
-				}
-				return iter.next();
-			}
-		});
-		/*var array = [];
-		for (var i = 0; true; i += 1) {
-			if (isEmpty() || _p(peek())) {
-				break;
-			}
-			array[@ i] = next();
-		}
-		return array;*/
+		return takeWhile(method({
+			p : _p
+		}, function(_x) {
+			return !_p(_x);
+		}));
 	}
 	/// @desc Returns an iterator which only takes the first `n` values.
 	/// @param {int} n The number of elements to take.

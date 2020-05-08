@@ -11,7 +11,7 @@ iter = new Iterator([1, 2, 3]);
 assert_eq(1, iter.next());
 assert_eq(2, iter.next());
 assert_eq([3], iter.collect());
-assert_eq([undefined, undefined, undefined], iter.take(3));
+assert_eq(undefined, iter.next());
 
 // tests struct iterators
 iter = new Iterator({
@@ -21,17 +21,16 @@ iter = new Iterator({
 		return pos;
 	}
 });
-assert_eq([1, 2, 3, 4], iter.take(4));
+assert_eq([1, 2, 3, 4], (iter.take(4)).collect());
 iter.drop(4); // [5, 6, 7, 8]
-assert_eq([9], iter.take(1));
-assert_eq([], iter.take(0));
+assert_eq(9, iter.next());
 
 // tests enumeration
 iter = new Iterator(["A", "B", "C", "D", "D", "F", "K"]);
 iter = iter.enumerate();
 assert_eq([0, "A"], iter.peek());
 assert_eq([0, "A"], iter.next());
-assert_eq([[1, "B"], [2, "C"], [3, "D"], [4, "D"]], iter.take(4));
+assert_eq([[1, "B"], [2, "C"], [3, "D"], [4, "D"]], (iter.take(4)).collect());
 assert_eq([[5, "F"], [6, "K"]], iter.collect());
 assert_eq(undefined, iter.next());
 
@@ -116,8 +115,7 @@ ds_map_destroy(ds);
 // tests first and takeWhile
 iter = range(1, 15);
 assert_eq(4, iter.first(function(_x) { return _x > 3 }));
-assert_eq([5, 6, 7, 8, 9], iter.takeWhile(function(_x) { return _x < 10 }));
-assert_eq([10, 11, 12, 13, 14], iter.takeUntil(function(_x) { return _x == 15 }));
+assert_eq([5, 6, 7, 8, 9], (iter.takeWhile(function(_x) { return _x < 10 })).collect());
 
 // tests each
 iter = range(0, 100, 2);
@@ -180,7 +178,10 @@ assert_eq([["a", "1"], ["b", "2"], ["c", "3"]], iter.collect());
 // tests iterate
 iter = iterate(0, function(_x) { return _x + 1 });
 iter.drop(10);
-assert_eq([10, 11, 12, 13, 14], iter.take(5));
+assert_eq(10, iter.next());
+assert_eq(11, iter.next());
+assert_eq(12, iter.next());
+assert_eq(13, iter.next());
 
 // tests file reader
 ds = file_text_open_from_string("line1\nline2\nline3");

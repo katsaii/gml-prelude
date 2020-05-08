@@ -306,38 +306,65 @@ function Iterator(_ds) constructor {
 	isEmpty = function() {
 		return peek() == undefined;
 	}
-	/// @desc Takes the first `n` values from this iterator and puts them into an array.
-	/// @param {int} n The number of elements to take.
-	take = function(_count) {
-		var array = array_create(_count);
-		for (var i = 0; i < _count; i += 1) {
-			array[@ i] = next();
-		}
-		return array;
-	}
-	/// @desc Takes values and inserts them into an array whilst some predicate holds.
+	/// @desc Returns an iterator which takes values.whilst some predicate holds.
 	/// @param {script} p The predicate to check.
 	takeWhile = function(_p) {
-		var array = [];
+		var me = self;
+		return new Iterator({
+			iter : me,
+			p : _p,
+			__next__ : function() {
+				if (iter.isEmpty() || !p(iter.peek())) {
+					return undefined;
+				}
+				return iter.next();
+			}
+		});
+		/*var array = [];
 		for (var i = 0; true; i += 1) {
 			if (isEmpty() || !_p(peek())) {
 				break;
 			}
 			array[@ i] = next();
 		}
-		return array;
+		return array;*/
 	}
-	/// @desc Takes values and inserts them into an array until some predicate holds.
+	/// @desc Returns an iterator which takes values.until some predicate holds.
 	/// @param {script} p The predicate to check.
 	takeUntil = function(_p) {
-		var array = [];
+		var me = self;
+		return new Iterator({
+			iter : me,
+			p : _p,
+			__next__ : function() {
+				if (iter.isEmpty() || p(iter.peek())) {
+					return undefined;
+				}
+				return iter.next();
+			}
+		});
+		/*var array = [];
 		for (var i = 0; true; i += 1) {
 			if (isEmpty() || _p(peek())) {
 				break;
 			}
 			array[@ i] = next();
 		}
-		return array;
+		return array;*/
+	}
+	/// @desc Returns an iterator which only takes the first `n` values.
+	/// @param {int} n The number of elements to take.
+	take = function(_count) {
+		return takeWhile(method({
+			n : _count
+		}, function(_) {
+			if (n <= 0) {
+				return false;
+			} else {
+				n -= 1;
+				return true;
+			}
+		}));
 	}
 	/// @desc Drops the first `n` values from this iterator.
 	/// @param {int} n The number of elements to drop.

@@ -327,7 +327,7 @@ function Iterator(_ds) constructor {
 		return takeWhile(method({
 			p : _p
 		}, function(_x) {
-			return !_p(_x);
+			return !p(_x);
 		}));
 	}
 	/// @desc Returns an iterator which only takes the first `n` values.
@@ -344,38 +344,53 @@ function Iterator(_ds) constructor {
 			}
 		}));
 	}
-	/// @desc Drops the first `n` values from this iterator.
-	/// @param {int} n The number of elements to drop.
-	drop = function(_count) {
-		repeat (_count) {
-			next();
-		}
-	}
-	/// @desc Drops values whilst some predicate holds.
+	/// @desc Returns an iterator which skips values.whilst some predicate holds.
 	/// @param {script} p The predicate to check.
 	dropWhile = function(_p) {
-		while (true) {
-			if (isEmpty() || !_p(peek())) {
-				break;
+		var me = self;
+		return new Iterator({
+			iter : me,
+			p : _p,
+			__next__ : function() {
+				while (true) {
+					if (iter.isEmpty()) {
+						return undefined;
+					}
+					if (!p(iter.peek())) {
+						return iter.next();
+					}
+					iter.next();
+				}
 			}
-			next();
-		}
+		});
 	}
-	/// @desc Drops values until some predicate holds.
+	/// @desc Returns an iterator which skips values.until some predicate holds.
 	/// @param {script} p The predicate to check.
 	dropUntil = function(_p) {
-		while (true) {
-			if (isEmpty() || _p(peek())) {
-				break;
+		return dropWhile(method({
+			p : _p
+		}, function(_x) {
+			return !p(_x);
+		}));
+	}
+	/// @desc Returns an iterator which skips the first `n` values.
+	/// @param {int} n The number of elements to drop.
+	drop = function(_count) {
+		return dropWhile(method({
+			n : _count
+		}, function(_) {
+			if (n <= 0) {
+				return false;
+			} else {
+				n -= 1;
+				return true;
 			}
-			next();
-		}
+		}));
 	}
 	/// @desc Returns the first element where this predicate holds.
 	/// @param {script} p The predicate to check.
 	first = function(_p) {
-		dropUntil(_p);
-		return next();
+		return (dropUntil(_p)).next();
 	}
 	/// @desc Zips this iterator together with another.
 	/// @param {Iterator} other The iterator to join this with.
@@ -447,17 +462,16 @@ function Iterator(_ds) constructor {
 	/// @desc Generates values until the iterator is empty, or until an element does not satisfy the predicate.
 	/// @param {script} p The predicate to check.
 	each = function(_p) {
-		dropWhile(_p);
-		return isEmpty();
+		return (dropWhile(_p)).isEmpty();
 	}
 	/// @desc Generates values until the iterator is empty, or until an element satisfies the predicate.
 	/// @param {script} p The predicate to check.
 	some = function(_p) {
-		dropUntil(_p);
-		if (isEmpty()) {
+		var iter = dropUntil(_p);
+		if (iter.isEmpty()) {
 			return false;
 		} else {
-			next();
+			iter.next();
 			return true;
 		}
 	}

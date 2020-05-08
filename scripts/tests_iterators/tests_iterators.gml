@@ -22,7 +22,7 @@ iter = new Iterator({
 	}
 });
 assert_eq([1, 2, 3, 4], (iter.take(4)).collect());
-iter.drop(4); // [5, 6, 7, 8]
+iter = iter.drop(4); // [5, 6, 7, 8]
 assert_eq(9, iter.next());
 
 // tests enumeration
@@ -177,7 +177,7 @@ assert_eq([["a", "1"], ["b", "2"], ["c", "3"]], iter.collect());
 
 // tests iterate
 iter = iterate(0, function(_x) { return _x + 1 });
-iter.drop(10);
+iter = iter.drop(10);
 assert_eq(10, iter.next());
 assert_eq(11, iter.next());
 assert_eq(12, iter.next());

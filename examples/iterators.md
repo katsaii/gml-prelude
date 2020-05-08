@@ -159,11 +159,9 @@ var iter = new Iterator(reader);
 
 This section details basic operations you can perform on iterators to generate values.
 
-### One at a Time
-
 Once you have an iterator, you can start generating values using `next` and `peek`.
 
-#### Next
+### Next
 
 The `next` method will return the next generated value and advance the iterator:
 
@@ -175,7 +173,7 @@ var b = iter.next(); // holds "B"
 var c = iter.next(); // holds "C"
 ```
 
-#### Peek
+### Peek
 
 The `peek` function will return the next generated value, but will not advance the iterator.
 
@@ -185,31 +183,6 @@ var iter = new Iterator(["A", "B", "C", "D"]);
 var a_peeked = iter.peek(); // holds "A"
 var a = iter.next();        // holds "A"
 var b = iter.next();        // holds "B"
-```
-
-### Many at Once
-
-Other important operations include `take` and `drop`.
-
-#### Take
-
-The `take` method accepts a number `n` as an argument, and will generate `n`-many values and insert them into an array:
-
-```js
-var iter = range(1, 5);
-
-var array = iter.take(3); // holds [1, 2, 3]
-```
-
-#### Drop
-
-The `drop` method takes a number `n` as an argument, and will skip that number of generated values:
-
-```js
-var iter = range(2, 8);
-
-iter.drop(2);             // drops [2, 3]
-var array = iter.take(3); // holds [4, 5, 6]
 ```
 
 ### Collecting Iterators
@@ -338,6 +311,29 @@ var iter = new Iterator([["W", vk_up], ["A", vk_left], ["S", vk_down], ["D", vk_
     iter = iter.concat();
 
 var array = iter.collect(); // holds ["W", vk_up, "A", vk_left, "S", vk_down, "D", vk_right]
+```
+
+#### Take
+
+The `take` method accepts a number `n` as an argument, and will produce a new iterator which will only generate up to that number of values:
+
+```js
+var iter = range(1, 5);
+    iter = iter.take(3);
+
+var array = iter.collect(); // holds [1, 2, 3]
+```
+
+#### Drop
+
+The `drop` method takes a number `n` as an argument, and will produce a new iterator which will skip that number of values:
+
+```js
+var iter = range(2, 8);
+    iter = iter.drop(2); // drops [2, 3]
+    iter = iter.take(3);
+
+var array = iter.collect(); // holds [4, 5, 6]
 ```
 
 ### Indexable Iterators

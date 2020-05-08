@@ -390,7 +390,8 @@ function Iterator(_ds) constructor {
 	/// @desc Returns the first element where this predicate holds.
 	/// @param {script} p The predicate to check.
 	first = function(_p) {
-		return (dropUntil(_p)).next();
+		var iter = dropUntil(_p);
+		return iter.next();
 	}
 	/// @desc Zips this iterator together with another.
 	/// @param {Iterator} other The iterator to join this with.
@@ -462,7 +463,8 @@ function Iterator(_ds) constructor {
 	/// @desc Generates values until the iterator is empty, or until an element does not satisfy the predicate.
 	/// @param {script} p The predicate to check.
 	each = function(_p) {
-		return (dropWhile(_p)).isEmpty();
+		var iter = dropWhile(_p);
+		return iter.isEmpty();
 	}
 	/// @desc Generates values until the iterator is empty, or until an element satisfies the predicate.
 	/// @param {script} p The predicate to check.

@@ -14,34 +14,33 @@ assert_eq([3], iter.collect());
 assert_eq(undefined, iter.next());
 
 // tests struct iterators
-iter = new Iterator({
+iter = new IteratorNew({
 	pos : 0,
 	__next__ : function() {
 		pos += 1;
 		return pos;
 	}
 });
-assert_eq([1, 2, 3, 4], (iter.take(4)).collect());
-iter = iter.drop(4); // [5, 6, 7, 8]
-assert_eq(9, iter.next());
+iter.drop(4);
+iter.take(4);
+assert_eq([5, 6, 7, 8], iter.collect());
 
 // tests enumeration
-iter = new Iterator(["A", "B", "C", "D", "D", "F", "K"]);
+iter = new IteratorNew(["A", "B", "C", "D", "D", "F", "K"]);
 iter = iter.enumerate();
-assert_eq([0, "A"], iter.peek());
-assert_eq([0, "A"], iter.next());
-assert_eq([[1, "B"], [2, "C"], [3, "D"], [4, "D"]], (iter.take(4)).collect());
-assert_eq([[5, "F"], [6, "K"]], iter.collect());
-assert_eq(undefined, iter.next());
+assert_eq(["A", 0], iter.peek());
+assert_eq(["A", 0], iter.next());
+iter.take(4);
+assert_eq([["B", 1], ["C", 2], ["D", 3], ["D", 4]], iter.collect());
 
 // tests mapping
-iter = new Iterator([0, 1, 2, 3, 4]);
-iter = iter.map(function(_x) { return _x * _x; });
+iter = new IteratorNew([0, 1, 2, 3, 4]);
+iter.map(function(_x) { return _x * _x; });
 assert_eq([0, 1, 4, 9, 16], iter.collect());
 
 // tests folding/collections
 array = ["A", "B", "C"];
-iter = new Iterator(array);
+iter = new IteratorNew(array);
 ds = iter.collect(ds_type_list);
 for (var i = 0; i < array_length(array); i += 1) {
 	assert_eq(array[i], ds[| i]);

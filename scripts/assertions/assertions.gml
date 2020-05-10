@@ -2,7 +2,9 @@
  * Kat @Katsaii
  */
 
-global.errors_exist = false;
+if not (variable_global_exists("errors_exist")) {
+	global.errors_exist = false;
+}
 
 function assert_eq(_expects, _got) {
 	var callstack_pos = argument_count > 2 ? argument[2] : 1;

@@ -48,13 +48,13 @@ for (var i = 0; i < array_length(array); i += 1) {
 ds_list_destroy(ds);
 
 // tests filtering
-iter = new Iterator([1, 2, 3, 4, 5, -1, -1, -2]);
-iter = iter.filter(function(_x) { return _x < 3 });
+iter = new IteratorNew([1, 2, 3, 4, 5, -1, -1, -2]);
+iter.filter(function(_x) { return _x < 3 });
 assert_eq([1, 2, -1, -1, -2], iter.collect());
 
 // tests folding and other combinations of operations
-iter = new Iterator(["A", "B", "C"]);
-iter = iter.map(function(_x) { return [ord(_x), _x]; });
+iter = new IteratorNew(["A", "B", "C"]);
+iter.map(function(_x) { return [ord(_x), _x]; });
 ds = iter.collect(ds_type_stack);
 assert_eq([67, "C"], ds_stack_pop(ds));
 assert_eq([66, "B"], ds_stack_pop(ds));
@@ -62,7 +62,7 @@ assert_eq([65, "A"], ds_stack_pop(ds));
 ds_stack_destroy(ds);
 
 // tests forEach
-iter = new Iterator(["A", "B", "C"]);
+iter = new IteratorNew(["A", "B", "C"]);
 iter.forEach(function(_x) {
 	static i = 0;
 	switch (i) {
@@ -80,13 +80,13 @@ iter.forEach(function(_x) {
 });
 
 // tests toString
-iter = new Iterator("123");
-assert_eq(@'["1", "2", "3"]', iter.toString());
+iter = new IteratorNew("123");
+assert_eq(@'[ "1", "2", "3" ]', iter.toString());
 
 // tests list iterator
 ds = ds_list_create();
 ds_list_add(ds, "A", "Z", 12);
-iter = new Iterator(ds, ds_type_list);
+iter = new IteratorNew(ds, ds_type_list);
 assert_eq(["A", "Z", 12], iter.collect());
 ds_list_destroy(ds);
 
@@ -96,9 +96,9 @@ ds[# 0, 0] = 1;
 ds[# 1, 0] = 2;
 ds[# 0, 1] = 3;
 ds[# 1, 1] = 4;
-iter = new Iterator(new GridReader(ds, true));
+iter = new IteratorNew(new GridReader(ds, true));
 assert_eq([1, 2, 3, 4], iter.collect());
-iter = new Iterator(new GridReader(ds, false));
+iter = new IteratorNew(new GridReader(ds, false));
 assert_eq([1, 3, 2, 4], iter.collect());
 ds_grid_destroy(ds);
 

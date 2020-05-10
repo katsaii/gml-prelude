@@ -274,16 +274,15 @@ function IteratorNew(_ds) constructor {
 	/// @desc Takes values.whilst some predicate holds.
 	/// @param {script} p The predicate to check.
 	takeWhile = function(_p) {
-		var f = generator;
 		generator = method({
-			f : f,
+			g : generator,
 			p : _p,
 			locked : false
 		}, function() {
 			if (locked) {
 				return undefined;
 			}
-			var val = f();
+			var val = g();
 			if (val == undefined || !p(val)) {
 				locked = true;
 				return undefined;
@@ -318,22 +317,20 @@ function IteratorNew(_ds) constructor {
 	/// @desc Skips values.whilst some predicate holds.
 	/// @param {script} p The predicate to check.
 	dropWhile = function(_p) {
-		var f = generator;
 		generator = method({
-			f : f,
+			g : generator,
 			p : _p,
 			locked : false
 		}, function() {
 			if (locked) {
-				return f();
+				return g();
 			}
-			while (true) {
-				var val = f();
-				if (val == undefined || !p(val)) {
-					locked = true;
-					return val;
-				}
-			}
+			var val;
+			do {
+				val = g();
+			} until (val == undefined || !p(val));
+			locked = true;
+			return val;
 		});
 		return self;
 	}
@@ -365,6 +362,32 @@ function IteratorNew(_ds) constructor {
 	first = function(_p) {
 		dropUntil(_p);
 		return next();
+	}
+	/// @desc Applies a function to the generator of this iterator.
+	/// @param {script} f The function to apply.
+	map = function(_f) {
+		generator = method({
+			g : generator,
+			f : _f
+		}, function() {
+			return f(g());
+		});
+		return self;
+	}
+	/// @desc Filters out elements of this iterator for which this predicate holds true.
+	/// @param {script} p The predicate to check.
+	filter = function(_p) {
+		generator = method({
+			g : generator,
+			p : _p
+		}, function() {
+			var val;
+			do {
+				val = g();
+			} until (val == undefined || p(val));
+			return val;
+		});
+		return self;
 	}
 }
 

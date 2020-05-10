@@ -191,5 +191,10 @@ file_text_close(ds);
 
 // tests new iterator
 iter = new IteratorNew([1, 2, 3, 4, 5, 6, 7]);
-show_message(iter.first(function(_x) { return _x % 2 == 0 }));
-show_message(iter.first(function(_x) { return _x % 2 == 0 }));
+iter.map(function(_x) { return _x * _x });
+show_message(iter.next());
+show_message(iter.next());
+show_message(iter.next());
+show_message(iter.next());
+show_message(iter.next());
+show_message(iter.next());

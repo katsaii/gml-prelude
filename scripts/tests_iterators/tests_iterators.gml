@@ -170,3 +170,10 @@ ds = file_text_open_from_string("line1\nline2\nline3");
 iter = new Iterator(new FileReader(ds));
 assert_eq(["line1", "line2", "line3"], iter.collect());
 file_text_close(ds);
+
+// tests nth
+iter = new Iterator("abcde");
+assert_eq("c", iter.nth(2));
+assert_eq("e", iter.nth(1));
+assert_eq(undefined, iter.nth(0));
+assert_eq(undefined, iter.nth(12));

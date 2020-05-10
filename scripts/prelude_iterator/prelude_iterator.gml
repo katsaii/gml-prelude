@@ -415,6 +415,12 @@ function Iterator(_ds) constructor {
 		dropUntil(_p);
 		return next();
 	}
+	/// @desc Returns the "nth" element of this iterator, starts at zero.
+	/// @param {script} n The index of the item of obtain.
+	nth = function(_n) {
+		drop(_n);
+		return next();
+	}
 	/// @desc Generates values until the iterator is empty, or until an element does not satisfy the predicate.
 	///       `true` is returned if all elements satisfy the predicate, and `false` is returned otherwise.
 	/// @param {script} p The predicate to check.

@@ -191,7 +191,7 @@ file_text_close(ds);
 
 // tests new iterator
 iter = new IteratorNew([1, 2, 3, undefined, 5, 6, 7]);
-iter.take(5);
+iter.drop(5);
 show_message(iter.next());
 show_message(iter.next());
 show_message(iter.next());

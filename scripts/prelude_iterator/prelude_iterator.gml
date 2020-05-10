@@ -310,6 +310,53 @@ function IteratorNew(_ds) constructor {
 			}
 		}));
 	}
+	/// @desc Returns an iterator which skips values.whilst some predicate holds.
+	/// @param {script} p The predicate to check.
+	dropWhile = function(_p) {
+		var f = generator;
+		generator = method({
+			f : f,
+			p : _p,
+			locked : false
+		}, function() {
+			if (locked) {
+				return f();
+			}
+			while (true) {
+				var val = f();
+				if (val == undefined) {
+					return undefined;
+				} else if not (p(val)) {
+					locked = true;
+					return val;
+				}
+			}
+		});
+		return self;
+	}
+	/// @desc Returns an iterator which skips values.until some predicate holds.
+	/// @param {script} p The predicate to check.
+	dropUntil = function(_p) {
+		return dropWhile(method({
+			p : _p
+		}, function(_x) {
+			return !p(_x);
+		}));
+	}
+	/// @desc Returns an iterator which skips the first `n` values.
+	/// @param {int} n The number of elements to drop.
+	drop = function(_count) {
+		return dropWhile(method({
+			n : _count
+		}, function(_) {
+			if (n <= 0) {
+				return false;
+			} else {
+				n -= 1;
+				return true;
+			}
+		}));
+	}
 }
 
 

@@ -277,10 +277,15 @@ function IteratorNew(_ds) constructor {
 		var f = generator;
 		generator = method({
 			f : f,
-			p : _p
+			p : _p,
+			locked : false
 		}, function() {
+			if (locked) {
+				return undefined;
+			}
 			var val = f();
 			if (val == undefined || !p(val)) {
+				locked = true;
 				return undefined;
 			}
 			return val;
@@ -310,7 +315,7 @@ function IteratorNew(_ds) constructor {
 			}
 		}));
 	}
-	/// @desc Returns an iterator which skips values.whilst some predicate holds.
+	/// @desc Skips values.whilst some predicate holds.
 	/// @param {script} p The predicate to check.
 	dropWhile = function(_p) {
 		var f = generator;
@@ -324,9 +329,7 @@ function IteratorNew(_ds) constructor {
 			}
 			while (true) {
 				var val = f();
-				if (val == undefined) {
-					return undefined;
-				} else if not (p(val)) {
+				if (val == undefined || !p(val)) {
 					locked = true;
 					return val;
 				}
@@ -334,7 +337,7 @@ function IteratorNew(_ds) constructor {
 		});
 		return self;
 	}
-	/// @desc Returns an iterator which skips values.until some predicate holds.
+	/// @desc Skips values.until some predicate holds.
 	/// @param {script} p The predicate to check.
 	dropUntil = function(_p) {
 		return dropWhile(method({
@@ -343,7 +346,7 @@ function IteratorNew(_ds) constructor {
 			return !p(_x);
 		}));
 	}
-	/// @desc Returns an iterator which skips the first `n` values.
+	/// @desc Skips the first `n` non-undefined values.
 	/// @param {int} n The number of elements to drop.
 	drop = function(_count) {
 		return dropWhile(method({

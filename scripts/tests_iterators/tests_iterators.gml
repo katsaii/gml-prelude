@@ -127,25 +127,6 @@ assert_eq(true, iter.some(function(_x) { return _x == 150 }));
 // tests string concatenation
 iter = new IteratorNew(["hello", " ", "world"]);
 assert_eq("hello world", iter.sum(ty_string));
-/*
-// tests seek and reset
-iter = new IteratorNew(["I", "J", "K", "L"]);
-assert_eq("I", iter.next());
-iter.seek(2);
-assert_eq("K", iter.next());
-assert_eq("L", iter.next());
-iter.reset();
-assert_eq("I", iter.next());
-assert_eq("J", iter.peek());
-iter.seek(iter.location() + 2);
-assert_eq("L", iter.next());
-
-// tests nudge
-iter = new IteratorNew("hiya");
-iter.nudge(3);
-assert_eq("a", iter.peek());
-iter.nudge(-2);
-assert_eq("i", iter.next());*/
 
 // tests append
 iter = new IteratorNew("hello");
@@ -177,22 +158,15 @@ iter = iter.map(function(_x) { return new IteratorNew(new WordReader(_x, ":")).c
 assert_eq([["a", "1"], ["b", "2"], ["c", "3"]], iter.collect());
 
 // tests iterate
-/*iter = iterate(0, function(_x) { return _x + 1 });
+iter = iterate(0, function(_x) { return _x + 1 });
 iter = iter.drop(10);
 assert_eq(10, iter.next());
 assert_eq(11, iter.next());
 assert_eq(12, iter.next());
-assert_eq(13, iter.next());*/
+assert_eq(13, iter.next());
 
 // tests file reader
 ds = file_text_open_from_string("line1\nline2\nline3");
 iter = new IteratorNew(new FileReader(ds));
 assert_eq(["line1", "line2", "line3"], iter.collect());
 file_text_close(ds);
-
-/*// tests new iterator
-iter = new IteratorNew([1, 2, 3]);
-iter.map(function(_x) { return _x * _x });
-iter.enumerate();
-iter.extend(range_new(12, 20, 3));
-show_message(iter);*/

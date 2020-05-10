@@ -389,6 +389,23 @@ function IteratorNew(_ds) constructor {
 		});
 		return self;
 	}
+	/// @desc Zips this iterator together with another.
+	/// @param {Iterator} other The iterator to join this with.
+	zip = function(_other) {
+		generator = method({
+			a : generator,
+			b : _other.generator
+		}, function() {
+			var val_a = a();
+			var val_b = b();
+			if (val_a == undefined || val_b == undefined) {
+				return undefined;
+			} else {
+				return [val_a, val_b]; 
+			}
+		});
+		return self;
+	}	
 	/// @desc Returns the first element where this predicate holds.
 	/// @param {script} p The predicate to check.
 	first = function(_p) {

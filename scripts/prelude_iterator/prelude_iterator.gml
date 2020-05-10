@@ -405,7 +405,11 @@ function IteratorNew(_ds) constructor {
 			}
 		});
 		return self;
-	}	
+	}
+	/// @desc Enumerates this iterator.
+	enumerate = function() {
+		return zip(range_new(0, infinity));
+	}
 	/// @desc Returns the first element where this predicate holds.
 	/// @param {script} p The predicate to check.
 	first = function(_p) {
@@ -554,6 +558,26 @@ function IteratorNew(_ds) constructor {
 		});
 		return "[ " + str + " ]";
 	}
+}
+
+/// @desc Produces an iterator which spans over a range.
+/// @param {real} first The first element of the range.
+/// @param {real} last The last element of the range.
+/// @param {real} [step=1] The step of the range.
+function range_new(_first, _last) {
+	return new IteratorNew({
+		pos : _first,
+		len : _last,
+		step : argument_count > 2 ? argument[2] : 1,
+		__next__ : function() {
+			if (pos > len) {
+				return undefined;
+			}
+			var val = pos;
+			pos += step;
+			return val;
+		}
+	});
 }
 
 

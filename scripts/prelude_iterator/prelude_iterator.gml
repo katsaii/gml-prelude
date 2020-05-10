@@ -407,6 +407,34 @@ function IteratorNew(_ds) constructor {
 		var val = first(_p);
 		return val != undefined;
 	}
+	/// @desc Calls a procedure for all elements of the iterator.
+	/// @param {script} ind The procedure to call.
+	forEach = function(_f) {
+		while (true) {
+			var val = next();
+			if (val == undefined) {
+				break;
+			}
+			_f(val);
+		}
+	}
+	/// @desc Applies a left-associative operation to all elements of the iterator.
+	/// @param {value} y0 The default value.
+	/// @param {script} f The function to apply.
+	fold = function(_y0, _f) {
+		for (var acc = _y0; true;) {
+			var val = next();
+			if (val == undefined) {
+				return acc;
+			}
+			var result = _f(acc, val);
+			if (result != undefined) {
+				// support for built-in functions, such as `ds_list_add`, which return `undefined`
+				acc = result;
+			}
+		}
+	}
+	
 }
 
 

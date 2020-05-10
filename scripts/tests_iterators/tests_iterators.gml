@@ -7,7 +7,7 @@ var ds;
 var array;
 
 // tests array iterators
-iter = new Iterator([1, 2, 3]);
+iter = new IteratorNew([1, 2, 3]);
 assert_eq(1, iter.next());
 assert_eq(2, iter.next());
 assert_eq([3], iter.collect());
@@ -189,9 +189,9 @@ iter = new Iterator(new FileReader(ds));
 assert_eq(["line1", "line2", "line3"], iter.collect());
 file_text_close(ds);
 
-// tests new iterator
+/*// tests new iterator
 iter = new IteratorNew([1, 2, 3]);
 iter.map(function(_x) { return _x * _x });
 iter.enumerate();
 iter.extend(range_new(12, 20, 3));
-show_message(iter);
+show_message(iter);*/

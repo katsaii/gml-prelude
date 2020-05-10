@@ -1,5 +1,7 @@
-/* Data structure operations (See: `https://github.com/NuxiiGit/gml-prelude`)
+/* Additional Data Structure Extensions
+ * ------------------------------------
  * Kat @Katsaii
+ * `https://github.com/NuxiiGit/gml-prelude`
  */
 
 /// @desc Clones an array.

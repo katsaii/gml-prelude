@@ -1,5 +1,7 @@
-/* Higher order functions (See: `https://github.com/NuxiiGit/functionalism`)
+/* Higher Order Functions
+ * ----------------------
  * Kat @Katsaii
+ * `https://github.com/NuxiiGit/functionalism`
  */
 
 /// @desc Converts a built-in function into a usable function pointer.

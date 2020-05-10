@@ -1,5 +1,7 @@
-/* Iterators (See: `https://github.com/NuxiiGit/gml-prelude`)
+/* Iterator library
+ * ----------------
  * Kat @Katsaii
+ * `https://github.com/NuxiiGit/gml-prelude`
  */
 
 /// @desc Creates a reader which returns elements of a ds_grid.

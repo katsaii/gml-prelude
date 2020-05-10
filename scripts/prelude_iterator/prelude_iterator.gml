@@ -204,6 +204,116 @@ function FileReader(_file) constructor {
 	__next__ = read;
 }
 
+/// @desc Creates an iterator instance from this data structure.
+/// @param {value} variable The data structure or value to generate values from.
+/// @param {int} [ds_type] The type of data structure, if `variable` holds a data structure index.
+function IteratorNew(_ds) constructor {
+	var reader;
+	if (argument_count > 1) {
+		var ds_type = argument[1];
+		switch (ds_type) {
+		case ds_type_grid:
+			reader = new GridReader(_ds);
+			break;
+		case ds_type_list:
+			reader = new ListReader(_ds);
+			break;
+		case ds_type_queue:
+			reader = new QueueReader(_ds);
+			break;
+		case ds_type_stack:
+			reader = new StackReader(_ds);
+			break;
+		case ds_type_priority:
+			reader = new PriorityQueueReader(_ds);
+			break;
+		case ds_type_map:
+			reader = new MapReader(_ds);
+			break;
+		default:
+			throw "unknown ds_kind (" + string(ds_type) + ")";
+		}
+	} else if (is_struct(_ds)) {
+		reader = _ds;
+	} else if (is_array(_ds)) {
+		reader = new ArrayReader(_ds);
+	} else if (is_string(_ds)) {
+		reader = new CharacterReader(_ds);
+	} else {
+		throw "unsupported data structure (" + string(_ds) + ")";
+	}
+	if (variable_struct_exists(reader, "__iter__")) {
+		reader = reader.__iter__();
+	}
+	if not (variable_struct_exists(reader, "__next__")) {
+		throw "invalid struct format: requires `__next__` method";
+	}
+	/// @desc The generator function.
+	generator = reader.__next__;
+	/// @desc The peeked value.
+	peeked = undefined;
+	/// @desc Whether a peeked value exists.
+	peekedExists = false;
+	/// @desc Advance the iterator and return its next value.
+	next = function() {
+		if (peekedExists) {
+			peekedExists = false;
+			return peeked;
+		} else {
+			return generator();
+		}
+	}
+	/// @desc peek at the next value in the iterator.
+	peek = function() {
+		if not (peekedExists) {
+			peeked = generator();
+			peekedExists = true;
+		}
+		return peeked;
+	}
+	/// @desc Takes values.whilst some predicate holds.
+	/// @param {script} p The predicate to check.
+	takeWhile = function(_p) {
+		var f = generator;
+		generator = method({
+			f : f,
+			p : _p
+		}, function() {
+			var val = f();
+			if (val == undefined || !p(val)) {
+				return undefined;
+			}
+			return val;
+		});
+		return self;
+	}
+	/// @desc Takes values.until some predicate holds.
+	/// @param {script} p The predicate to check.
+	takeUntil = function(_p) {
+		return takeWhile(method({
+			p : _p
+		}, function(_x) {
+			return !p(_x);
+		}));
+	}
+	/// @desc Takes the first `n` non-undefined values.
+	/// @param {int} n The number of elements to take.
+	take = function(_count) {
+		return takeWhile(method({
+			n : _count
+		}, function(_) {
+			if (n <= 0) {
+				return false;
+			} else {
+				n -= 1;
+				return true;
+			}
+		}));
+	}
+}
+
+
+
 /// @desc Creates an iterator instance with this function.
 /// @param {value} variable The data structure or value to generate values from.
 /// @param {int} [ds_type] The type of data structure, if `variable` holds a data structure index.

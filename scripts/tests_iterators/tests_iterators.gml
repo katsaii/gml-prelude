@@ -188,3 +188,14 @@ ds = file_text_open_from_string("line1\nline2\nline3");
 iter = new Iterator(new FileReader(ds));
 assert_eq(["line1", "line2", "line3"], iter.collect());
 file_text_close(ds);
+
+// tests new iterator
+iter = new IteratorNew([1, 2, 3, undefined, 5, 6, 7]);
+iter.take(5);
+show_message(iter.next());
+show_message(iter.next());
+show_message(iter.next());
+show_message(iter.next());
+show_message(iter.next());
+show_message(iter.next());
+show_message(iter.next());

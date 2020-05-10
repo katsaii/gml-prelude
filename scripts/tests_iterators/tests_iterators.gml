@@ -193,4 +193,5 @@ file_text_close(ds);
 iter = new IteratorNew([1, 2, 3]);
 iter.map(function(_x) { return _x * _x });
 iter.enumerate();
+iter.extend(range_new(12, 20, 3));
 show_message(iter);

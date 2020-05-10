@@ -410,6 +410,26 @@ function IteratorNew(_ds) constructor {
 	enumerate = function() {
 		return zip(range_new(0, infinity));
 	}
+	/// @desc Appends another iterator onto the end of this iterator.
+	/// @param {script} other The iterator to append onto this one.
+	extend = function(_other) {
+		generator = method({
+			a : generator,
+			b : _other.generator,
+			locked : false
+		}, function() {
+			if (locked) {
+				return b();
+			}
+			var val = a();
+			if (val == undefined) {
+				locked = true;
+				return b();
+			}
+			return val;
+		});
+		return self;
+	}
 	/// @desc Returns the first element where this predicate holds.
 	/// @param {script} p The predicate to check.
 	first = function(_p) {

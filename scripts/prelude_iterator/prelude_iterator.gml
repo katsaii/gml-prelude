@@ -188,7 +188,7 @@ function FileReader(_file) constructor {
 /// @desc Creates an iterator instance from this data structure.
 /// @param {value} variable The data structure or value to generate values from.
 /// @param {int} [ds_type] The type of data structure, if `variable` holds a data structure index.
-function IteratorNew(_ds) constructor {
+function Iterator(_ds) constructor {
 	var reader;
 	if (argument_count > 1) {
 		var ds_type = argument[1];
@@ -387,7 +387,7 @@ function IteratorNew(_ds) constructor {
 	}
 	/// @desc Enumerates this iterator.
 	enumerate = function() {
-		return zip(range_new(0, infinity));
+		return zip(range(0, infinity));
 	}
 	/// @desc Appends another iterator onto the end of this iterator.
 	/// @param {script} other The iterator to append onto this one.
@@ -563,8 +563,8 @@ function IteratorNew(_ds) constructor {
 /// @param {real} first The first element of the range.
 /// @param {real} last The last element of the range.
 /// @param {real} [step=1] The step of the range.
-function range_new(_first, _last) {
-	return new IteratorNew({
+function range(_first, _last) {
+	return new Iterator({
 		pos : _first,
 		len : _last,
 		step : argument_count > 2 ? argument[2] : 1,
@@ -583,7 +583,7 @@ function range_new(_first, _last) {
 /// @param {value} value The first element of the sequence.
 /// @param {script} f The function to apply.
 function iterate(_first, _f) {
-	return new IteratorNew({
+	return new Iterator({
 		acc : _first,
 		f : _f,
 		__next__ : function() {

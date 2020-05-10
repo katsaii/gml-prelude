@@ -357,12 +357,6 @@ function IteratorNew(_ds) constructor {
 			}
 		}));
 	}
-	/// @desc Returns the first element where this predicate holds.
-	/// @param {script} p The predicate to check.
-	first = function(_p) {
-		dropUntil(_p);
-		return next();
-	}
 	/// @desc Applies a function to the generator of this iterator.
 	/// @param {script} f The function to apply.
 	map = function(_f) {
@@ -388,6 +382,30 @@ function IteratorNew(_ds) constructor {
 			return val;
 		});
 		return self;
+	}
+	/// @desc Returns the first element where this predicate holds.
+	/// @param {script} p The predicate to check.
+	first = function(_p) {
+		dropUntil(_p);
+		return next();
+	}
+	/// @desc Generates values until the iterator is empty, or until an element does not satisfy the predicate.
+	///       `true` is returned if all elements satisfy the predicate, and `false` is returned otherwise.
+	/// @param {script} p The predicate to check.
+	each = function(_p) {
+		var val = first(method({
+			p : _p
+		}, function(_x) {
+			return !p(_x);
+		}));
+		return val == undefined;
+	}
+	/// @desc Generates values until the iterator is empty, or until an element satisfies the predicate.
+	///       `true` is returned if any element satisfies the predicate, and `false` is returned otherwise.
+	/// @param {script} p The predicate to check.
+	some = function(_p) {
+		var val = first(_p);
+		return val != undefined;
 	}
 }
 

@@ -190,12 +190,6 @@ assert_eq(["line1", "line2", "line3"], iter.collect());
 file_text_close(ds);
 
 // tests new iterator
-iter = new IteratorNew([1, 2, 3, undefined, 5, 6, 7]);
-iter.drop(5);
-show_message(iter.next());
-show_message(iter.next());
-show_message(iter.next());
-show_message(iter.next());
-show_message(iter.next());
-show_message(iter.next());
-show_message(iter.next());
+iter = new IteratorNew([1, 2, 3, 4, 5, 6, 7]);
+show_message(iter.first(function(_x) { return _x % 2 == 0 }));
+show_message(iter.first(function(_x) { return _x % 2 == 0 }));

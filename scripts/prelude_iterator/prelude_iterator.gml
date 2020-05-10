@@ -360,6 +360,12 @@ function IteratorNew(_ds) constructor {
 			}
 		}));
 	}
+	/// @desc Returns the first element where this predicate holds.
+	/// @param {script} p The predicate to check.
+	first = function(_p) {
+		dropUntil(_p);
+		return next();
+	}
 }
 
 

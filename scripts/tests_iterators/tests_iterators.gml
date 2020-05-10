@@ -192,5 +192,4 @@ file_text_close(ds);
 // tests new iterator
 iter = new IteratorNew([1, 2, 3]);
 iter.map(function(_x) { return _x * _x });
-var result = iter.toString();
-show_message(result);
+show_message(iter);

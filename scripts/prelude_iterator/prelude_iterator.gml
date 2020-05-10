@@ -364,7 +364,11 @@ function IteratorNew(_ds) constructor {
 			g : generator,
 			f : _f
 		}, function() {
-			return f(g());
+			var val = g();
+			if (val == undefined) {
+				return undefined;
+			}
+			return f(val);
 		});
 		return self;
 	}
@@ -529,7 +533,7 @@ function IteratorNew(_ds) constructor {
 			}
 			return msg;
 		});
-		return "[" + str + "]";
+		return "[ " + str + " ]";
 	}
 }
 

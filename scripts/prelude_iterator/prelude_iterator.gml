@@ -434,7 +434,103 @@ function IteratorNew(_ds) constructor {
 			}
 		}
 	}
-	
+	/// @desc Converts an iterator into an array.
+	/// @param {value} [ds_type] The type to fold into. Can be one of: `ds_type_list`, `ds_type_queue`, `ds_type_stack`.
+	collect = function() {
+		var y0, f;
+		if (argument_count > 0) {
+			var ds_type = argument[0];
+			if (ds_type == ds_type_list) {
+				y0 = ds_list_create();
+				f = method(undefined, ds_list_add);
+			} else if (ds_type == ds_type_queue) {
+				y0 = ds_queue_create();
+				f = method(undefined, ds_queue_enqueue);
+			} else if (ds_type == ds_type_stack) {
+				y0 = ds_stack_create();
+				f = method(undefined, ds_stack_push);
+			} else {
+				throw "unsupported collection type";
+			}
+		} else {
+			y0 = [];
+			f = method({
+				pos : 0
+			}, function(_xs, _x) {
+				_xs[@ pos] = _x;
+				pos += 1;
+				return _xs;
+			});
+		}
+		return fold(y0, f);
+	}
+	/// @desc Adds elements of this iterator together.
+	/// @param {number} type The type of elements to sum.
+	sum = function(_type) {
+		var y0, f;
+		if (_type == ty_real) {
+			y0 = 0;
+			f = function(_xs, _x) {
+				var val;
+				if (is_real(_x)) {
+					val = _x;
+				} else {
+					try {
+						val = real(_x);
+					} catch (_) {
+						throw "incompatible number type";
+					}
+				}
+				return _xs + val;
+			};
+		} else if (_type == ty_string) {
+			y0 = "";
+			f = function(_xs, _x) {
+				var val;
+				if (is_string(_x)) {
+					val = _x;
+				} else {
+					val = string(_x);
+				}
+				return _xs + val;
+			};
+		} else {
+			throw "unsupported sum type: must be `ty_real` or `ty_string`";
+		}
+		return fold(y0, f);
+	}
+	/// @desc Multiplies elements of this iterator together.
+	product = function() {
+		return fold(1, function(_xs, _x) {
+			var val;
+			if (is_real(_x)) {
+				val = _x;
+			} else {
+				try {
+					val = real(_x);
+				} catch (_) {
+					throw "incompatible number type";
+				}
+			}
+			return _xs * val;
+		});
+	}
+	/// @desc Converts an iterator into a string.
+	toString = function() {
+		var str = fold("", function(_xs, _x) {
+			var msg = _xs;
+			if (msg != "") {
+				msg += ", ";
+			}
+			if (is_string(_x)) {
+				msg += "\"" + string_replace_all(_x, "\"", "\\\"") + "\"";
+			} else {
+				msg += string(_x);
+			}
+			return msg;
+		});
+		return "[" + str + "]";
+	}
 }
 
 

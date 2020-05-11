@@ -54,12 +54,11 @@ Unfortunately, due to how data structures are implemented in GML, the `Iterator`
 ```js
 var list = ds_list_create();
 ds_list_add(list, 1, 2, 3);
+
 var iter = new Iterator(list, ds_type_list);
 ```
 
 Alternatively, you can pass an instance of the corresponding reader struct. The following table details the `ds_type_*` and its corresponding reader struct:
-
-<p align="center">
 
 | Type               | Reader                |
 |--------------------|-----------------------|
@@ -69,8 +68,6 @@ Alternatively, you can pass an instance of the corresponding reader struct. The 
 | `ds_type_stack`    | `StackReader`         |
 | `ds_type_priority` | `PriorityQueueReader` |
 | `ds_type_map`      | `MapReader`           |
-
-</p>
 
 ### Writing Custom Iterators Using Structs
 
@@ -283,10 +280,8 @@ Iterators can be stacked with multiple operations with barely any overhead or co
 The `zip` method takes a second iterator as an argument, and returns a new iterator which generate pairs of values that correspond to the generated values of each iterator:
 
 ```js
-var a = new Iterator("hello");
-var b = new Iterator("world");
-
-var iter = a.zip(b);
+var iter = new Iterator("hello");
+iter.zip(new Iterator("world"));
 
 var array = iter.collect(); // holds [["w", "h"], ["o", "e"], ["r", "l"], ["l", "l"], ["d", "o"]]
 ```
@@ -297,20 +292,10 @@ The `map` method takes a function as an argument, and returns a new iterator whi
 
 ```js
 var iter = range(1, infinity);
-    iter = iter.map(function(_x) { return _x * _x });
+iter.map(function(_x) { return _x * _x });
+iter.take(4);
 
-var array = iter.take(4); // holds [1, 4, 9, 16]
-```
-
-#### Concat
-
-The `concat` method converts an iterator wich generates arrays into an iterator which also iterates over those arrays; that is, a two-dimensional array can be flattened into a single-dimensional array:
-
-```js
-var iter = new Iterator([["W", vk_up], ["A", vk_left], ["S", vk_down], ["D", vk_right]]);
-    iter = iter.concat();
-
-var array = iter.collect(); // holds ["W", vk_up, "A", vk_left, "S", vk_down, "D", vk_right]
+var array = iter.collect(); // holds [1, 4, 9, 16]
 ```
 
 #### Take
@@ -319,7 +304,7 @@ The `take` method accepts a number `n` as an argument, and will produce a new it
 
 ```js
 var iter = range(1, 5);
-    iter = iter.take(3);
+iter.take(3);
 
 var array = iter.collect(); // holds [1, 2, 3]
 ```
@@ -330,8 +315,8 @@ The `drop` method takes a number `n` as an argument, and will produce a new iter
 
 ```js
 var iter = range(2, 8);
-    iter = iter.drop(2); // drops [2, 3]
-    iter = iter.take(3);
+iter.drop(2); // drops [2, 3]
+iter.take(3);
 
 var array = iter.collect(); // holds [4, 5, 6]
 ```

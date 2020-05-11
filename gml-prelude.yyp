@@ -2,6 +2,7 @@
   "resources": [
     {"id":{"name":"prelude_gml_ex","path":"scripts/prelude_gml_ex/prelude_gml_ex.yy",},"order":3,},
     {"id":{"name":"tests_iterators","path":"scripts/tests_iterators/tests_iterators.yy",},"order":5,},
+    {"id":{"name":"prelude_monad","path":"scripts/prelude_monad/prelude_monad.yy",},"order":4,},
     {"id":{"name":"tests_arrays","path":"scripts/tests_arrays/tests_arrays.yy",},"order":6,},
     {"id":{"name":"tests_curry","path":"scripts/tests_curry/tests_curry.yy",},"order":2,},
     {"id":{"name":"prelude_iterator","path":"scripts/prelude_iterator/prelude_iterator.yy",},"order":0,},

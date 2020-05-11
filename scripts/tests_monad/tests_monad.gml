@@ -2,14 +2,12 @@
  * Kat @Katsaii
  */
 
-var f;
 var mf;
-var mx;
 
 // tests bind
-f = function(_x) { return 2 * _x };
-assert_eq(2, bind(1, f));
-assert_eq(undefined, bind(undefined, f));
+mf = function(_x) { return 2 * _x };
+assert_eq(2, bind(1, mf));
+assert_eq(undefined, bind(undefined, mf));
 assert_eq(undefined, bind(12, undefined));
 
 // tests apply
@@ -18,14 +16,11 @@ mf = [
 	function(_x) { return _x + _x },
 	function(_x) { return _x + "izard" }
 ];
-mx = [
-	"A", "B", "C"
-];
-assert_eq([65, 66, 67, "AA", "BB", "CC", "Aizard", "Bizard", "Cizard"], apply(mf, mx));
+assert_eq([65, 66, 67, "AA", "BB", "CC", "Aizard", "Bizard", "Cizard"], apply(mf, ["A", "B", "C"]));
 
 // tets lifted function
 mf = function(_x) { return 4 * _x };
 assert_eq(8, apply(mf, 2));
 assert_eq(undefined, apply(mf, undefined));
 assert_eq([-4, 8, 12], apply(mf, [-1, 2, 3]));
-assert_eq(undefined, apply(mf, [1, 1, 1, undefined, 1]));
+assert_eq([4, 4, 4, undefined, 4], apply(mf, [1, 1, 1, undefined, 1]));

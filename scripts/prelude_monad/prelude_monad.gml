@@ -4,7 +4,7 @@
  * `https://github.com/NuxiiGit/gml-prelude`
  */
 
-/// @desc Binds an nullable impure value to a nullable function.
+/// @desc Binds a list of nullable values to a nullable funtion.
 /// @param {value_or_array} mx The impure value to feed into `f`.
 /// @param {script} f The function to apply to elements of `mx`.
 function bind(_mx, _f) {
@@ -17,9 +17,6 @@ function bind(_mx, _f) {
 		var pos = 0;
 		for (var i = 0; i < count; i += 1) {
 			var yy = bind(_mx[i], _f);
-			if (yy == undefined) {
-				return undefined;
-			}
 			if (is_array(yy)) {
 				var count2 = array_length(yy);
 				var start = pos;

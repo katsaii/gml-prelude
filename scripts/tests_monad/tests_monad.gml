@@ -25,6 +25,19 @@ assert_eq(undefined, apply(mf, undefined));
 assert_eq([-4, 8, 12], apply(mf, [-1, 2, 3]));
 assert_eq([4, 4, 4, undefined, 4], apply(mf, [1, 1, 1, undefined, 1]));
 
+// more tests lifted function
+mf = function(_a) {
+	return method({
+		a : _a
+	}, function(_b) {
+		return a + _b;
+	})
+};
+assert_eq(6, apply(apply(mf, 2), 4));
+assert_eq(undefined, apply(apply(mf, 2), undefined));
+assert_eq(undefined, apply(apply(mf, undefined), 2));
+assert_eq(["AX", "AY", "AZ", "BX", "BY", "BZ", "CX", "CY", "CZ"], apply(apply(mf, ["A", "B", "C"]), ["X", "Y", "Z"]));
+
 // tests join
 assert_eq([1], join([[1]]));
 assert_eq([undefined], join([undefined]));

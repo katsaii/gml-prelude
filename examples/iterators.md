@@ -335,31 +335,3 @@ var iter = range(2, 8);
 
 var array = iter.collect(); // holds [4, 5, 6]
 ```
-
-### Indexable Iterators
-
-If your data structure has some internal state which determines "how far along" in the iteration it is, you might want to consider implementing a `__seek__` method. This method enables iterators which implement it to be indexed at arbitrary locations using the `seek` method, and even totally reset using the `reset` method. This is particularly useful if you would like to use the same iterator repetitively.
-
-```js
-var abc_reader = {
-	n : 0,
-	__next__ : function() {
-		var char = chr(65 + n);
-		n += 1;
-		return char;
-	},
-	__seek__ : function(_pos) {
-		n = _pos;
-	}
-}
-
-var iter = new Iterator(abc_reader);
-var a = iter.next();      // holds "A"
-var b = iter.next();      // holds "B"
-iter.seek(6);
-var h = iter.next();      // holds "H"
-var i = iter.next();      // holds "I"
-iter.reset();
-var also_a = iter.next(); // holds "A"
-var also_b = iter.next(); // holds "B"
-```

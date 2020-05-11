@@ -1,5 +1,6 @@
 {
   "resources": [
+    {"id":{"name":"tests_monad","path":"scripts/tests_monad/tests_monad.yy",},"order":8,},
     {"id":{"name":"prelude_gml_ex","path":"scripts/prelude_gml_ex/prelude_gml_ex.yy",},"order":3,},
     {"id":{"name":"tests_iterators","path":"scripts/tests_iterators/tests_iterators.yy",},"order":5,},
     {"id":{"name":"prelude_monad","path":"scripts/prelude_monad/prelude_monad.yy",},"order":4,},

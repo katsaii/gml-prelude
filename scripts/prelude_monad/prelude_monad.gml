@@ -13,11 +13,25 @@ function bind(_mx, _f) {
 	}
 	if (is_array(_mx)) {
 		var count = array_length(_mx);
-		var clone = array_create(count);
+		var my = array_create(count);
+		var pos = 0;
 		for (var i = 0; i < count; i += 1) {
-			clone[@ i] = _f(_mx[i]);
+			var yy = bind(_mx[i], _f);
+			if (yy == undefined) {
+				return undefined;
+			}
+			if (is_array(yy)) {
+				var count2 = array_length(yy);
+				var start = pos;
+				for (; pos - start < count2; pos += 1) {
+					my[@ pos] = yy[pos - start];
+				}
+			} else {
+				my[@ pos] = yy;
+				pos += 1;
+			}
 		}
-		return clone;
+		return my;
 	} else {
 		return _f(_mx);
 	}

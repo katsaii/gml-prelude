@@ -34,6 +34,12 @@ function bind(_mx, _f) {
 	}
 }
 
+/// @desc Unwraps a list of nullable lists of nullable values into just a list of nullable values.
+/// @param {value_or_array} mmx The nested impure value to unwrap.
+function join(_mmx) {
+	return bind(_mmx, function(_mx) { return _mx });
+}
+
 /// @desc Applies a nullable impure function to a nullable impure value.
 /// @param {value_or_array} mf The impure value function.
 /// @param {value_or_array} mx The impure value.

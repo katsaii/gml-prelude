@@ -177,3 +177,9 @@ assert_eq("c", iter.nth(2));
 assert_eq("e", iter.nth(1));
 assert_eq(undefined, iter.nth(0));
 assert_eq(undefined, iter.nth(12));
+
+// tests takeUntil
+iter = range(0, 100);
+iter.drop(10);
+iter.takeUntil(function(_x) { return _x == 15 });
+assert_eq([10, 11, 12, 13, 14], iter.collect());

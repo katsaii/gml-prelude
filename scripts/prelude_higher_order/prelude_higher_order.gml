@@ -84,7 +84,7 @@ function script_execute_array(_f, _a) {
 /// @desc Generates a new function with a number of arguments partially applied.
 /// @param {script} ind the id of the script or method to apply currying to.
 /// @param {value} [args] The arguments to partially apply to the function.
-function curry(_f) {
+function partial(_f) {
 	var count = argument_count - 1;
 	var args = array_create(count);
 	for (var i = count - 1; i >= 0; i -= 1) {

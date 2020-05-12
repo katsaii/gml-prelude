@@ -2,13 +2,13 @@
  * Kat @Katsaii
  */
 
+var f;
 var mf;
 
 // tests bind
-mf = function(_x) { return 2 * _x };
-assert_eq(2, bind(1, mf));
-assert_eq(undefined, bind(undefined, mf));
-assert_eq(undefined, bind(12, undefined));
+f = function(_x) { return 2 * _x };
+assert_eq(2, bind(1, f));
+assert_eq(undefined, bind(undefined, f));
 
 // tests apply
 mf = [

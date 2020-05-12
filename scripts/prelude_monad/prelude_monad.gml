@@ -4,11 +4,11 @@
  * `https://github.com/NuxiiGit/gml-prelude`
  */
 
-/// @desc Binds a list of nullable values to a nullable funtion.
+/// @desc Binds a list of nullable values to a funtion.
 /// @param {value_or_array} mx The impure value to feed into `f`.
 /// @param {script} f The function to apply to elements of `mx`.
 function bind(_mx, _f) {
-	if (_mx == undefined || _f == undefined) {
+	if (_mx == undefined) {
 		return undefined;
 	}
 	if (is_array(_mx)) {

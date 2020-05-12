@@ -111,7 +111,7 @@ function curry(_f) {
 		f : _f
 	}, function(_a) {
 		return method({
-			f : _f,
+			f : f,
 			a : _a
 		}, function(_b) {
 			return f(a, _b);

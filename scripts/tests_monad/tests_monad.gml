@@ -26,13 +26,10 @@ assert_eq([-4, 8, 12], apply(mf, [-1, 2, 3]));
 assert_eq([4, 4, 4, undefined, 4], apply(mf, [1, 1, 1, undefined, 1]));
 
 // more tests lifted function
-mf = function(_a) {
-	return method({
-		a : _a
-	}, function(_b) {
-		return a + _b;
-	})
-};
+f = function(_a, _b) {
+	return _a + _b;
+}
+mf = curry(f);
 assert_eq(6, apply(apply(mf, 2), 4));
 assert_eq(undefined, apply(apply(mf, 2), undefined));
 assert_eq(undefined, apply(apply(mf, undefined), 2));

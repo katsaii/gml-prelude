@@ -69,4 +69,4 @@ The identity function is nothing special, and is simply a function which returns
 
 ## The No-Op Function
 
-The no-op function is similar to the identity function, except it does not accept any arguments and always returns `undefined`. This makes it functionally identical to `identity(undefined)`.
+The `noop` function is similar to the `identity` function, except it does not accept any arguments and always returns `undefined`. This makes it functionally identical to `identity(undefined)`.

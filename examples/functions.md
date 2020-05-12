@@ -39,9 +39,9 @@ scream_message("hello world"); // prints "HELLO WORLD"
 
 This code will compose the two functions `string_upper` and `show_message` into a new method which prints a message in capital case.
 
-## Partial Application (Currying)
+## Partial Application and Currying
 
-Currying is the concept of being able to pass arguments to a function, either individually or all at once. This allows you to create domain-specific variants of a function by only applying the first couple of arguments before-hand. For example, let's say you have a function which draws your player sprite:
+Currying is the concept of being able to pass arguments to a function either individually, or all at once. This allows you to create domain-specific variants of a function by only applying the first couple of arguments before-hand. For example, let's say you have a function which draws your player sprite:
 
 ```js
 function draw_player(_x, _y, _xscale, _yscale, _rot, _colour, _alpha) {
@@ -51,13 +51,13 @@ function draw_player(_x, _y, _xscale, _yscale, _rot, _colour, _alpha) {
 
 Doesn't it look like a pain having to type out all those additional arguments when you only really care about the first two? Wouldn't it be nice if you could just pass the first two arguments without caring about what the remaining arguments are? Well, with currying this is possible!
 
-To create a the new `draw_player` function, the `curry` function can be used:
+To create a the new `draw_player` function, the `partial` function can be used:
 
 ```js
-draw_player = curry(draw_sprite_ext, spr_player, 0);
+draw_player = partial(draw_sprite_ext, spr_player, 0);
 ```
 
-The first argument of `curry` is the function you want to partially apply. Next, any additional arguments are the arguments of the function you are partially applying. Finally, the `curry` function returns a method which contains those arguments applied to the function. The resulting method is assigned to the instance variable `draw_player`, and can be used like any typical function would be.
+The first argument of `partial` is the function you want to partially apply. Next, any additional arguments are the arguments of the function you are partially applying. Finally, the `partial` function returns a method which contains those arguments applied to the function. The resulting method is assigned to the instance variable `draw_player`, and can be used like any typical function would be.
 
 ```js
 draw_player(x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);

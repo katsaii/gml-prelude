@@ -13,10 +13,10 @@ function increment(_x) {
 	return _x + 1;
 }
 
-var two = bind(1, increment);            // holds 2
-var none = bind(undefined, increment);   // holds undefined
-var array = bind([5, 6, 7], increment);  // holds [6, 7, 8]
-var empty = bind([], increment);         // holds []
+var two = bind(1, increment);              // holds 2
+var nothing = bind(undefined, increment);  // holds undefined
+var array = bind([5, 6, 7], increment);    // holds [6, 7, 8]
+var empty = bind([], increment);           // holds []
 ```
 
 Notice that when the input is `undefined` or the empty array `[]`, the result doesn't change. This is what it is meant by the process of applying a function to the "middle values" of `mx`.
@@ -38,3 +38,19 @@ The `join(mmx)` function gives you the benefit of collapsing arrays without havi
 ```js
 var collapsed = join(["A", [1, undefined], [12]]); // collapses into ["A", 1, undefined, 12]
 ```
+
+## Apply
+
+The `apply(mf, mx)` function takes a step-up from the `bind` function, since it allows you to bind an impure function to an impure value. In the case of this library, this means that an array of functions can be called onto an array of values!
+
+```js
+function prod_by_four(_x) {
+	return 4 * _x;
+}
+
+var eight = apply(prod_by_four, 2);                      // holds 8
+var nothing = apply(prod_by_four, undefined);            // holds undefined
+var array = apply(prod_by_four, [-1, 2, undefined, 3]);  // holds [-4, 8, undefined, 12]
+```
+
+Specifically, this function models the behaviour of [applicative functors](http://learnyouahaskell.com/functors-applicative-functors-and-monoids#applicative-functors).

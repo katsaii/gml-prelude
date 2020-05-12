@@ -30,3 +30,11 @@ function ascii_pair(_x) {
 
 var array = bind(["A", "B", "C"], ascii_pair); // holds [65, "A", 66, "B", 67, "C"]
 ```
+
+## Join
+
+The `join(mmx)` function gives you the benefit of collapsing arrays without having to pass in your own function. This is functionally identical to `bind(mmx, identity)` where `identity` is the identity map.
+
+```js
+var collapsed = join(["A", [1, undefined], [12]]); // collapses into ["A", 1, undefined, 12]
+```

@@ -82,7 +82,7 @@ function script_execute_array(_f, _a) {
 }
 
 /// @desc Generates a new function with a number of arguments partially applied.
-/// @param {script} ind the id of the script or method to apply currying to.
+/// @param {script} ind The id of the script or method to apply currying to.
 /// @param {value} [args] The arguments to partially apply to the function.
 function partial(_f) {
 	var count = argument_count - 1;
@@ -101,5 +101,30 @@ function partial(_f) {
 			args[@ len + i] = argument[i];
 		}
 		return script_execute_array(f, args);
+	});
+}
+
+/// @desc Applies currying to function which accepts two arguments.
+/// @param {script} ind The id of the script or method to apply currying to.
+function curry(_f) {
+	return method({
+		f : _f
+	}, function(_a) {
+		return method({
+			f : _f,
+			a : _a
+		}, function(_b) {
+			return f(a, _b);
+		});
+	});
+}
+
+/// @desc Uncurries a function which returns a higher-order function.
+/// @param {script} ind The id of the script or method to uncurry.
+function uncurry(_f) {
+	return method({
+		f : _f
+	}, function(_a, _b) {
+		return f(_a)(_b);
 	});
 }

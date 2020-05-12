@@ -1,0 +1,3 @@
+# Monads
+
+A monad can be described as the minimal amount of behaviour which can be used to override function composition, such that some additional operation is performed on the internal value. Luckily for us, GML has two primitive monadic data types; these are arrays (lists) and `undefined`, which acts as a nullable data type. Hence, we can produce a monad over the elements of "lists of nullable values".

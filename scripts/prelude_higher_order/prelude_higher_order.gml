@@ -162,10 +162,15 @@ function operator_map() {
 	map[? ">"] = function(_l, _r) { return _l > _r };
 	map[? "<"] = function(_l, _r) { return _l < _r };
 	map[? "!!"] = function(_x) { return bool(_x) };
-	map[? "."] = function(_l, _r) {
-		try {
-			return is_struct(_l) ? variable_struct_get(_l, _r) : variable_instance_get(_l, _r);
-		} catch (_) {
+	map[? "."] = function(_container, _key) {
+		return is_struct(_container) ?
+				variable_struct_exists(_container, _key) ? variable_struct_get(_container, _key) : undefined :
+				variable_instance_exists(_container, _key) ? variable_instance_get(_container, _key) : undefined;
+	};
+	map[? "[]"] = function(_container, _key) {
+		if (_key >= 0 && _key < array_length(_container)) {
+			return _container[_key];
+		} else {
 			return undefined;
 		}
 	};

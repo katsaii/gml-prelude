@@ -28,3 +28,9 @@ assert_eq(print_partial("brave", "James"), partial(print_partial, "brave")("Jame
 var f = function(_x, _y) { return _x * _y };
 var f2 = uncurry(curry(f));
 assert_eq(f(1, 2), f2(1, 2));
+
+// tests operator sections
+var section = curry(operator("."));
+var access = section({ a : 1, b : "x" });
+assert_eq(1, access("a"));
+assert_eq("x", access("b"));

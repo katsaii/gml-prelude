@@ -163,9 +163,13 @@ function operator_map() {
 	map[? "<"] = function(_l, _r) { return _l < _r };
 	map[? "!!"] = function(_x) { return bool(_x) };
 	map[? "."] = function(_container, _key) {
-		return is_struct(_container) ?
-				variable_struct_exists(_container, _key) ? variable_struct_get(_container, _key) : undefined :
-				variable_instance_exists(_container, _key) ? variable_instance_get(_container, _key) : undefined;
+		if (is_struct(_container)) {
+			return variable_struct_exists(_container, _key) ?
+					variable_struct_get(_container, _key) : undefined;
+		} else {
+			return variable_instance_exists(_container, _key) ?
+					variable_instance_get(_container, _key) : undefined;
+		}
 	};
 	map[? "[]"] = function(_container, _key) {
 		if (_key >= 0 && _key < array_length(_container)) {
@@ -182,5 +186,3 @@ function operator(_kind) {
 	static ops = operator_map();
 	return ops[? _kind];
 }
-
-show_message(operator("+")(2, 3));

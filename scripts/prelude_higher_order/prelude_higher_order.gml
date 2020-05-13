@@ -169,5 +169,19 @@ function operator(_kind) {
 	case "!":
 	case "not":
 		return function(_x) { return !_x };
+	case "==":
+	case "=":
+		return function(_l, _r) { return _l == _r };
+	case "!=":
+	case "<>":
+		return function(_l, _r) { return _l != _r };
+	case ">=":
+		return function(_l, _r) { return _l >= _r };
+	case "<=":
+		return function(_l, _r) { return _l <= _r };
+	case ">":
+		return function(_l, _r) { return _l > _r };
+	case "<":
+		return function(_l, _r) { return _l < _r };
 	}
 }

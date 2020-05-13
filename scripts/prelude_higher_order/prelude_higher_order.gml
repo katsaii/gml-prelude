@@ -128,3 +128,17 @@ function uncurry(_f) {
 		return f(_a)(_b);
 	});
 }
+
+/// @desc Returns an operator reference.
+function operator(_kind) {
+	switch (_kind) {
+	case "+":
+		return function(_l, _r) { return _l + _r };
+	case "-":
+		return function(_l, _r) { return _l - _r };
+	case "*":
+		return function(_l, _r) { return _l * _r };
+	case "/":
+		return function(_l, _r) { return _l / _r };
+	}
+}

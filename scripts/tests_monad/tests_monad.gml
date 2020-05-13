@@ -40,3 +40,6 @@ assert_eq([1], join([[1]]));
 assert_eq([undefined], join([undefined]));
 assert_eq([undefined], join([[undefined]]));
 assert_eq([2], join([[[2]]]));
+
+// tests another lifted function
+assert_eq([3, 5, 8, 6, 10, 16, 9, 15, 24], apply(bind([1, 2, 3], curry(operator("*"))), [3, 5, 8]));

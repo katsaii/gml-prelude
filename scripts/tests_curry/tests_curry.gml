@@ -23,3 +23,8 @@ var custom_print = function(_a, _b, _c) {
 }
 var print_partial = partial(custom_print, "mega");
 assert_eq(print_partial("brave", "James"), partial(print_partial, "brave")("James"));
+
+// tests uncurrying a curried function
+var f = function(_x, _y) { return _x * _y };
+var f2 = uncurry(curry(f));
+assert_eq(f(1, 2), f2(1, 2));

@@ -153,7 +153,6 @@ function operator_map() {
 	map[? "xor"] = map[? "^^"];
 	map[? "!"] = function(_x) { return !_x };
 	map[? "not"] = map[? "!"];
-	map[? "!!"] = function(_x) { return bool(_x) };
 	map[? "=="] = function(_l, _r) { return _l == _r };
 	map[? "="] = map[? "=="];
 	map[? "!="] = function(_l, _r) { return _l != _r };
@@ -162,6 +161,14 @@ function operator_map() {
 	map[? "<="] = function(_l, _r) { return _l <= _r };
 	map[? ">"] = function(_l, _r) { return _l > _r };
 	map[? "<"] = function(_l, _r) { return _l < _r };
+	map[? "!!"] = function(_x) { return bool(_x) };
+	map[? "."] = function(_l, _r) {
+		try {
+			return is_struct(_l) ? variable_struct_get(_l, _r) : variable_instance_get(_l, _r);
+		} catch (_) {
+			return undefined;
+		}
+	};
 	return map;
 }
 

@@ -63,6 +63,23 @@ The first argument of `partial` is the function you want to partially apply. Nex
 draw_player(x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 ```
 
+### Curry
+
+The `curry` function works similar to `partial`, except it is used specifically with functions which accept two arguments. `curry(f)` will produce a new function which accepts two individual arguments of `f`:
+
+```js
+function append(_prefix, _postfix) {
+	return _prefix + _postfix;
+}
+
+var append_curried = curry(append);
+var str = append_curried("hello")("world"); // holds "helloworld"
+```
+
+### Uncurry
+
+The `uncurry` function has the opposite effect of `curry`; that is, `uncurry(f)` produces a new function where the parameters of `f` are passed at the same time. It holds that `uncurry(curry(f)) = f`.
+
 ## The Identity Function
 
 The identity function is nothing special, and is simply a function which returns its input; that is, it is the case that `identity(x) == x` for all possible values `x`. This sort of function is actually fairly useful to define "no behaviour" in situations where a function is required. For example, perhaps you have a higher-order function which uses some function `f` to define or modify some `Enemy` struct. Using the identity function, you can just let the struct pass through without any modification.

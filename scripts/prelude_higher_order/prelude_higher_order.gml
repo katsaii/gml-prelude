@@ -140,5 +140,11 @@ function operator(_kind) {
 		return function(_l, _r) { return _l * _r };
 	case "/":
 		return function(_l, _r) { return _l / _r };
+	case "%":
+	case "mod":
+		return function(_l, _r) { return _l % _r };
+	case "div":
+		return function(_l, _r) { return _l div _r };
+	
 	}
 }

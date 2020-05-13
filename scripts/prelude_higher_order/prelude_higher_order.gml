@@ -129,59 +129,46 @@ function uncurry(_f) {
 	});
 }
 
+/// @desc Returns a new ds_map containing operator references.
+function operator_map() {
+	var map = ds_map_create();
+	map[? "+"] = function(_l, _r) { return _l + _r };
+	map[? "-"] = function(_l, _r) { return _l - _r };
+	map[? "*"] = function(_l, _r) { return _l * _r };
+	map[? "/"] = function(_l, _r) { return _l / _r };
+	map[? "%"] = function(_l, _r) { return _l % _r };
+	map[? "mod"] = map[? "%"];
+	map[? "div"] = function(_l, _r) { return _l div _r };
+	map[? "|"] = function(_l, _r) { return _l | _r };
+	map[? "&"] = function(_l, _r) { return _l & _r };
+	map[? "^"] = function(_l, _r) { return _l ^ _r };
+	map[? "~"] = function(_x) { return ~_x };
+	map[? "<<"] = function(_l, _r) { return _l << _r };
+	map[? ">>"] = function(_l, _r) { return _l >> _r };
+	map[? "||"] = function(_l, _r) { return _l || _r };
+	map[? "or"] = map[? "||"];
+	map[? "&&"] = function(_l, _r) { return _l && _r };
+	map[? "and"] = map[? "&&"];
+	map[? "^^"] = function(_l, _r) { return _l ^^ _r };
+	map[? "xor"] = map[? "^^"];
+	map[? "!"] = function(_x) { return !_x };
+	map[? "not"] = map[? "!"];
+	map[? "!!"] = function(_x) { return bool(_x) };
+	map[? "=="] = function(_l, _r) { return _l == _r };
+	map[? "="] = map[? "=="];
+	map[? "!="] = function(_l, _r) { return _l != _r };
+	map[? "<>"] = map[? "!="];
+	map[? ">="] = function(_l, _r) { return _l >= _r };
+	map[? "<="] = function(_l, _r) { return _l <= _r };
+	map[? ">"] = function(_l, _r) { return _l > _r };
+	map[? "<"] = function(_l, _r) { return _l < _r };
+	return map;
+}
+
 /// @desc Returns an operator reference.
 function operator(_kind) {
-	switch (_kind) {
-	case "+":
-		return function(_l, _r) { return _l + _r };
-	case "-":
-		return function(_l, _r) { return _l - _r };
-	case "*":
-		return function(_l, _r) { return _l * _r };
-	case "/":
-		return function(_l, _r) { return _l / _r };
-	case "%":
-	case "mod":
-		return function(_l, _r) { return _l % _r };
-	case "div":
-		return function(_l, _r) { return _l div _r };
-	case "|":
-		return function(_l, _r) { return _l | _r };
-	case "&":
-		return function(_l, _r) { return _l & _r };
-	case "^":
-		return function(_l, _r) { return _l ^ _r };
-	case "~":
-		return function(_x) { return ~_x };
-	case "<<":
-		return function(_l, _r) { return _l << _r };
-	case ">>":
-		return function(_l, _r) { return _l >> _r };
-	case "||":
-	case "or":
-		return function(_l, _r) { return _l || _r };
-	case "&&":
-	case "and":
-		return function(_l, _r) { return _l && _r };
-	case "^^":
-	case "xor":
-		return function(_l, _r) { return _l ^^ _r };
-	case "!":
-	case "not":
-		return function(_x) { return !_x };
-	case "==":
-	case "=":
-		return function(_l, _r) { return _l == _r };
-	case "!=":
-	case "<>":
-		return function(_l, _r) { return _l != _r };
-	case ">=":
-		return function(_l, _r) { return _l >= _r };
-	case "<=":
-		return function(_l, _r) { return _l <= _r };
-	case ">":
-		return function(_l, _r) { return _l > _r };
-	case "<":
-		return function(_l, _r) { return _l < _r };
-	}
+	static ops = operator_map();
+	return ops[? _kind];
 }
+
+show_message(operator("+")(2, 3));

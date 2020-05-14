@@ -22,3 +22,10 @@ Array extensions
  - `array_contains`
  - `array_foldl`
  - `array_foldr`
+
+Struct extensions
+
+ - `struct_clone`
+ - `struct_foreach`
+ - `struct_foreach_key`
+ - `struct_foreach_value`

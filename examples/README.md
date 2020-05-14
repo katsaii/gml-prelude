@@ -29,3 +29,7 @@ Struct extensions
  - `struct_foreach`
  - `struct_foreach_key`
  - `struct_foreach_value`
+
+Script extensions
+
+ - `script_execute_array`

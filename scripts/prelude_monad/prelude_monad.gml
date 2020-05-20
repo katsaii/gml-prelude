@@ -29,6 +29,14 @@ function bind(_mx, _f) {
 			}
 		}
 		return my;
+	} else if (is_string(_mx)) {
+		var count = string_length(_mx);
+		var my = "";
+		for (var i = 0; i < count; i += 1) {
+			var yy = bind(string_char_at(_mx, i), _f);
+			my += is_string(yy) ? yy : string(yy);
+		}
+		return my;
 	} else {
 		return _f(_mx);
 	}

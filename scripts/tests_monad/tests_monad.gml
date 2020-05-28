@@ -43,3 +43,6 @@ assert_eq([2], join([[[2]]]));
 
 // tests another lifted function
 assert_eq([3, 5, 8, 6, 10, 16, 9, 15, 24], apply(bind([1, 2, 3], curry(operator("*"))), [3, 5, 8]));
+
+// tests string monad
+assert_eq("blizardglizard", bind("bg", function(_x) { return _x + "lizard" }));

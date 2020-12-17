@@ -7,7 +7,7 @@
 /// @desc Creates a reader which returns elements of a ds_grid.
 /// @param {ds_grid} id The id of the ds_grid to read.
 /// @param {bool} [row_major=true] Whether to iterate in row-major order (`true`), versus column-major order (`false`).
-function GridReader(_grid) {
+function GridReader(_grid) constructor {
 	grid = _grid;
 	pos = 0;
 	rowMajor = argument_count > 1 ? argument[1] : true;
@@ -33,7 +33,7 @@ function GridReader(_grid) {
 
 /// @desc Creates a reader which returns elements of a ds_list.
 /// @param {ds_list} id The id of the ds_list to read.
-function ListReader(_list) {
+function ListReader(_list) constructor {
 	list = _list;
 	pos = 0;
 	read = function() {
@@ -49,7 +49,7 @@ function ListReader(_list) {
 
 /// @desc Creates a reader which returns elements of a ds_queue.
 /// @param {ds_queue} id The id of the ds_queue to read.
-function QueueReader(_queue) {
+function QueueReader(_queue) constructor {
 	queue = _queue;
 	read = function() {
 		if (ds_queue_empty(queue)) {
@@ -62,7 +62,7 @@ function QueueReader(_queue) {
 
 /// @desc Creates a reader which returns elements of a ds_stack.
 /// @param {ds_stack} id The id of the ds_stack to read.
-function StackReader(_stack) {
+function StackReader(_stack) constructor {
 	stack = _stack;
 	read = function() {
 		if (ds_stack_empty(stack)) {
@@ -76,7 +76,7 @@ function StackReader(_stack) {
 /// @desc Creates a reader which returns elements of a ds_priority.
 /// @param {ds_priority} id The id of the ds_priority to read.
 /// @param {bool} [max=true] Whether to remove values by maximum priority (`true`), versus minimum priority (`false`).
-function PriorityQueueReader(_queue) {
+function PriorityQueueReader(_queue) constructor {
 	queue = _queue;
 	takeMaximum = argument_count > 1 ? argument[1] : true;
 	read = function() {
@@ -90,7 +90,7 @@ function PriorityQueueReader(_queue) {
 
 /// @desc Creates a reader which returns key-value pairs of a ds_map.
 /// @param {ds_map} id The id of the ds_map to read.
-function MapReader(_map) {
+function MapReader(_map) constructor {
 	map = _map;
 	key = ds_map_find_first(map);
 	read = function() {

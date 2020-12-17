@@ -26,8 +26,8 @@
     "name": "Default",
     "children": [],
   },
-  "RoomOrder": [
-    {"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},
+  "RoomOrderNodes": [
+    {"roomId":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},},
   ],
   "Folders": [
     {"folderPath":"folders/_Tests.yy","order":10,"resourceVersion":"1.0","name":"_Tests","tags":[],"resourceType":"GMFolder",},
@@ -42,9 +42,9 @@
   ],
   "IncludedFiles": [],
   "MetaData": {
-    "IDEVersion": "23.1.1.138",
+    "IDEVersion": "23.1.1.193",
   },
-  "resourceVersion": "1.3",
+  "resourceVersion": "1.4",
   "name": "gml-prelude",
   "tags": [],
   "resourceType": "GMProject",

@@ -599,3 +599,9 @@ function iterate(_first, _f) {
 		}
 	});
 }
+
+var a = method({
+	huh : 100
+}, function(_x) { return huh + 1; });
+a([13]);
+//script_execute_ext(a, [13]);

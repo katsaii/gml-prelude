@@ -144,7 +144,15 @@ An additional, optional argument can be passed to the `range` function to decide
 
 ### Iterate
 
-Another useful built-in iterator constructor is `iterate`. The `iterate` function will create an infinite iterator where each subsequent value generated is the result of applying a function to the previous value.
+Another useful built-in iterator constructor is `iterate`. The `iterate` function will create an infinite iterator where each subsequent value generated is the result of applying a function to the previous value, starting at some initial value. For example, the following code will create an iterator over the function <code>y = 2<sup>x</sup></code> by multiplying the previous value by `2` each iteration:
+
+```js
+function pow2(_n) {
+	return _n * 2;
+}
+
+var iter = iterate(pow2, 1); // start at 1
+```
 
 ### Creating a File Iterator
 
